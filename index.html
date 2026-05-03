@@ -179,7 +179,7 @@
   .cpi-kda-det { font-size: 11px; font-weight: 600; }
 
   /* --- COLONNE DROITE (MAIN) --- */
-  .summary-30g { display: grid; grid-template-columns: auto 1fr 1fr; gap: 20px; padding: 20px; align-items: center; }
+  .summary-30g { display: grid; grid-template-columns: auto 1fr 1fr 1fr; gap: 0; padding: 0; align-items: center; }
   @media (max-width: 600px) { .summary-30g { grid-template-columns: 1fr 1fr; } }
   .donut-chart { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
   .donut-inner { width: 48px; height: 48px; border-radius: 50%; background: var(--bg-card); display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -220,7 +220,7 @@
 
   /* Carte Match (Redesigned) */
   .match-card {
-    display: flex; align-items: center; gap: 16px; padding: 12px 14px;
+    display: flex; align-items: center; gap: 12px; padding: 10px 12px;
     border-radius: 8px; margin-bottom: 6px;
     transition: 0.15s; position: relative; border: 1px solid transparent;
   }
@@ -237,16 +237,16 @@
     border-left: 4px solid var(--loss-color);
   }
   
-  .mc-col-1 { width: 90px; }
+  .mc-col-1 { width: 82px; }
   .mc-col-1 .result { font-weight: 700; font-size: 15px; color: var(--text-main); }
   .mc-col-1 .role { font-size: 11px; color: var(--text-muted); margin: 2px 0;}
   .mc-col-1 .lp { font-weight: 700; font-size: 13px; }
   
-  .mc-col-2 { position: relative; width: 48px; height: 48px; flex-shrink: 0;}
+  .mc-col-2 { position: relative; width: 44px; height: 44px; flex-shrink: 0;}
   .mc-col-2 img.main-c { width: 100%; height: 100%; border-radius: 8px; object-fit: cover; }
-  .mc-col-2 img.sub-c { position: absolute; bottom: -6px; right: -6px; width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--bg-card); object-fit: cover; }
+  .mc-col-2 img.sub-c { position: absolute; bottom: -6px; right: -6px; width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--bg-card); object-fit: cover; }
 
-  .mc-col-3 { width: 90px; text-align: center; }
+  .mc-col-3 { width: 80px; text-align: center; }
   .mc-col-3 .kda { font-weight: 700; font-size: 14px; letter-spacing: 0.5px; }
   .mc-col-3 .kda span { color: var(--text-muted); font-weight: 500;}
   .badge-team { display: inline-block; padding: 2px 6px; border-radius: 4px; font-size: 9px; font-weight: 600; text-transform: uppercase; margin-top: 4px; background: rgba(255,255,255,0.04); color: var(--text-dark); border: 1px solid rgba(255,255,255,0.07); letter-spacing: 0.3px; }
@@ -254,12 +254,12 @@
   .badge-bad { color: var(--text-dark); }
   .badge-perfect { color: var(--text-muted); border-color: rgba(255,255,255,0.1); }
   
-  .mc-col-4 { width: 85px; font-size: 11px; color: var(--text-dark); font-weight: 500; line-height: 1.6;}
+  .mc-col-4 { width: 72px; font-size: 11px; color: var(--text-dark); font-weight: 500; line-height: 1.6;}
   .mc-col-4 strong { font-weight: 700; }
   
-  .mc-col-5 { flex: 1; padding: 0 10px; font-size: 11px; color: var(--text-muted); font-style: italic; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+  .mc-col-5 { flex: 1; padding: 0 8px; font-size: 11px; color: var(--text-muted); font-style: italic; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; }
 
-  .mc-col-6 { display: flex; align-items: center; justify-content: center; gap: 6px; width: 65px; margin-left: auto; }
+  .mc-col-6 { display: flex; align-items: center; justify-content: center; gap: 6px; width: 58px; margin-left: auto; }
   .mc-col-6 span { font-size: 10px; color: var(--text-dark); font-weight: 700; }
   .mc-vs-icons { position: relative; width: 32px; height: 32px; }
   .mc-vs-icons img.main-c { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border); }
@@ -291,11 +291,11 @@
   /* Match card responsive */
   .match-card {
     display: grid;
-    grid-template-columns: 85px 52px 90px 80px 1fr 70px 54px 30px;
+    grid-template-columns: 82px 48px 80px 72px 1fr 58px 50px 28px;
     gap: 10px; align-items: center;
   }
   @media (max-width: 900px) {
-    .match-card { grid-template-columns: 85px 44px 80px 70px 1fr 44px; }
+    .match-card { grid-template-columns: 82px 44px 75px 68px 1fr 44px; }
     .match-card .mc-col-5, .match-card .mc-col-8 { display: none; }
   }
   @media (max-width: 600px) {
@@ -416,6 +416,20 @@
   .wmb-slot-lbl { font-size: 9px; color: var(--text-dark); font-weight: 600; margin-top: 3px; }
 
   
+  /* --- RANK HISTORY --- */
+  .rh-row { display:flex; align-items:center; gap:4px; padding:6px 10px; border-bottom:1px solid var(--border); transition:background 0.15s; }
+  .rh-row:last-child { border-bottom:none; }
+  .rh-row:hover { background:rgba(255,255,255,0.02); }
+  .rh-season { font-size:11px; color:var(--text-dark); font-weight:600; width:70px; flex-shrink:0; }
+  .rh-img { width:24px; height:24px; object-fit:contain; flex-shrink:0; }
+  .rh-select { background:transparent; border:none; color:var(--text-main); font-size:11px; font-weight:600; font-family:'Rajdhani',sans-serif; cursor:pointer; outline:none; padding:2px 2px; border-radius:4px; flex-shrink:0; }
+  .rh-select:hover { background:rgba(255,255,255,0.05); }
+  .rh-select option { background:var(--bg-card); }
+  .rh-del-btn { margin-left:auto; flex-shrink:0; background:transparent; border:1px solid var(--border); color:var(--text-muted); cursor:pointer; padding:4px 6px; border-radius:4px; display:flex; align-items:center; transition:all 0.15s; }
+  .rh-del-btn:hover { border-color:var(--loss-color); color:var(--loss-color); background:rgba(231,76,60,0.08); }
+  .rh-add-btn { display:flex; align-items:center; gap:6px; padding:8px 14px; font-size:11px; color:var(--text-dark); cursor:pointer; transition:color 0.15s; background:transparent; border:none; width:100%; text-align:left; }
+  .rh-add-btn:hover { color:var(--text-muted); }
+
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
@@ -439,6 +453,11 @@
         <a href="#" onclick="importData()" class="nav-action-btn" title="Restaurer">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
           <span class="nav-tooltip">Restaurer</span>
+        </a>
+        <div id="nav-quick-links" style="display:flex;gap:4px;"></div>
+        <a href="#" onclick="openLinksModal()" class="nav-action-btn" title="Liens rapides">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          <span class="nav-tooltip">Liens rapides</span>
         </a>
         <input type="file" id="import-file" accept=".json" style="display:none" onchange="handleImport(event)"/>
       </div>
@@ -478,10 +497,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 16l4 4"/><path d="M19 21l2-2"/></svg>
           Matchups
         </div>
-        <div class="sub-nav-item" onclick="navTab('progression', this)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-          Progression
-        </div>
       </div>
     </div>
   </div>
@@ -509,7 +524,6 @@
                 <img src="" id="card-rank-img" class="rs-icon" onerror="this.src='https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/gold.png'">
                 <div class="rs-info">
                   <div class="rs-rank" id="card-rank-txt">PLATINUM IV</div>
-                  <div class="rs-lp" id="card-lp-txt">0 LP</div>
                   <div class="rs-wl" id="card-winrate-txt">106W - 95L (53%)</div>
                 </div>
               </div>
@@ -547,14 +561,34 @@
           </div>
 
           <div class="card" style="padding:0;">
-            <div class="card-header"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/></svg> TOP CHAMPIONS</div>
+            <div class="card-header">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/></svg>
+                TOP CHAMPIONS
+              </div>
+            </div>
             <div id="overview-champions"></div>
+          </div>
+
+          <div class="card" style="padding:0;">
+            <div class="card-header">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                RANK HISTORY
+              </div>
+            </div>
+            <div id="rank-history-list"></div>
+            <button class="rh-add-btn" id="rh-add-btn" onclick="addRankHistoryRow()">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Ajouter une saison
+            </button>
           </div>
 
         </div><div class="col-right">
           
-          <div class="card summary-30g">
-            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+          <div class="card" style="padding:0;margin-bottom:0;">
+          <div class="summary-30g">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:16px 20px;border-right:1px solid var(--border);">
               <div style="position:relative;width:100px;height:56px;overflow:hidden;">
                 <svg viewBox="0 0 100 56" style="width:100%;height:100%;">
                   <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="var(--border-light)" stroke-width="10" stroke-linecap="round"/>
@@ -568,7 +602,7 @@
               <div id="sum-games" style="font-size:11px;color:var(--text-muted);font-weight:500;">0 Games</div>
             </div>
             
-            <div class="stat-block">
+            <div class="stat-block" style="padding:16px 20px;border-right:1px solid var(--border);">
               <div class="lbl" style="margin-bottom:8px;">KDA Perso · Équipe</div>
               <div style="display:flex;gap:16px;justify-content:center;align-items:flex-end;">
                 <div style="text-align:center;">
@@ -585,17 +619,48 @@
               </div>
             </div>
 
-            <div class="stat-block">
-              <div class="lbl">Ranking Moy</div>
-              <div class="val" style="color:var(--text-main); font-size:24px;">#<span id="sum-rank">0.0</span></div>
-              <div class="sub" style="display:flex; justify-content:center; margin-top:4px;">
-                <span style="background:var(--win-bg); color:var(--win-color); padding:2px 6px; border-radius:4px; font-weight:700;" id="sum-mvp">MVP x0</span>
+            <div class="stat-block" style="padding:16px 20px;border-right:1px solid var(--border);">
+              <div class="lbl">Streaks</div>
+              <div style="display:flex;gap:16px;justify-content:center;align-items:flex-end;">
+                <div style="text-align:center;">
+                  <div class="val" id="sum-win-streak" style="font-size:24px;color:var(--win-color);">0</div>
+                  <div style="font-size:9px;color:var(--text-dark);margin-top:3px;text-transform:uppercase;letter-spacing:0.5px;">Win max</div>
+                </div>
+                <div style="width:1px;height:36px;background:var(--border);align-self:center;"></div>
+                <div style="text-align:center;">
+                  <div class="val" id="sum-lose-streak" style="font-size:24px;color:var(--loss-color);">0</div>
+                  <div style="font-size:9px;color:var(--text-dark);margin-top:3px;text-transform:uppercase;letter-spacing:0.5px;">Lose max</div>
+                </div>
               </div>
             </div>
-          </div>
+
+            <div style="display:flex;align-items:center;padding:12px 14px;gap:12px;">
+              <div class="stat-block" style="flex:1;text-align:center;">
+                <div class="lbl">Ranking Moy</div>
+                <div class="val" style="color:var(--text-main);font-size:24px;">#<span id="sum-rank">0.0</span></div>
+                <div class="sub" style="display:flex;justify-content:center;margin-top:4px;">
+                  <span style="background:var(--win-bg);color:var(--win-color);padding:2px 6px;border-radius:4px;font-weight:700;" id="sum-mvp">MVP x0</span>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:4px;align-items:stretch;border-left:1px solid var(--border);padding-left:12px;width:58px;">
+                <button id="sum-btn-all" onclick="setSumFilter('all')"
+                  style="font-size:8px;font-weight:600;text-transform:uppercase;padding:4px 0;border-radius:4px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-muted);cursor:pointer;transition:all 0.15s;width:100%;">
+                  Origine
+                </button>
+                <button id="sum-btn-last" onclick="setSumFilter('last')"
+                  style="font-size:8px;font-weight:600;text-transform:uppercase;padding:4px 0;border-radius:4px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-muted);cursor:pointer;transition:all 0.15s;width:100%;">
+                  Last
+                </button>
+                <input id="sum-last-n" type="text" inputmode="numeric" maxlength="3" value="40"
+                  class="finput" style="font-size:9px;padding:3px 4px;text-align:center;box-sizing:border-box;width:100%;"
+                  onchange="setSumFilter('last')" onclick="setSumFilter('last')">
+              </div>
+            </div>
+            </div>
+          </div><!-- end summary card -->
 
           <!-- Barre principale : Winrate global + 4 plages horaires -->
-          <div class="winrate-main-bar" id="session-bar-row">
+          <div class="winrate-main-bar" id="session-bar-row" style="margin-top:16px;">
             <div class="wmb-slots" style="padding: 10px 16px;">
               <div class="wmb-slots-row">
                 <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-0">—</div><div class="wmb-slot-lbl">0–6h</div></div>
@@ -616,6 +681,7 @@
             <div class="session-bar-item"><div class="sbi-val" id="sbi-tilt">—</div><div class="sbi-lbl">Tilt Index</div></div>
             <div class="session-bar-item"><div class="sbi-val" id="sbi-cs">—</div><div class="sbi-lbl">CS/min</div></div>
             <div class="session-bar-item"><div class="sbi-val" id="sbi-vs">—</div><div class="sbi-lbl">Vision</div></div>
+
           </div>
 
           <div class="history-controls">
@@ -771,7 +837,7 @@
             <div class="fgroup"><label class="flabel">Vision Score</label><input class="finput" id="f-vs-score" type="number" min="0" placeholder="22"/></div>
             <div class="fgroup"><label class="flabel">Damage (k)</label><input class="finput" id="f-dmg" type="number" step="0.1" placeholder="18.5"/></div>
             <div class="fgroup"><label class="flabel">Ranking</label><input class="finput" id="f-note" type="number" min="1" max="10" placeholder="1"/></div>
-            <div class="fgroup"><label class="flabel"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> Tilt (1–10)</label><input class="finput" id="f-tilt" type="number" min="1" max="10" placeholder="5"/></div>
+            <div class="fgroup"><label class="flabel"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg> Tilt (0–10)</label><input class="finput" id="f-tilt" type="number" min="0" max="10" placeholder="5"/></div>
           </div>
 
           <div class="grid-2">
@@ -779,15 +845,23 @@
             <div class="fgroup"><label class="flabel">Comment</label><input class="finput" id="f-comment" type="text" placeholder="Mauvais midgame..."/></div>
           </div>
 
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; padding-top:20px; border-top:1px solid var(--border);">
-            <div style="display:flex; align-items:center; gap:12px;">
-              <label class="btn-ghost" style="cursor:pointer; display:flex; align-items:center; gap:8px;">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Screenshot
-                <input type="file" accept="image/*" style="display:none" onchange="handleScreenshot(event)"/>
-              </label>
-              <div id="f-screenshot-preview" style="font-size:12px; color:var(--text-dark)">No image</div>
+          <div style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border);">
+            <div id="f-drop-zone" onclick="document.getElementById('f-screenshot-file').click()"
+              style="border:2px dashed var(--border); border-radius:8px; padding:14px 16px; display:flex; align-items:center; gap:12px; cursor:pointer; transition:all 0.2s; margin-bottom:12px;"
+              ondragover="event.preventDefault();this.style.borderColor='var(--accent)';this.style.background='rgba(108,92,231,0.06)'"
+              ondragleave="this.style.borderColor='var(--border)';this.style.background=''"
+              ondrop="handleScreenshotDrop(event)">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-dark);flex-shrink:0"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <div>
+                <div style="font-size:12px;color:var(--text-muted);font-weight:500;">Glisse un screenshot ici</div>
+                <div style="font-size:10px;color:var(--text-dark);margin-top:2px;">ou clique pour sélectionner</div>
+              </div>
+              <input type="file" id="f-screenshot-file" accept="image/*" style="display:none" onchange="handleScreenshot(event)"/>
+              <div id="f-screenshot-preview" style="font-size:12px;color:var(--text-dark);margin-left:auto;"></div>
             </div>
-            <button class="btn-primary" onclick="addGame()">Save Game →</button>
+            <div style="display:flex;justify-content:flex-end;">
+              <button class="btn-primary" onclick="addGame()">Save Game →</button>
+            </div>
           </div>
 
         </div>
@@ -879,62 +953,26 @@
       </div>
     </div>
 
-    <div id="page-progression" class="page">
-      <div class="card" style="padding:0;">
-        <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;">
-          <div style="display:flex;align-items:center;gap:8px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            LP Progression
-          </div>
-          <div id="prog-stats-inline" style="font-size:11px;color:var(--text-muted);"></div>
-        </div>
-        <div style="padding:20px 12px 16px; position:relative;">
-          <canvas id="lp-prog-chart" style="width:100%;display:block;cursor:crosshair;" height="280"></canvas>
-          <div id="lp-tooltip" style="
-            display:none; position:absolute; pointer-events:none; z-index:10;
-            background:rgba(15,18,26,0.96); border:1px solid rgba(255,255,255,0.1);
-            border-radius:10px; padding:10px 14px; box-shadow:0 8px 24px rgba(0,0,0,0.5);
-            min-width:140px; backdrop-filter:blur(8px);
-          ">
-            <div id="lp-tooltip-rank" style="font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:800;line-height:1.2;"></div>
-            <div id="lp-tooltip-lp" style="font-size:12px;color:var(--text-muted);margin-top:2px;font-family:'Share Tech Mono',monospace;"></div>
-            <div id="lp-tooltip-game" style="font-size:11px;color:var(--text-dark);margin-top:6px;border-top:1px solid rgba(255,255,255,0.06);padding-top:6px;"></div>
-          </div>
-        </div>
+  <!-- QUICK LINKS MODAL -->
+  <div class="modal-overlay hidden" id="links-modal" onclick="if(event.target===this)closeModal('links-modal')">
+    <div class="modal-box" style="width:420px;max-width:95vw;" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <span style="display:flex;align-items:center;gap:8px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Liens rapides
+        </span>
+        <button onclick="closeModal('links-modal')" class="modal-close">✕</button>
       </div>
-
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px;">
-        <div class="card" style="padding:16px;text-align:center;margin-bottom:0;">
-          <div style="font-size:10px;color:var(--text-dark);text-transform:uppercase;font-weight:600;margin-bottom:10px;letter-spacing:1px;display:flex;align-items:center;justify-content:center;gap:6px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-            Peak
-          </div>
-          <div style="font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:800;" id="prog-peak">—</div>
-          <div id="prog-peak-lp" style="font-size:11px;color:var(--text-dark);margin-top:2px;font-family:'Share Tech Mono',monospace;"></div>
-        </div>
-        <div class="card" style="padding:16px;text-align:center;margin-bottom:0;">
-          <div style="font-size:10px;color:var(--text-dark);text-transform:uppercase;font-weight:600;margin-bottom:10px;letter-spacing:1px;display:flex;align-items:center;justify-content:center;gap:6px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            Win streak max
-          </div>
-          <div style="font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:800;color:var(--win-color);" id="prog-best-streak">0</div>
-        </div>
-        <div class="card" style="padding:16px;text-align:center;margin-bottom:0;">
-          <div style="font-size:10px;color:var(--text-dark);text-transform:uppercase;font-weight:600;margin-bottom:10px;letter-spacing:1px;display:flex;align-items:center;justify-content:center;gap:6px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            Lose streak max
-          </div>
-          <div style="font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:800;color:var(--loss-color);" id="prog-worst-streak">0</div>
-        </div>
-        <div class="card" style="padding:16px;text-align:center;margin-bottom:0;">
-          <div style="font-size:10px;color:var(--text-dark);text-transform:uppercase;font-weight:600;margin-bottom:10px;letter-spacing:1px;display:flex;align-items:center;justify-content:center;gap:6px;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            Net LP
-          </div>
-          <div style="font-family:'Rajdhani',sans-serif;font-size:32px;font-weight:800;" id="prog-lpnet">+0</div>
+      <div style="padding:16px;display:flex;flex-direction:column;gap:8px;">
+        <div id="links-list" style="display:flex;flex-direction:column;gap:6px;"></div>
+        <div style="display:flex;gap:8px;margin-top:8px;padding-top:12px;border-top:1px solid var(--border);">
+          <input id="link-name-input" class="finput" placeholder="Nom (ex: OP.GG)" style="flex:1;font-size:12px;" onkeydown="if(event.key==='Enter')addQuickLink()">
+          <input id="link-url-input" class="finput" placeholder="https://..." style="flex:2;font-size:12px;" onkeydown="if(event.key==='Enter')addQuickLink()">
+          <button onclick="addQuickLink()" class="btn-primary" style="padding:8px 12px;white-space:nowrap;">Ajouter</button>
         </div>
       </div>
     </div>
+  </div>
 
   </main>
 
@@ -999,7 +1037,7 @@
         <div class="fgroup"><label class="flabel">Vision</label><input class="finput" id="e-vs-score" type="number"/></div>
         <div class="fgroup"><label class="flabel">Damage</label><input class="finput" id="e-dmg" type="number" step="0.1"/></div>
         <div class="fgroup"><label class="flabel">Ranking</label><input class="finput" id="e-note" type="number" min="1" max="10"/></div>
-        <div class="fgroup"><label class="flabel">Tilt (1–10)</label><input class="finput" id="e-tilt" type="number" min="1" max="10"/></div>
+        <div class="fgroup"><label class="flabel">Tilt (0–10)</label><input class="finput" id="e-tilt" type="number" min="0" max="10"/></div>
       </div>
       <div class="fgroup"><label class="flabel">Draft / Notes</label><input class="finput" id="e-draft" type="text" placeholder="Composition, strategy..."/></div>
       <div class="fgroup"><label class="flabel">Comment</label><input class="finput" id="e-comment" type="text"/></div>
@@ -1027,8 +1065,17 @@
     </div>
   </div>
 
-  <div class="modal-overlay hidden" id="img-modal" onclick="closeModal('img-modal')">
-    <img id="img-modal-src" src="" style="max-width:95vw; max-height:90vh; border-radius:8px; border:2px solid var(--border);">
+  <div class="modal-overlay hidden" id="img-modal" style="background:rgba(0,0,0,0.92);flex-direction:column;gap:12px;">
+    <div style="position:relative;border-radius:8px;border:1px solid var(--border);" id="img-modal-wrap">
+      <img id="img-modal-src" src="" style="display:block;width:80vw;max-width:1200px;border-radius:8px;" draggable="false">
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <button onclick="imgZoom(-0.25)" style="background:rgba(255,255,255,0.08);border:1px solid var(--border);color:var(--text-main);border-radius:6px;padding:6px 14px;cursor:pointer;font-size:18px;line-height:1;">−</button>
+      <span id="img-zoom-label" style="font-size:12px;color:var(--text-muted);min-width:40px;text-align:center;">100%</span>
+      <button onclick="imgZoom(+0.25)" style="background:rgba(255,255,255,0.08);border:1px solid var(--border);color:var(--text-main);border-radius:6px;padding:6px 14px;cursor:pointer;font-size:18px;line-height:1;">+</button>
+      <button onclick="imgZoomReset()" style="background:rgba(255,255,255,0.08);border:1px solid var(--border);color:var(--text-muted);border-radius:6px;padding:6px 12px;cursor:pointer;font-size:11px;">Reset</button>
+      <button onclick="closeModal('img-modal')" style="background:rgba(231,76,60,0.15);border:1px solid rgba(231,76,60,0.4);color:var(--loss-color);border-radius:6px;padding:6px 14px;cursor:pointer;font-size:12px;font-weight:600;">✕ Fermer</button>
+    </div>
   </div>
 
   <div class="modal-overlay hidden" id="comment-modal" onclick="if(event.target===this)closeModal('comment-modal')">
@@ -1259,9 +1306,13 @@
     }
     loadChampions();
 
+    function normalizeStr(str) {
+      return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+    }
+
     function getChampIcon(name) {
       if(!name) return 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/profileicon/29.png';
-      const c = championsData.find(x => x.name.toLowerCase() === name.toLowerCase());
+      const c = championsData.find(x => normalizeStr(x.name) === normalizeStr(name));
       return c ? c.iconUrl : `https://ddragon.leagueoflegends.com/cdn/14.8.1/img/profileicon/29.png`;
     }
 
@@ -1313,7 +1364,7 @@
         const query = this.value.toLowerCase().trim();
         drop.innerHTML = '';
         if(!query) { drop.style.display = 'none'; if(icon) icon.style.display = 'none'; inp.classList.remove('has-icon'); return; }
-        const filtered = championsData.filter(c => c.name.toLowerCase().includes(query)).slice(0, 20);
+        const filtered = championsData.filter(c => normalizeStr(c.name).includes(normalizeStr(query))).slice(0, 20);
         if(filtered.length > 0) {
           filtered.forEach(champ => {
             const div = document.createElement('div');
@@ -1408,6 +1459,7 @@
        COMPRESSION IMAGE
        ========================================================= */
     let pendingScreenshot = null;
+    let _sumFilter = { mode: 'all', n: 40 }; // 'all' = origine, 'last' = last N
     function resizeBase64Img(base64, maxWidth, callback) {
       const img = new Image();
       img.onload = () => {
@@ -1424,14 +1476,33 @@
 
     function handleScreenshot(event) {
       const file = event.target.files[0]; if(!file) return;
+      processScreenshotFile(file);
+      event.target.value = '';
+    }
+
+    function handleScreenshotDrop(event) {
+      event.preventDefault();
+      const zone = document.getElementById('f-drop-zone');
+      zone.style.borderColor = 'var(--border)';
+      zone.style.background = '';
+      const file = event.dataTransfer.files[0]; if(!file || !file.type.startsWith('image/')) return;
+      processScreenshotFile(file);
+    }
+
+    function processScreenshotFile(file) {
       const reader = new FileReader();
       reader.onload = ev => {
         resizeBase64Img(ev.target.result, 800, (compressed) => {
           pendingScreenshot = compressed;
-          document.getElementById('f-screenshot-preview').innerHTML = `<img src="${compressed}" style="height:32px; border-radius:4px; cursor:pointer;" onclick="openImg('${compressed}')"> <span style="color:var(--win-color)">OK</span>`;
+          document.getElementById('f-screenshot-preview').innerHTML =
+            `<img src="${compressed}" style="height:36px;border-radius:4px;cursor:pointer;border:1px solid var(--border);" onclick="openImg('${compressed}')">
+             <span style="color:var(--win-color);font-size:10px;display:block;text-align:center;margin-top:2px;">✓</span>`;
+          const zone = document.getElementById('f-drop-zone');
+          zone.style.borderColor = 'var(--win-color)';
+          zone.style.borderStyle = 'solid';
         });
       };
-      reader.readAsDataURL(file); event.target.value = '';
+      reader.readAsDataURL(file);
     }
 
     function updateProfileSetting(event, key) {
@@ -1447,10 +1518,49 @@
       reader.readAsDataURL(file);
     }
 
+    /* =========================================================
+       IMAGE VIEWER — zoom resize
+       ========================================================= */
+    let _imgScale = 1;
+    const _IMG_BASE_VW = 80; // base width in vw
+
     function openImg(src) {
-      document.getElementById('img-modal-src').src = src;
+      _imgScale = 1;
+      const img = document.getElementById('img-modal-src');
+      img.src = src;
+      _applyImgTransform();
       document.getElementById('img-modal').classList.remove('hidden');
     }
+
+    function _applyImgTransform() {
+      const img = document.getElementById('img-modal-src');
+      const vw = Math.min(_IMG_BASE_VW * _imgScale, 98);
+      img.style.width = vw + 'vw';
+      img.style.maxWidth = ''; 
+      document.getElementById('img-zoom-label').textContent = Math.round(_imgScale * 100) + '%';
+    }
+
+    function imgZoom(delta) {
+      _imgScale = Math.min(4, Math.max(0.2, _imgScale + delta));
+      _applyImgTransform();
+    }
+
+    function imgZoomReset() {
+      _imgScale = 1;
+      _applyImgTransform();
+    }
+
+    // Wheel zoom
+    document.addEventListener('wheel', e => {
+      if(document.getElementById('img-modal').classList.contains('hidden')) return;
+      e.preventDefault();
+      imgZoom(e.deltaY < 0 ? 0.15 : -0.15);
+    }, { passive: false });
+
+    // Click outside to close
+    document.getElementById('img-modal') && document.getElementById('img-modal').addEventListener('click', e => {
+      if(e.target.id === 'img-modal') closeModal('img-modal');
+    });
 
     /* =========================================================
        COMPUTATION
@@ -1500,7 +1610,6 @@
       if(tabId === 'add') renderAddTiltBanner();
       if(tabId === 'champions') renderChampionsTab();
       if(tabId === 'matchups') renderMatchupsTab();
-      if(tabId === 'progression') { _chartHoverAttached = false; renderProgression(); }
     }
 
     function renderAddTiltBanner() {
@@ -2284,7 +2393,7 @@
             </div>
             <div class="mc-col-5" onclick="openComment(${g.id})" style="cursor:pointer;" title="Voir en entier">
               ${g.draft ? `<b style="color:var(--accent)">Draft:</b> ${g.draft}<br>` : ''}
-              <span style="color:var(--text-muted)">${g.comment || '<i style="color:var(--text-dark)">No comment</i>'}</span>
+              ${g.comment ? `<b style="color:var(--text-muted)">Comment:</b> ${g.comment}` : '<span style="color:var(--text-muted)"><i style="color:var(--text-dark)">No comment</i></span>'}
             </div>
             <div class="mc-col-6"><span>VS</span> ${vsHtml}</div>
             <div class="mc-gauge" style="color:${noteCol}" title="Ranking">
@@ -2416,6 +2525,22 @@
       ctx.fill(); ctx.shadowBlur = 0;
     }
 
+    function setSumFilter(mode) {
+      _sumFilter.mode = mode;
+      if(mode === 'last') {
+        const n = parseInt(document.getElementById('sum-last-n').value) || 40;
+        _sumFilter.n = Math.max(1, n);
+      }
+      const btnAll  = document.getElementById('sum-btn-all');
+      const btnLast = document.getElementById('sum-btn-last');
+      if(btnAll && btnLast) {
+        const base = 'font-size:8px;font-weight:600;text-transform:uppercase;padding:4px 0;border-radius:4px;cursor:pointer;transition:all 0.15s;width:100%;';
+        btnAll.style.cssText  = base + (mode === 'all'  ? 'border:1px solid var(--accent);background:rgba(108,92,231,0.15);color:var(--accent);' : 'border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-dark);');
+        btnLast.style.cssText = base + (mode === 'last' ? 'border:1px solid var(--accent);background:rgba(108,92,231,0.15);color:var(--accent);' : 'border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-dark);');
+      }
+      renderOverview();
+    }
+
     function renderOverview() {
       const p = ap(); if(!p) return;
       const games = p.games;
@@ -2442,8 +2567,9 @@
       const e30 = document.getElementById('rs-30d'); e30.textContent = `${lp30d>=0?'▲':'▼'} ${Math.abs(lp30d)} LP (30d)`; e30.style.color = lp30d>=0?'var(--win-color)':'var(--loss-color)';
       const e7 = document.getElementById('rs-7d'); e7.textContent = `${lp7d>=0?'▲':'▼'} ${Math.abs(lp7d)} LP (7d)`; e7.style.color = lp7d>=0?'var(--win-color)':'var(--loss-color)';
 
-      // Summary 30G - half-circle winrate
-      const last30 = games.slice(0, 30);
+      // Summary — filtre dynamique (Origine ou Last N)
+      const sumGames = _sumFilter.mode === 'all' ? games : games.slice(0, _sumFilter.n);
+      const last30 = sumGames; // alias pour le reste du code
       const st30 = computeStats(last30);
       const wrPct = st30.wr || 0;
       document.getElementById('sum-wr').textContent = wrPct + '%';
@@ -2460,6 +2586,11 @@
       document.getElementById('sum-kda-detail').textContent = `${st30.avgK} / ${st30.avgD} / ${st30.avgA}`;
       document.getElementById('sum-rank').textContent = st30.avgNote;
       document.getElementById('sum-mvp').textContent = `MVP x${st30.mvpCount}`;
+
+      // Streaks (sur toutes les games, pas juste les 30 dernières)
+      const stAll = computeStats(games);
+      document.getElementById('sum-win-streak').textContent = stAll.bestWin;
+      document.getElementById('sum-lose-streak').textContent = stAll.worstLoss;
 
       // Team KDA average
       let tkSum=0, tdSum=0, taSum=0, tkN=0;
@@ -2620,7 +2751,7 @@
         vs: parseInt(document.getElementById('f-vs-score').value) || null,
         dmg: parseFloat(document.getElementById('f-dmg').value) || null,
         note: parseInt(document.getElementById('f-note').value) || null,
-        tiltNote: parseInt(document.getElementById('f-tilt').value) || null,
+        tiltNote: document.getElementById('f-tilt').value !== '' ? parseInt(document.getElementById('f-tilt').value) : null,
         draft: document.getElementById('f-draft').value.trim(),
         comment: document.getElementById('f-comment').value.trim(),
         screenshot: pendingScreenshot
@@ -2639,8 +2770,10 @@
       document.getElementById('f-lp').value = '20';
       document.querySelectorAll('.champ-selected-icon').forEach(e => e.style.display = 'none');
       document.querySelectorAll('.champ-search-input').forEach(e => e.classList.remove('has-icon'));
-      document.getElementById('f-screenshot-preview').innerHTML = 'No image';
+      document.getElementById('f-screenshot-preview').innerHTML = '';
       pendingScreenshot = null;
+      const zone = document.getElementById('f-drop-zone');
+      if(zone) { zone.style.borderColor=''; zone.style.borderStyle='dashed'; zone.style.background=''; }
       
       save(); navTab('overview', document.querySelector('.sub-nav-item')); 
     }
@@ -2661,7 +2794,10 @@
       document.getElementById('account-modal').classList.remove('hidden');
     }
     
-    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+      if(id === 'img-modal') imgZoomReset();
+    }
 
     /* =========================================================
        RANK EDIT
@@ -2731,10 +2867,6 @@
       save();
       closeModal('rank-edit-modal');
       renderOverview();
-      // Refresh progression chart if open
-      if(document.getElementById('page-progression').classList.contains('active')) {
-        renderProgression();
-      }
     }
 
     function renderAccountList() {
@@ -2863,6 +2995,9 @@
       if (btnAll) btnAll.classList.add('active');
 
       renderOverview();
+      renderRankHistory();
+      // Init filter button styles
+      setSumFilter(_sumFilter.mode);
     }
     
     /* =========================================================
@@ -2987,7 +3122,7 @@
         vs: parseInt(document.getElementById('e-vs-score').value) || null,
         dmg: parseFloat(document.getElementById('e-dmg').value) || null,
         note: parseInt(document.getElementById('e-note').value) || null,
-        tiltNote: parseInt(document.getElementById('e-tilt').value) || null,
+        tiltNote: document.getElementById('e-tilt').value !== '' ? parseInt(document.getElementById('e-tilt').value) : null,
         draft: document.getElementById('e-draft').value.trim(),
         comment: document.getElementById('e-comment').value.trim(),
         ts: newTs,
@@ -3106,7 +3241,163 @@
       setV('sbi-kp', avgKp);
       setV('sbi-vs', avgVs);
       setV('sbi-rank', avgRank);
+
     }
+
+    /* =========================================================
+       RANK HISTORY
+       ========================================================= */
+    const RANKS_ALL = ['Iron','Bronze','Silver','Gold','Platinum','Emerald','Diamond','Master','Grandmaster','Challenger'];
+    const DIVS_ALL  = ['IV','III','II','I'];
+    const NO_DIV    = ['Master','Grandmaster','Challenger'];
+
+    function getRankHistory() {
+      const p = ap(); if(!p) return [];
+      return p.rankHistory || [];
+    }
+
+    function saveRankHistory() {
+      const p = ap(); if(!p) return;
+      const rows = document.querySelectorAll('.rh-row');
+      p.rankHistory = Array.from(rows).map(row => ({
+        season: row.querySelector('.rh-season-input').value,
+        rank:   row.querySelector('.rh-rank-sel').value,
+        div:    row.querySelector('.rh-div-sel').value,
+        lp:     row.querySelector('.rh-lp-input').value,
+      }));
+      save();
+    }
+
+    function renderRankHistory() {
+      const list = document.getElementById('rank-history-list');
+      const btn  = document.getElementById('rh-add-btn');
+      if(!list) return;
+      const history = getRankHistory();
+      list.innerHTML = '';
+      history.forEach((entry, i) => buildRhRow(list, entry, i));
+      if(btn) btn.style.display = history.length >= 10 ? 'none' : 'flex';
+    }
+
+    function buildRhRow(container, entry, idx) {
+      const rankOpts  = RANKS_ALL.map(r => `<option value="${r}" ${entry.rank===r?'selected':''}>${r}</option>`).join('');
+      const divOpts   = DIVS_ALL.map(d => `<option value="${d}" ${entry.div===d?'selected':''}>${d}</option>`).join('');
+      const noDivRank = NO_DIV.includes(entry.rank);
+      const row = document.createElement('div');
+      row.className = 'rh-row';
+      row.innerHTML = `
+        <input class="rh-season rh-season-input finput" style="width:72px;font-size:11px;padding:4px 6px;" placeholder="S14 Split 2" value="${entry.season||''}">
+        <img class="rh-img" src="${RI[entry.rank]||''}" onerror="this.src=''">
+        <select class="rh-select rh-rank-sel">${rankOpts}</select>
+        <select class="rh-select rh-div-sel" style="display:${noDivRank?'none':'inline-block'}">${divOpts}</select>
+        <input class="rh-lp-input finput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" style="width:36px;font-size:11px;padding:3px 4px;box-sizing:border-box;text-align:center;display:${noDivRank?'none':'inline-block'}" placeholder="LP" value="${entry.lp||''}">
+        <button class="rh-del-btn" onclick="removeRhRow(this)" title="Supprimer">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      `;
+      const rankSel = row.querySelector('.rh-rank-sel');
+      const divSel  = row.querySelector('.rh-div-sel');
+      const lpInp   = row.querySelector('.rh-lp-input');
+      const img     = row.querySelector('.rh-img');
+      rankSel.addEventListener('change', () => {
+        const noDiv = NO_DIV.includes(rankSel.value);
+        img.src = RI[rankSel.value] || '';
+        divSel.style.display = noDiv ? 'none' : 'inline-block';
+        lpInp.style.display  = noDiv ? 'none' : 'inline-block';
+        saveRankHistory();
+      });
+      const seasonInp = row.querySelector('.rh-season-input');
+      seasonInp.addEventListener('input', () => saveRankHistory());
+      divSel.addEventListener('change', () => saveRankHistory());
+      lpInp.addEventListener('input', () => saveRankHistory());
+      container.appendChild(row);
+    }
+
+    function addRankHistoryRow() {
+      const p = ap(); if(!p) return;
+      if(!p.rankHistory) p.rankHistory = [];
+      if(p.rankHistory.length >= 10) return;
+      p.rankHistory.push({ season: '', rank: 'Gold', div: 'IV' });
+      save();
+      renderRankHistory();
+    }
+
+    function removeRhRow(btn) {
+      btn.closest('.rh-row').remove();
+      saveRankHistory();
+      const btn2 = document.getElementById('rh-add-btn');
+      const count = document.querySelectorAll('.rh-row').length;
+      if(btn2) btn2.style.display = count >= 10 ? 'none' : 'flex';
+    }
+
+    /* =========================================================
+       QUICK LINKS
+       ========================================================= */
+    function getLinks() {
+      try { return JSON.parse(localStorage.getItem('mlt_links') || '[]'); } catch { return []; }
+    }
+    function saveLinks(links) {
+      localStorage.setItem('mlt_links', JSON.stringify(links));
+    }
+
+    function openLinksModal() {
+      renderLinksList();
+      document.getElementById('links-modal').classList.remove('hidden');
+    }
+
+    function renderLinksList() {
+      const links = getLinks();
+      const el = document.getElementById('links-list');
+      if(!links.length) {
+        el.innerHTML = '<div style="font-size:11px;color:var(--text-dark);text-align:center;padding:8px 0;">Aucun lien pour l\'instant</div>';
+        return;
+      }
+      el.innerHTML = links.map((l, i) => `
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:6px;border:1px solid var(--border);">
+          <a href="${l.url}" target="_blank" style="flex:1;font-size:12px;color:var(--text-main);font-weight:600;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${l.url}">${l.name}</a>
+          <span style="font-size:10px;color:var(--text-dark);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px;">${l.url}</span>
+          <button onclick="removeLink(${i})" style="background:transparent;border:none;color:var(--text-dark);cursor:pointer;padding:2px 4px;border-radius:4px;display:flex;align-items:center;flex-shrink:0;transition:color 0.15s;" onmouseover="this.style.color='var(--loss-color)'" onmouseout="this.style.color='var(--text-dark)'">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function addQuickLink() {
+      const name = document.getElementById('link-name-input').value.trim();
+      let url = document.getElementById('link-url-input').value.trim();
+      if(!name || !url) return;
+      if(!/^https?:\/\//i.test(url)) url = 'https://' + url;
+      const links = getLinks();
+      links.push({ name, url });
+      saveLinks(links);
+      document.getElementById('link-name-input').value = '';
+      document.getElementById('link-url-input').value = '';
+      renderLinksList();
+      renderNavLinks();
+    }
+
+    function removeLink(i) {
+      const links = getLinks();
+      links.splice(i, 1);
+      saveLinks(links);
+      renderLinksList();
+      renderNavLinks();
+    }
+
+    function renderNavLinks() {
+      const links = getLinks();
+      const container = document.getElementById('nav-quick-links');
+      if(!container) return;
+      container.innerHTML = links.map(l => `
+        <a href="${l.url}" target="_blank" class="nav-action-btn" title="${l.name}" style="font-size:10px;font-weight:600;padding:0 8px;gap:0;min-width:unset;">
+          ${l.name}
+          <span class="nav-tooltip">${l.url}</span>
+        </a>
+      `).join('');
+    }
+
+    // Init nav links on load
+    window.addEventListener('DOMContentLoaded', () => { renderNavLinks(); });
 
     // Initial Render
     setTimeout(() => { masterRender(); }, 100);
@@ -3143,9 +3434,6 @@
       if(document.getElementById('page-overview').classList.contains('active')) {
         drawCanvasGraph('rs-canvas', 30, false);
         drawMiniLPChart();
-      }
-      if(document.getElementById('page-progression').classList.contains('active')) {
-        drawFullLPChartWhenReady();
       }
       if(!document.getElementById('chart-fullscreen-modal').classList.contains('hidden')) {
         drawFullscreenChart();
