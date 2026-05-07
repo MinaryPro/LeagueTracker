@@ -306,16 +306,16 @@
   /* --- FORMULAIRES --- */
   .finput, .fselect {
     background: var(--bg-main); border: 1px solid var(--border-light); border-radius: 8px;
-    color: var(--text-main); font-family: inherit; font-size: 14px; padding: 10px 12px;
+    color: var(--text-main); font-family: inherit; font-size: 13px; padding: 7px 10px;
     outline: none; width: 100%; transition: 0.2s;
   }
   .finput:focus, .fselect:focus { border-color: var(--accent); }
-  .flabel { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 6px; display: block; text-transform: uppercase; }
-  .fgroup { display: flex; flex-direction: column; margin-bottom: 16px; }
+  .flabel { font-size: 10px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; display: block; text-transform: uppercase; }
+  .fgroup { display: flex; flex-direction: column; margin-bottom: 10px; }
   
-  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
   
   .btn-primary { background: #4171ff; border: none; color: white; font-weight: 600; padding: 12px 24px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-family: inherit; font-size: 14px; }
   .btn-primary:hover { filter: brightness(1.1); box-shadow: 0 0 15px rgba(65, 113, 255, 0.4); }
@@ -330,9 +330,9 @@
   /* Modal Base */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
   .modal-overlay.hidden { display: none; }
-  .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+  .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
   .modal.large { max-width: 800px; }
-  .modal-title { font-size: 20px; font-weight: 700; color: var(--text-main); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+  .modal-title { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
   .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
   .close-btn:hover { color: var(--loss-color); }
 
@@ -417,16 +417,21 @@
 
   
   /* --- RANK HISTORY --- */
-  .rh-row { display:flex; align-items:center; gap:4px; padding:6px 10px; border-bottom:1px solid var(--border); transition:background 0.15s; }
+  .rh-row { display:flex; align-items:center; justify-content:space-between; gap:0; padding:6px 0 6px 8px; border-bottom:1px solid var(--border); transition:background 0.15s; }
   .rh-row:last-child { border-bottom:none; }
   .rh-row:hover { background:rgba(255,255,255,0.02); }
   .rh-season { font-size:11px; color:var(--text-dark); font-weight:600; width:70px; flex-shrink:0; }
-  .rh-img { width:24px; height:24px; object-fit:contain; flex-shrink:0; }
-  .rh-select { background:transparent; border:none; color:var(--text-main); font-size:11px; font-weight:600; font-family:'Rajdhani',sans-serif; cursor:pointer; outline:none; padding:2px 2px; border-radius:4px; flex-shrink:0; }
+  .rh-img { width:22px; height:22px; object-fit:contain; flex-shrink:0; }
+  .rh-select { background:transparent; border:none; color:var(--text-main); font-size:11px; font-weight:600; font-family:'Rajdhani',sans-serif; cursor:pointer; outline:none; padding:2px 1px; border-radius:4px; flex-shrink:0; min-width:0; max-width:72px; }
   .rh-select:hover { background:rgba(255,255,255,0.05); }
   .rh-select option { background:var(--bg-card); }
-  .rh-del-btn { margin-left:auto; flex-shrink:0; background:transparent; border:1px solid var(--border); color:var(--text-muted); cursor:pointer; padding:4px 6px; border-radius:4px; display:flex; align-items:center; transition:all 0.15s; }
-  .rh-del-btn:hover { border-color:var(--loss-color); color:var(--loss-color); background:rgba(231,76,60,0.08); }
+  .rh-drag-handle { color:var(--text-dark); cursor:grab; display:flex; align-items:center; flex-shrink:0; padding:0 1px; opacity:0.5; transition:opacity 0.15s; }
+  .rh-row:hover .rh-drag-handle { opacity:1; }
+  .rh-drag-handle:active { cursor:grabbing; }
+  .rh-drag-over { background:rgba(108,92,231,0.08) !important; border-top:2px solid var(--accent); }
+  .rh-dragging { opacity:0.4; }
+  .rh-del-btn { flex-shrink:0; background:transparent; border:none; border-left:1px solid var(--border); color:var(--text-muted); cursor:pointer; padding:6px 8px; display:flex; align-items:center; justify-content:center; align-self:stretch; transition:all 0.15s; }
+  .rh-del-btn:hover { color:var(--loss-color); background:rgba(231,76,60,0.08); }
   .rh-add-btn { display:flex; align-items:center; gap:6px; padding:8px 14px; font-size:11px; color:var(--text-dark); cursor:pointer; transition:color 0.15s; background:transparent; border:none; width:100%; text-align:left; }
   .rh-add-btn:hover { color:var(--text-muted); }
 
@@ -563,6 +568,23 @@
           <div class="card" style="padding:0;">
             <div class="card-header">
               <div style="display:flex;align-items:center;gap:6px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                WR PAR HORAIRE
+              </div>
+            </div>
+            <div style="padding:10px 12px;">
+              <div class="wmb-slots-row">
+                <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-0">—</div><div class="wmb-slot-lbl">0–6h</div></div>
+                <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-6">—</div><div class="wmb-slot-lbl">6–12h</div></div>
+                <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-12">—</div><div class="wmb-slot-lbl">12–18h</div></div>
+                <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-18">—</div><div class="wmb-slot-lbl">18–24h</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:0;">
+            <div class="card-header">
+              <div style="display:flex;align-items:center;gap:6px;">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/></svg>
                 TOP CHAMPIONS
               </div>
@@ -584,6 +606,16 @@
             </button>
           </div>
 
+          <div class="card" style="padding:0;" id="role-wr-card">
+            <div class="card-header">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                WINRATE PAR RÔLE
+              </div>
+            </div>
+            <div id="role-wr-list"></div>
+          </div>
+
         </div><div class="col-right">
           
           <div class="card" style="padding:0;margin-bottom:0;">
@@ -603,7 +635,7 @@
             </div>
             
             <div class="stat-block" style="padding:16px 20px;border-right:1px solid var(--border);">
-              <div class="lbl" style="margin-bottom:8px;">KDA Perso · Équipe</div>
+              <div class="lbl" style="margin-bottom:8px;">KDA</div>
               <div style="display:flex;gap:16px;justify-content:center;align-items:flex-end;">
                 <div style="text-align:center;">
                   <div class="val" id="sum-kda" style="font-size:20px;">0.0</div>
@@ -659,20 +691,9 @@
             </div>
           </div><!-- end summary card -->
 
-          <!-- Barre principale : Winrate global + 4 plages horaires -->
-          <div class="winrate-main-bar" id="session-bar-row" style="margin-top:16px;">
-            <div class="wmb-slots" style="padding: 10px 16px;">
-              <div class="wmb-slots-row">
-                <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-0">—</div><div class="wmb-slot-lbl">0–6h</div></div>
-                <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-6">—</div><div class="wmb-slot-lbl">6–12h</div></div>
-                <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-12">—</div><div class="wmb-slot-lbl">12–18h</div></div>
-                <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-18">—</div><div class="wmb-slot-lbl">18–24h</div></div>
-              </div>
-            </div>
-          </div>
 
           <!-- Barre secondaire : 8 metriques -->
-          <div class="session-bar session-bar-secondary" id="session-bar-secondary">
+          <div class="session-bar session-bar-secondary" id="session-bar-secondary" style="margin-top:12px;">
             <div class="session-bar-item"><div class="sbi-val" id="sbi-games">0</div><div class="sbi-lbl">Games</div></div>
             <div class="session-bar-item"><div class="sbi-val" id="sbi-kda">—</div><div class="sbi-lbl">KDA Solo</div></div>
             <div class="session-bar-item"><div class="sbi-val" id="sbi-team-kda">—</div><div class="sbi-lbl">KDA Team</div></div>
@@ -842,7 +863,7 @@
 
           <div class="grid-2">
             <div class="fgroup"><label class="flabel">Draft / Notes</label><input class="finput" id="f-draft" type="text" placeholder="Ban Zed, first pick..."/></div>
-            <div class="fgroup"><label class="flabel">Comment</label><input class="finput" id="f-comment" type="text" placeholder="Mauvais midgame..."/></div>
+            <div class="fgroup"><label class="flabel">Commentaire</label><input class="finput" id="f-comment" type="text" placeholder="Mauvais midgame..."/></div>
           </div>
 
           <div style="margin-top:20px; padding-top:20px; border-top:1px solid var(--border);">
@@ -867,36 +888,6 @@
         </div>
       </div>
     </div>
-
-    <script>
-    // Enter key navigation between form fields (skip f-lp which has quick buttons)
-    (function() {
-      const ORDER = [
-        'f-role','f-champ','f-champ2','f-vs','f-vs2',
-        'f-k','f-d','f-a',
-        'f-team-k','f-team-d','f-team-a',
-        'f-csm','f-vs-score','f-dmg','f-note','f-tilt',
-        'f-draft','f-comment'
-      ];
-      ORDER.forEach((id, i) => {
-        const el = document.getElementById(id);
-        if(!el) return;
-        el.addEventListener('keydown', e => {
-          if(e.key !== 'Enter') return;
-          e.preventDefault();
-          // Find next visible field
-          for(let j = i+1; j < ORDER.length; j++) {
-            const next = document.getElementById(ORDER[j]);
-            if(next && !next.disabled && next.offsetParent !== null) {
-              next.focus(); next.select && next.select(); return;
-            }
-          }
-          // Last field — submit
-          addGame();
-        });
-      });
-    })();
-    </script>
 
     </div><!-- /page-add -->
 
@@ -1040,8 +1031,7 @@
         <div class="fgroup"><label class="flabel">Tilt (0–10)</label><input class="finput" id="e-tilt" type="number" min="0" max="10"/></div>
       </div>
       <div class="fgroup"><label class="flabel">Draft / Notes</label><input class="finput" id="e-draft" type="text" placeholder="Composition, strategy..."/></div>
-      <div class="fgroup"><label class="flabel">Comment</label><input class="finput" id="e-comment" type="text"/></div>
-      
+      <div class="fgroup"><label class="flabel">Commentaire</label><input class="finput" id="e-comment" type="text"/></div>
       <div class="grid-2">
         <div class="fgroup">
           <label class="flabel">Date & Time</label>
@@ -2393,7 +2383,7 @@
             </div>
             <div class="mc-col-5" onclick="openComment(${g.id})" style="cursor:pointer;" title="Voir en entier">
               ${g.draft ? `<b style="color:var(--accent)">Draft:</b> ${g.draft}<br>` : ''}
-              ${g.comment ? `<b style="color:var(--text-muted)">Comment:</b> ${g.comment}` : '<span style="color:var(--text-muted)"><i style="color:var(--text-dark)">No comment</i></span>'}
+              ${g.comment ? `<b style="color:var(--text-muted)">Com:</b> ${g.comment}` : '<span style="color:var(--text-muted)"><i style="color:var(--text-dark)">No comment</i></span>'}
             </div>
             <div class="mc-col-6"><span>VS</span> ${vsHtml}</div>
             <div class="mc-gauge" style="color:${noteCol}" title="Ranking">
@@ -2775,7 +2765,7 @@
       const zone = document.getElementById('f-drop-zone');
       if(zone) { zone.style.borderColor=''; zone.style.borderStyle='dashed'; zone.style.background=''; }
       
-      save(); navTab('overview', document.querySelector('.sub-nav-item')); 
+      save(); renderRoleWinrate(); navTab('overview', document.querySelector('.sub-nav-item')); 
     }
 
     function deleteGame(id) {
@@ -2785,7 +2775,7 @@
       if(idx > -1) {
         p.games.splice(idx, 1);
         p.currentRank = p.games.length > 0 ? {...p.games[0].rankAfter} : {...p.setup.initialRank};
-        save(); renderOverview();
+        save(); renderOverview(); renderRoleWinrate();
       }
     }
 
@@ -2996,6 +2986,7 @@
 
       renderOverview();
       renderRankHistory();
+      renderRoleWinrate();
       // Init filter button styles
       setSumFilter(_sumFilter.mode);
     }
@@ -3140,7 +3131,7 @@
         p.games[i].rankAfter = lp2r(runningLP);
       }
       p.currentRank = {...p.games[0].rankAfter};
-      save(); closeModal('edit-modal'); renderOverview();
+      save(); closeModal('edit-modal'); renderOverview(); renderRoleWinrate();
     }
 
     /* Open comment modal */
@@ -3284,12 +3275,16 @@
       const noDivRank = NO_DIV.includes(entry.rank);
       const row = document.createElement('div');
       row.className = 'rh-row';
+      row.draggable = true;
       row.innerHTML = `
-        <input class="rh-season rh-season-input finput" style="width:72px;font-size:11px;padding:4px 6px;" placeholder="S14 Split 2" value="${entry.season||''}">
+        <span class="rh-drag-handle" title="Déplacer">
+          <svg width="10" height="14" viewBox="0 0 10 14" fill="currentColor"><circle cx="3" cy="2.5" r="1.2"/><circle cx="7" cy="2.5" r="1.2"/><circle cx="3" cy="7" r="1.2"/><circle cx="7" cy="7" r="1.2"/><circle cx="3" cy="11.5" r="1.2"/><circle cx="7" cy="11.5" r="1.2"/></svg>
+        </span>
+        <input class="rh-season rh-season-input finput" style="width:60px;font-size:11px;padding:3px 5px;min-width:0;" placeholder="S14 Sp2" value="${entry.season||''}">
         <img class="rh-img" src="${RI[entry.rank]||''}" onerror="this.src=''">
         <select class="rh-select rh-rank-sel">${rankOpts}</select>
-        <select class="rh-select rh-div-sel" style="display:${noDivRank?'none':'inline-block'}">${divOpts}</select>
-        <input class="rh-lp-input finput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" style="width:36px;font-size:11px;padding:3px 4px;box-sizing:border-box;text-align:center;display:${noDivRank?'none':'inline-block'}" placeholder="LP" value="${entry.lp||''}">
+        <select class="rh-select rh-div-sel" style="visibility:${noDivRank?'hidden':'visible'};width:32px;">${divOpts}</select>
+        <input class="rh-lp-input finput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="5" style="width:34px;font-size:11px;padding:3px 4px;box-sizing:border-box;text-align:center;" placeholder="LP" value="${entry.lp||''}">
         <button class="rh-del-btn" onclick="removeRhRow(this)" title="Supprimer">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
@@ -3301,14 +3296,45 @@
       rankSel.addEventListener('change', () => {
         const noDiv = NO_DIV.includes(rankSel.value);
         img.src = RI[rankSel.value] || '';
-        divSel.style.display = noDiv ? 'none' : 'inline-block';
-        lpInp.style.display  = noDiv ? 'none' : 'inline-block';
+        divSel.style.visibility = noDiv ? 'hidden' : 'visible';
         saveRankHistory();
       });
       const seasonInp = row.querySelector('.rh-season-input');
       seasonInp.addEventListener('input', () => saveRankHistory());
       divSel.addEventListener('change', () => saveRankHistory());
       lpInp.addEventListener('input', () => saveRankHistory());
+
+      // Drag & drop
+      const handle = row.querySelector('.rh-drag-handle');
+      handle.addEventListener('mousedown', () => { row.draggable = true; });
+      row.addEventListener('dragstart', e => {
+        e.dataTransfer.effectAllowed = 'move';
+        row.classList.add('rh-dragging');
+        setTimeout(() => row.style.opacity = '0.4', 0);
+      });
+      row.addEventListener('dragend', () => {
+        row.classList.remove('rh-dragging');
+        row.style.opacity = '';
+        document.querySelectorAll('.rh-row').forEach(r => r.classList.remove('rh-drag-over'));
+        saveRankHistory();
+      });
+      row.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        const dragging = document.querySelector('.rh-dragging');
+        if(dragging && dragging !== row) {
+          document.querySelectorAll('.rh-row').forEach(r => r.classList.remove('rh-drag-over'));
+          row.classList.add('rh-drag-over');
+          const list = document.getElementById('rank-history-list');
+          const rows = [...list.querySelectorAll('.rh-row')];
+          const fromIdx = rows.indexOf(dragging);
+          const toIdx   = rows.indexOf(row);
+          if(fromIdx < toIdx) list.insertBefore(dragging, row.nextSibling);
+          else list.insertBefore(dragging, row);
+        }
+      });
+      row.addEventListener('dragleave', () => row.classList.remove('rh-drag-over'));
+
       container.appendChild(row);
     }
 
@@ -3398,6 +3424,40 @@
 
     // Init nav links on load
     window.addEventListener('DOMContentLoaded', () => { renderNavLinks(); });
+
+    /* =========================================================
+       WINRATE PAR RÔLE
+       ========================================================= */
+    function renderRoleWinrate() {
+      const el = document.getElementById('role-wr-list');
+      if(!el) return;
+      const games = gg().filter(g => g.result !== 'remake');
+      const roles = ['Top','Jungle','Mid','ADC','Support'];
+      const stats = {};
+      roles.forEach(r => { stats[r] = { w:0, t:0 }; });
+      games.forEach(g => {
+        if(stats[g.role]) {
+          stats[g.role].t++;
+          if(g.result === 'win') stats[g.role].w++;
+        }
+      });
+      const active = roles.filter(r => stats[r].t > 0);
+      if(!active.length) { el.innerHTML = ''; return; }
+      el.innerHTML = active.map(role => {
+        const { w, t } = stats[role];
+        const wr = Math.round(w / t * 100);
+        const color = wr >= 60 ? 'var(--win-color)' : wr >= 50 ? '#f0c040' : 'var(--loss-color)';
+        return `
+          <div style="display:flex;align-items:center;gap:10px;padding:7px 12px;border-bottom:1px solid var(--border);">
+            <span style="font-size:11px;font-weight:600;color:var(--text-muted);width:52px;flex-shrink:0;">${role}</span>
+            <div style="flex:1;height:5px;background:var(--border-light);border-radius:3px;overflow:hidden;">
+              <div style="width:${wr}%;height:100%;background:${color};border-radius:3px;"></div>
+            </div>
+            <span style="font-size:12px;font-weight:700;color:${color};width:34px;text-align:right;font-family:'Rajdhani',sans-serif;">${wr}%</span>
+            <span style="font-size:10px;color:var(--text-dark);width:36px;text-align:right;">${w}W/${t-w}L</span>
+          </div>`;
+      }).join('');
+    }
 
     // Initial Render
     setTimeout(() => { masterRender(); }, 100);
