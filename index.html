@@ -566,12 +566,6 @@
           </div>
 
           <div class="card" style="padding:0;">
-            <div class="card-header">
-              <div style="display:flex;align-items:center;gap:6px;">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                WR PAR HORAIRE
-              </div>
-            </div>
             <div style="padding:10px 12px;">
               <div class="wmb-slots-row">
                 <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-0">—</div><div class="wmb-slot-lbl">0–6h</div></div>
@@ -1247,30 +1241,109 @@
     }
 
     /* =========================================================
-       STATE & LOCALSTORAGE
+       STATE & INDEXEDDB (migré depuis localStorage)
        ========================================================= */
     let S = { profiles: [], activeProfileId: null, filter: 'all', formResult: 'win' };
-    
-    function load() {
+
+    // ── IndexedDB setup ───────────────────────────────────────
+    const DB_NAME    = 'mlt_db';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'state';
+    const STATE_KEY  = 'mlt_v4';
+    let _db = null;
+
+    function openDB() {
+      return new Promise((resolve, reject) => {
+        if (_db) { resolve(_db); return; }
+        const req = indexedDB.open(DB_NAME, DB_VERSION);
+        req.onupgradeneeded = e => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME);
+          }
+        };
+        req.onsuccess = e => { _db = e.target.result; resolve(_db); };
+        req.onerror   = e => reject(e.target.error);
+      });
+    }
+
+    async function saveAsync() {
       try {
-        const s = localStorage.getItem('mlt_v4');
-        if(s) S = JSON.parse(s);
-        else {
-          const s2 = localStorage.getItem('mlt_v3') || localStorage.getItem('mlt_v2') || localStorage.getItem('mlt_v1');
-          if(s2) S = JSON.parse(s2);
-        }
-      } catch(e) {}
+        const db    = await openDB();
+        const tx    = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        store.put(JSON.stringify(S), STATE_KEY);
+        return new Promise((res, rej) => {
+          tx.oncomplete = () => res();
+          tx.onerror    = e => rej(e.target.error);
+        });
+      } catch(e) {
+        console.error('IndexedDB save error:', e);
+        alert('❌ Erreur de sauvegarde : ' + e.message);
+      }
     }
-    function save() {
-      try { localStorage.setItem('mlt_v4', JSON.stringify(S)); } 
-      catch(e) { alert("❌ Storage full!"); }
+
+    // save() synchrone-looking : lance la sauvegarde en arrière-plan
+    function save() { saveAsync().catch(e => console.error(e)); }
+
+    async function loadFromDB() {
+      try {
+        const db    = await openDB();
+        const tx    = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const req   = store.get(STATE_KEY);
+        return new Promise((res, rej) => {
+          req.onsuccess = e => res(e.target.result ? JSON.parse(e.target.result) : null);
+          req.onerror   = e => rej(e.target.error);
+        });
+      } catch(e) {
+        console.error('IndexedDB load error:', e);
+        return null;
+      }
     }
-    
-    load();
+
+    // ── Migration depuis localStorage puis init ───────────────
+    async function initApp() {
+      // 1. Tente de charger depuis IndexedDB
+      let data = await loadFromDB();
+
+      // 2. Si rien en IDB, cherche dans localStorage (migration)
+      if (!data) {
+        try {
+          const raw = localStorage.getItem('mlt_v4')
+                   || localStorage.getItem('mlt_v3')
+                   || localStorage.getItem('mlt_v2')
+                   || localStorage.getItem('mlt_v1');
+          if (raw) {
+            data = JSON.parse(raw);
+            // Sauvegarde immédiatement dans IDB
+            S = data;
+            await saveAsync();
+            // Nettoie localStorage pour libérer de l'espace
+            ['mlt_v4','mlt_v3','mlt_v2','mlt_v1'].forEach(k => localStorage.removeItem(k));
+            console.log('✅ Migration localStorage → IndexedDB réussie');
+          }
+        } catch(e) { console.warn('Migration localStorage échouée:', e); }
+      }
+
+      if (data) S = data;
+
+      // 3. Lance le rendu
+      function ap() { return S.profiles.find(p => p.id === S.activeProfileId) || S.profiles[0] || null; }
+      window.ap = ap;
+      function gg() { return ap() ? ap().games : []; }
+      window.gg = gg;
+
+      if (S.profiles.length === 0) document.getElementById('account-modal').classList.remove('hidden');
+
+      setTimeout(() => { masterRender(); }, 100);
+    }
+
     function ap() { return S.profiles.find(p => p.id === S.activeProfileId) || S.profiles[0] || null; }
     function gg() { return ap() ? ap().games : []; }
 
-    if(S.profiles.length === 0) document.getElementById('account-modal').classList.remove('hidden');
+    // Lance l'init (asynchrone)
+    initApp();
 
     /* =========================================================
        DATA DRAGON (CHAMPIONS)
@@ -3356,19 +3429,70 @@
     }
 
     /* =========================================================
-       QUICK LINKS
+       QUICK LINKS — stockés dans IndexedDB (clé 'mlt_links')
        ========================================================= */
-    function getLinks() {
-      try { return JSON.parse(localStorage.getItem('mlt_links') || '[]'); } catch { return []; }
+    const LINKS_KEY = 'mlt_links';
+
+    async function getLinksAsync() {
+      try {
+        const db    = await openDB();
+        const tx    = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const req   = store.get(LINKS_KEY);
+        return new Promise((res, rej) => {
+          req.onsuccess = e => res(e.target.result ? JSON.parse(e.target.result) : []);
+          req.onerror   = () => res([]);
+        });
+      } catch { return []; }
     }
+
+    async function saveLinksAsync(links) {
+      try {
+        // Migration : si des liens existent encore dans localStorage, on les ignore désormais
+        localStorage.removeItem('mlt_links');
+        const db    = await openDB();
+        const tx    = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        store.put(JSON.stringify(links), LINKS_KEY);
+        return new Promise((res, rej) => {
+          tx.oncomplete = () => res();
+          tx.onerror    = e => rej(e.target.error);
+        });
+      } catch(e) { console.error('saveLinks error:', e); }
+    }
+
+    // Helpers synchrones-looking pour le reste du code
+    let _linksCache = [];
+    function getLinks() { return _linksCache; }
     function saveLinks(links) {
-      localStorage.setItem('mlt_links', JSON.stringify(links));
+      _linksCache = links;
+      saveLinksAsync(links).catch(console.error);
+    }
+
+    async function initLinks() {
+      // Migration depuis localStorage si besoin
+      let links = [];
+      try {
+        const old = localStorage.getItem('mlt_links');
+        if(old) {
+          links = JSON.parse(old);
+          await saveLinksAsync(links);
+          localStorage.removeItem('mlt_links');
+        } else {
+          links = await getLinksAsync();
+        }
+      } catch { links = await getLinksAsync(); }
+      _linksCache = links;
+      renderNavLinks();
     }
 
     function openLinksModal() {
       renderLinksList();
       document.getElementById('links-modal').classList.remove('hidden');
     }
+
+    // ── Drag & drop state ─────────────────────────────────────
+    let _linkDragIdx = null;
 
     function renderLinksList() {
       const links = getLinks();
@@ -3378,7 +3502,12 @@
         return;
       }
       el.innerHTML = links.map((l, i) => `
-        <div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:6px;border:1px solid var(--border);">
+        <div class="ql-row" draggable="true" data-idx="${i}"
+          style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:rgba(255,255,255,0.03);border-radius:6px;border:1px solid var(--border);cursor:default;transition:opacity 0.15s;">
+          <!-- poignée drag -->
+          <span class="ql-handle" title="Déplacer" style="cursor:grab;color:var(--text-dark);flex-shrink:0;display:flex;align-items:center;opacity:0.5;">
+            <svg width="10" height="14" viewBox="0 0 10 14" fill="currentColor"><circle cx="3" cy="2.5" r="1.2"/><circle cx="7" cy="2.5" r="1.2"/><circle cx="3" cy="7" r="1.2"/><circle cx="7" cy="7" r="1.2"/><circle cx="3" cy="11.5" r="1.2"/><circle cx="7" cy="11.5" r="1.2"/></svg>
+          </span>
           <a href="${l.url}" target="_blank" style="flex:1;font-size:12px;color:var(--text-main);font-weight:600;text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${l.url}">${l.name}</a>
           <span style="font-size:10px;color:var(--text-dark);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:130px;">${l.url}</span>
           <button onclick="removeLink(${i})" style="background:transparent;border:none;color:var(--text-dark);cursor:pointer;padding:2px 4px;border-radius:4px;display:flex;align-items:center;flex-shrink:0;transition:color 0.15s;" onmouseover="this.style.color='var(--loss-color)'" onmouseout="this.style.color='var(--text-dark)'">
@@ -3386,6 +3515,40 @@
           </button>
         </div>
       `).join('');
+
+      // Attache les événements drag & drop sur chaque ligne
+      el.querySelectorAll('.ql-row').forEach(row => {
+        row.addEventListener('dragstart', e => {
+          _linkDragIdx = parseInt(row.dataset.idx);
+          e.dataTransfer.effectAllowed = 'move';
+          setTimeout(() => row.style.opacity = '0.4', 0);
+        });
+        row.addEventListener('dragend', () => {
+          row.style.opacity = '';
+          el.querySelectorAll('.ql-row').forEach(r => r.style.outline = '');
+          _linkDragIdx = null;
+        });
+        row.addEventListener('dragover', e => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          el.querySelectorAll('.ql-row').forEach(r => r.style.outline = '');
+          row.style.outline = '1px solid var(--accent)';
+        });
+        row.addEventListener('dragleave', () => {
+          row.style.outline = '';
+        });
+        row.addEventListener('drop', e => {
+          e.preventDefault();
+          const toIdx = parseInt(row.dataset.idx);
+          if(_linkDragIdx === null || _linkDragIdx === toIdx) return;
+          const links = getLinks();
+          const moved = links.splice(_linkDragIdx, 1)[0];
+          links.splice(toIdx, 0, moved);
+          saveLinks(links);
+          renderLinksList();
+          renderNavLinks();
+        });
+      });
     }
 
     function addQuickLink() {
@@ -3423,7 +3586,7 @@
     }
 
     // Init nav links on load
-    window.addEventListener('DOMContentLoaded', () => { renderNavLinks(); });
+    window.addEventListener('DOMContentLoaded', () => { initLinks(); });
 
     /* =========================================================
        WINRATE PAR RÔLE
@@ -3459,8 +3622,7 @@
       }).join('');
     }
 
-    // Initial Render
-    setTimeout(() => { masterRender(); }, 100);
+    // Initial Render géré par initApp() (IndexedDB async)
 
     // Enter key navigation in add form (skips f-lp which has quick-select buttons)
     setTimeout(() => {
