@@ -512,13 +512,17 @@
       <div class="layout-grid">
         <div class="col-left">
           
-          <div class="card" style="padding:0;">
+          <!-- ═══ CARTE FUSIONNÉE ═══ -->
+          <div class="card" style="padding:0;" id="fused-card">
+
+            <!-- RANKED SOLO -->
             <div class="card-header">
-              <div style="display:flex; align-items:center; gap:6px;">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Ranked Solo
+              <div style="display:flex;align-items:center;gap:6px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                Ranked Solo
               </div>
               <div style="display:flex;align-items:center;gap:8px;">
-                <span style="font-size:10px; border:1px solid var(--border-light); padding:2px 4px; border-radius:4px;">EUW</span>
+                <span style="font-size:10px;border:1px solid var(--border-light);padding:2px 4px;border-radius:4px;">EUW</span>
                 <button onclick="openRankEditModal()" title="Edit Rank" class="icon-edit-btn">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                 </button>
@@ -532,15 +536,17 @@
                   <div class="rs-wl" id="card-winrate-txt">106W - 95L (53%)</div>
                 </div>
               </div>
-              <div style="display:flex; justify-content:space-between; font-size:11px; font-weight:600; padding:0 8px; margin-top:8px; margin-bottom:10px;">
+              <div style="display:flex;justify-content:space-between;font-size:11px;font-weight:600;padding:0 8px;margin-top:8px;margin-bottom:10px;">
                 <span id="rs-30d">▲ 0 LP (30d)</span>
                 <span id="rs-7d">▲ 0 LP (7d)</span>
               </div>
               <div class="rs-peak">Peak <b id="card-peak-txt">DIAMOND I - 31 LP</b></div>
             </div>
-          </div>
 
-          <div class="card" style="padding:0;">
+            <!-- séparateur -->
+            <div style="height:1px;background:var(--border);margin:0 12px;"></div>
+
+            <!-- LP PROGRESSION -->
             <div class="card-header">
               <div style="display:flex;align-items:center;gap:6px;">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
@@ -550,31 +556,49 @@
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
               </button>
             </div>
-            <div style="padding:10px 8px 8px;position:relative;">
-              <canvas id="ov-lp-mini" style="width:100%;display:block;cursor:crosshair;" height="120" onclick="void(0)"></canvas>
-              <div id="mini-lp-tooltip" style="
-                display:none;position:absolute;pointer-events:none;z-index:10;
-                background:rgba(15,18,26,0.96);border:1px solid rgba(255,255,255,0.1);
-                border-radius:8px;padding:8px 12px;box-shadow:0 4px 16px rgba(0,0,0,0.5);
-                min-width:130px;backdrop-filter:blur(8px);
-              ">
+            <div style="padding:6px 8px 8px;position:relative;">
+              <canvas id="ov-lp-mini" style="width:100%;display:block;cursor:crosshair;" height="120"></canvas>
+              <div id="mini-lp-tooltip" style="display:none;position:absolute;pointer-events:none;z-index:10;background:rgba(15,18,26,0.96);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px 12px;box-shadow:0 4px 16px rgba(0,0,0,0.5);min-width:130px;backdrop-filter:blur(8px);">
                 <div id="mini-tooltip-rank" style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:800;line-height:1.2;"></div>
                 <div id="mini-tooltip-lp" style="font-size:11px;color:var(--text-muted);margin-top:1px;font-family:'Share Tech Mono',monospace;"></div>
                 <div id="mini-tooltip-game" style="font-size:10px;color:var(--text-dark);margin-top:5px;border-top:1px solid rgba(255,255,255,0.06);padding-top:5px;"></div>
               </div>
             </div>
-          </div>
 
-          <div class="card" style="padding:0;">
-            <div style="padding:10px 12px;">
-              <div class="wmb-slots-row">
-                <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-0">—</div><div class="wmb-slot-lbl">0–6h</div></div>
-                <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-6">—</div><div class="wmb-slot-lbl">6–12h</div></div>
-                <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-12">—</div><div class="wmb-slot-lbl">12–18h</div></div>
-                <div class="wmb-slot"><div class="wmb-slot-val" id="sbi-slot-18">—</div><div class="wmb-slot-lbl">18–24h</div></div>
+            <!-- séparateur -->
+            <div style="height:1px;background:var(--border);margin:0 12px;"></div>
+
+            <!-- STATS PAR HEURE -->
+            <div class="card-header">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Stats par heure
+              </div>
+              <div style="display:flex;gap:4px;">
+                <button id="hc-btn-wr"  onclick="setHourMode('wr')"  style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:var(--accent);color:#fff;cursor:pointer;transition:0.15s;">WR%</button>
+                <button id="hc-btn-day" onclick="setHourMode('day')" style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:0.15s;">Jour</button>
+                <button id="hc-btn-lp"  onclick="setHourMode('lp')"  style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:0.15s;">LP</button>
               </div>
             </div>
+            <div style="padding:0 10px 10px 10px;position:relative;">
+              <canvas id="hour-chart" height="110" style="width:100%;display:block;cursor:crosshair;"></canvas>
+              <div id="hour-tooltip" style="display:none;position:absolute;pointer-events:none;z-index:20;background:rgba(15,18,26,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:7px 11px;box-shadow:0 4px 16px rgba(0,0,0,0.5);font-size:11px;min-width:100px;"></div>
+            </div>
+
+            <!-- séparateur -->
+            <div style="height:1px;background:var(--border);margin:0 12px;"></div>
+
+            <!-- WINRATE PAR RÔLE -->
+            <div class="card-header">
+              <div style="display:flex;align-items:center;gap:6px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                Winrate par rôle
+              </div>
+            </div>
+            <div id="role-wr-list" style="padding-bottom:4px;"></div>
+
           </div>
+          <!-- ═══ FIN CARTE FUSIONNÉE ═══ -->
 
           <div class="card" style="padding:0;">
             <div class="card-header">
@@ -598,16 +622,6 @@
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               Ajouter une saison
             </button>
-          </div>
-
-          <div class="card" style="padding:0;" id="role-wr-card">
-            <div class="card-header">
-              <div style="display:flex;align-items:center;gap:6px;">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                WINRATE PAR RÔLE
-              </div>
-            </div>
-            <div id="role-wr-list"></div>
           </div>
 
         </div><div class="col-right">
@@ -2358,12 +2372,21 @@
       for (const [dateStr, dGames] of Object.entries(grouped)) {
         let wins = 0, losses = 0, kSum = 0, dSum = 0, aSum = 0, csSum = 0, csN = 0;
         let tkSum = 0, tdSum = 0, taSum = 0, tkN = 0;
+        let tiltSum = 0, tiltN = 0;
         dGames.forEach(g => {
            if(g.result === 'win') wins++; else if(g.result === 'loss') losses++;
            kSum += g.k||0; dSum += g.d||0; aSum += g.a||0;
            if(g.csm) { csSum += g.csm; csN++; }
            if(g.teamKda) { tkSum+=g.teamKda.k; tdSum+=g.teamKda.d; taSum+=g.teamKda.a; tkN++; }
+           if(g.tiltNote != null) { tiltSum += g.tiltNote; tiltN++; }
         });
+        const avgTilt = tiltN > 0 ? (tiltSum / tiltN).toFixed(1) : null;
+        const tiltColor = avgTilt === null ? 'var(--text-dark)'
+          : avgTilt >= 7 ? 'var(--loss-color)'
+          : avgTilt >= 5 ? '#e67e22'
+          : avgTilt >= 3 ? '#f0c040'
+          : 'var(--win-color)';
+        const tiltEmoji = '';
         const totalGames = wins + losses;
         const wrPct = totalGames > 0 ? Math.round(wins / totalGames * 100) : 0;
         const wrColor = wrPct >= 50 ? 'var(--win-color)' : 'var(--loss-color)';
@@ -2408,6 +2431,10 @@
               <span style="color:var(--text-dark);font-size:10px;">(${teamKdaReal})</span>
             </div>` : ''}
             <div class="dh-stat">CS/m <span>${avgCs}</span></div>
+            ${avgTilt !== null ? `
+            <div class="dh-stat" style="border-left:1px solid var(--border);padding-left:8px;margin-left:2px;">
+              Tilt <span style="color:${tiltColor};font-weight:700;">${avgTilt}</span><span style="color:var(--text-dark);font-size:10px;">/10</span>
+            </div>` : ''}
           </div>
         </div>
         `;
@@ -2677,10 +2704,11 @@
       const cm = {};
       games.forEach(g => {
         if(!g.champion) return;
-        if(!cm[g.champion]) cm[g.champion] = {w:0, t:0, kSum:0, dSum:0, aSum:0, cs:0, csN:0};
+        if(!cm[g.champion]) cm[g.champion] = {w:0, t:0, kSum:0, dSum:0, aSum:0, cs:0, csN:0, lp:0};
         cm[g.champion].t++; if(g.result==='win') cm[g.champion].w++;
         cm[g.champion].kSum += g.k||0; cm[g.champion].dSum += g.d||0; cm[g.champion].aSum += g.a||0;
         if(g.csm){ cm[g.champion].cs += g.csm; cm[g.champion].csN++; }
+        if(g.lpChange != null) cm[g.champion].lp += Number(g.lpChange)||0;
       });
       const topChamps = Object.entries(cm).sort((a,b)=>b[1].t - a[1].t);
 
@@ -2694,6 +2722,11 @@
         const avgK = (d.kSum/d.t).toFixed(1);
         const avgD = (d.dSum/d.t).toFixed(1);
         const avgA = (d.aSum/d.t).toFixed(1);
+
+        // LP net
+        const lpNet = Math.round(d.lp);
+        const lpSign = lpNet > 0 ? '+' : '';
+        const lpColor = lpNet > 0 ? 'var(--win-color)' : lpNet < 0 ? 'var(--loss-color)' : 'var(--text-muted)';
 
         // WR colour: ≥75 gold, ≥60 blue, 50-59 green, 40-49 muted, <40 red
         const wrColor = wr >= 75 ? '#c89b3c'
@@ -2731,6 +2764,7 @@
           <div class="cpi-right">
             <div class="cpi-kda" style="color:${kdaColor};"><span>KDA</span> ${kda}</div>
             <div class="cpi-kda-det" style="color:${kdaDetColor};">${avgK} // ${avgD} // ${avgA}</div>
+            <div style="font-size:11px;font-weight:700;color:${lpColor};margin-top:3px;font-family:'Rajdhani',sans-serif;">${lpSign}${lpNet} LP</div>
           </div>
         </div>`;
       }).join('') || '<div class="empty-state" style="padding:20px; color:var(--text-dark);">No data</div>';
@@ -2967,7 +3001,7 @@
       save(); closeModal('account-modal'); masterRender();
     }
 
-    function switchProfile(id) { S.activeProfileId = id; save(); closeModal('account-modal'); masterRender(); }
+    function switchProfile(id) { S.activeProfileId = id; save(); closeModal('account-modal'); masterRender(); renderNavLinks(); }
     function deleteProfile(id) {
       if(S.profiles.length <= 1) { alert("Impossible de supprimer le dernier profil."); return; }
       if(!confirm("Delete ce profil ?")) return;
@@ -3067,13 +3101,48 @@
     /* =========================================================
        SAVE / RESTORE
        ========================================================= */
-    function exportData() {
+    async function exportData() {
       const data = JSON.stringify(S, null, 2);
-      const blob = new Blob([data], {type:'application/json'});
+      const fileName = 'minary-league-backup.json';
+      const blob = new Blob([data], { type: 'application/json' });
+
+      // iOS/iPadOS Safari : utilise Web Share API (seul moyen fiable de télécharger)
+      const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
+                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (isIOS && navigator.canShare) {
+        const file = new File([blob], fileName, { type: 'application/json' });
+        if (navigator.canShare({ files: [file] })) {
+          try {
+            await navigator.share({ files: [file], title: 'Minary League Backup' });
+            return;
+          } catch(e) {
+            if (e.name === 'AbortError') return; // utilisateur a annulé
+          }
+        }
+      }
+
+      // PC Chrome/Edge : boîte de dialogue "Enregistrer sous"
+      if (window.showSaveFilePicker) {
+        try {
+          const handle = await window.showSaveFilePicker({
+            suggestedName: fileName,
+            types: [{ description: 'JSON Backup', accept: { 'application/json': ['.json'] } }]
+          });
+          const writable = await handle.createWritable();
+          await writable.write(blob);
+          await writable.close();
+          return;
+        } catch(e) {
+          if (e.name === 'AbortError') return; // utilisateur a annulé
+          // autre erreur → fallback
+        }
+      }
+
+      // Firefox / Safari / Android : téléchargement classique
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url; a.download = 'minary-league-backup.json'; a.click();
-      URL.revokeObjectURL(url);
+      a.href = url; a.download = fileName; a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     }
     function importData() { document.getElementById('import-file').click(); }
     function handleImport(e) {
@@ -3275,22 +3344,250 @@
         const el = document.getElementById('sbi-tilt'); if(el){ el.textContent='—'; el.style.color='';}
       }
 
-      // Winrate by slot horaire (utilise ts pour l'heure)
-      const slots = [{start:0,end:6,id:'sbi-slot-0'},{start:6,end:12,id:'sbi-slot-6'},{start:12,end:18,id:'sbi-slot-12'},{start:18,end:24,id:'sbi-slot-18'}];
-      slots.forEach(sl => {
-        const slGames = games.filter(g => {
-          if(!g.ts) return false;
-          const h = new Date(g.ts).getHours();
-          return h >= sl.start && h < sl.end;
-        }).filter(g => g.result !== 'remake');
-        const el = document.getElementById(sl.id);
-        if(!el) return;
-        if(!slGames.length) { el.textContent='—'; el.style.color=''; return; }
-        const slWins = slGames.filter(g => g.result==='win').length;
-        const slWr = Math.round(slWins/slGames.length*100);
-        el.textContent = slWr+'%';
-        el.style.color = slWr>=50?'var(--win-color)':'var(--loss-color)';
-      });
+      // Graphe 24h
+      buildHourChart(games);
+
+      // ── Graphe horaire ──────────────────────────────────────
+      window._hourGames = games; // stocké pour le re-render lors du changement de mode
+
+      function buildHourChart(allGames) {
+        const canvas = document.getElementById('hour-chart');
+        if (!canvas) return;
+        const mode = window._hourMode || 'wr';
+
+        // Données par heure 0-23
+        const hours = Array.from({length:24}, (_,i) => ({
+          h: i, w: 0, l: 0, lp: 0, hasTs: false,
+          days: { Mon:0,Tue:0,Wed:0,Thu:0,Fri:0,Sat:0,Sun:0,
+                  wW:0,wL:0,thW:0,thL:0,fW:0,fL:0,saW:0,saL:0,suW:0,suL:0,moW:0,moL:0,tuW:0,tuL:0,weW:0,weL:0 }
+        }));
+        const DAYS = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        const DAYS_FR = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+        allGames.forEach(g => {
+          if (!g.ts) return;
+          const date = new Date(g.ts);
+          const h = date.getHours();
+          const dayIdx = date.getDay();
+          const d = hours[h];
+          d.hasTs = true;
+          if (g.result === 'win') d.w++;
+          else if (g.result === 'loss') d.l++;
+          if (g.lpChange != null) d.lp += Number(g.lpChange)||0;
+        });
+
+        // Par jour de semaine : agrégation sur toutes les games avec ts
+        const dayStats = Array.from({length:7}, () => ({w:0,l:0,lp:0,has:false}));
+        allGames.forEach(g => {
+          if (!g.ts) return;
+          const date = new Date(g.ts);
+          const d = date.getDay();
+          dayStats[d].has = true;
+          if (g.result==='win') dayStats[d].w++;
+          else if (g.result==='loss') dayStats[d].l++;
+          if (g.lpChange!=null) dayStats[d].lp += Number(g.lpChange)||0;
+        });
+
+        // Polyfill roundRect pour Safari < 15.4
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+          CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r) {
+            this.beginPath();
+            this.moveTo(x+r,y); this.lineTo(x+w-r,y); this.arcTo(x+w,y,x+w,y+r,r);
+            this.lineTo(x+w,y+h-r); this.arcTo(x+w,y+h,x+w-r,y+h,r);
+            this.lineTo(x+r,y+h); this.arcTo(x,y+h,x,y+h-r,r);
+            this.lineTo(x,y+r); this.arcTo(x,y,x+r,y,r); this.closePath();
+          };
+        }
+        const dpr = window.devicePixelRatio || 1;
+        const W = canvas.offsetWidth || canvas.parentElement.offsetWidth || 300;
+        const H = 110;
+        canvas.width  = W * dpr;
+        canvas.height = H * dpr;
+        canvas.style.width  = W + 'px';
+        canvas.style.height = H + 'px';
+        const ctx = canvas.getContext('2d');
+        ctx.scale(dpr, dpr);
+
+        const PAD = { top: 12, right: 8, bottom: 28, left: 36 };
+        const cW = W - PAD.left - PAD.right;
+        const cH = H - PAD.top  - PAD.bottom;
+
+        ctx.clearRect(0, 0, W, H);
+
+        let labels, values, colors, hasData;
+
+        if (mode === 'wr') {
+          labels = Array.from({length:24}, (_,i) => i+'h');
+          values = hours.map(d => {
+            const t = d.w + d.l;
+            return t > 0 ? Math.round(d.w/t*100) : null;
+          });
+          hasData = values.some(v => v !== null);
+          colors = values.map(v => v === null ? null : v >= 60 ? '#2ecc71' : v >= 50 ? '#f0c040' : '#f84f54');
+        } else if (mode === 'day') {
+          labels = DAYS_FR;
+          // ordre Lun→Dim
+          const ORDER = [1,2,3,4,5,6,0];
+          values = ORDER.map(i => {
+            const d = dayStats[i];
+            if (!d.has) return null;
+            const t = d.w + d.l;
+            return t > 0 ? Math.round(d.w/t*100) : null;
+          });
+          hasData = values.some(v => v !== null);
+          colors = values.map(v => v === null ? null : v >= 60 ? '#2ecc71' : v >= 50 ? '#f0c040' : '#f84f54');
+        } else { // lp
+          if (mode === 'lp' && window._lpDayMode) {
+            labels = DAYS_FR;
+            const ORDER = [1,2,3,4,5,6,0];
+            values = ORDER.map(i => {
+              const d = dayStats[i];
+              return d.has ? Math.round(d.lp) : null;
+            });
+          } else {
+            labels = Array.from({length:24}, (_,i) => i+'h');
+            values = hours.map(d => d.hasTs ? Math.round(d.lp) : null);
+          }
+          hasData = values.some(v => v !== null);
+          const maxAbs = Math.max(1, ...values.filter(v=>v!==null).map(Math.abs));
+          colors = values.map(v => v === null ? null : v > 0 ? '#2ecc71' : v < 0 ? '#f84f54' : 'var(--text-muted)');
+        }
+
+        const n = labels.length;
+        const barW = Math.max(2, cW / n - 3);
+
+        // Calcul min/max
+        const nonNull = values.filter(v => v !== null);
+        if (!hasData || !nonNull.length) {
+          ctx.fillStyle = 'rgba(255,255,255,0.12)';
+          ctx.font = '10px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('Pas de données horodatées', W/2, H/2);
+          return;
+        }
+
+        let minV = Math.min(...nonNull);
+        let maxV = Math.max(...nonNull);
+        if (mode === 'wr' || mode === 'day') { minV = Math.min(minV, 0); maxV = Math.max(maxV, 100); }
+        else { minV = Math.min(minV, 0); maxV = Math.max(maxV, 0); }
+        if (minV === maxV) { minV -= 10; maxV += 10; }
+        const range = maxV - minV;
+
+        const zero_y = PAD.top + cH * (1 - (0 - minV)/range);
+
+        // Grille
+        ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) {
+          const y = PAD.top + cH * (i/4);
+          ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(PAD.left+cW, y); ctx.stroke();
+        }
+
+        // Ligne zéro si LP
+        if (mode === 'lp') {
+          ctx.strokeStyle = 'rgba(255,255,255,0.15)';
+          ctx.lineWidth = 1;
+          ctx.setLineDash([3,3]);
+          ctx.beginPath(); ctx.moveTo(PAD.left, zero_y); ctx.lineTo(PAD.left+cW, zero_y); ctx.stroke();
+          ctx.setLineDash([]);
+        }
+
+        // Barres
+        values.forEach((v, i) => {
+          if (v === null) return;
+          const x = PAD.left + i * (cW/n) + (cW/n - barW)/2;
+          const y_val = PAD.top + cH * (1 - (v - minV)/range);
+          const barH = Math.abs(zero_y - y_val);
+          const barTop = v >= 0 ? y_val : zero_y;
+          const color = colors[i] || '#4171ff';
+          ctx.fillStyle = color + 'cc';
+          ctx.beginPath();
+          ctx.roundRect(x, barTop, barW, Math.max(2, barH), 2);
+          ctx.fill();
+        });
+
+        // Labels axe X
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.font = `${n > 10 ? 8 : 9}px sans-serif`;
+        ctx.textAlign = 'center';
+        const step = n > 10 ? 3 : 1;
+        labels.forEach((lbl, i) => {
+          if (n > 10 && i % step !== 0) return;
+          const x = PAD.left + i * (cW/n) + (cW/n)/2;
+          ctx.fillText(lbl, x, H - 6);
+        });
+
+        // Labels axe Y
+        ctx.textAlign = 'right';
+        ctx.font = '9px sans-serif';
+        ctx.fillStyle = 'rgba(255,255,255,0.25)';
+        [0, 0.5, 1].forEach(t => {
+          const v = Math.round(minV + t*range);
+          const y = PAD.top + cH*(1-t);
+          ctx.fillText((mode==='wr'||mode==='day') ? v+'%' : (v>0?'+':'')+v, PAD.left-4, y+3);
+        });
+
+        // Stocke les données pour le tooltip
+        canvas._chartData = { values, labels, colors, n, cW, cH, PAD, barW, mode,
+                               hours, dayStats, DAYS_FR };
+      }
+
+      window.buildHourChart = buildHourChart;
+
+      // ── Tooltip ──────────────────────────────────────────────
+      (function attachHourTooltip() {
+        const canvas = document.getElementById('hour-chart');
+        const tip = document.getElementById('hour-tooltip');
+        if (!canvas || !tip) return;
+
+        function onMove(e) {
+          const d = canvas._chartData; if (!d) return;
+          const rect = canvas.getBoundingClientRect();
+          const mx = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+          const { n, cW, PAD, values, labels, hours, dayStats, DAYS_FR, mode } = d;
+          const idx = Math.floor((mx - PAD.left) / (cW/n));
+          if (idx < 0 || idx >= n || values[idx] === null) { tip.style.display='none'; return; }
+
+          let html = `<div style="font-weight:700;color:#fff;margin-bottom:4px;">${labels[idx]}</div>`;
+          if (mode === 'wr') {
+            const h = hours[idx];
+            const t = h.w + h.l;
+            html += `<div style="color:#2ecc71;">${h.w}W <span style="color:#f84f54;">${h.l}L</span></div>`;
+            html += `<div style="color:${values[idx]>=50?'#2ecc71':'#f84f54'};font-weight:700;font-size:13px;">${values[idx]}%</div>`;
+          } else if (mode === 'day') {
+            const ORDER = [1,2,3,4,5,6,0];
+            const d2 = dayStats[ORDER[idx]];
+            html += `<div style="color:#2ecc71;">${d2.w}W <span style="color:#f84f54;">${d2.l}L</span></div>`;
+            html += `<div style="color:${values[idx]>=50?'#2ecc71':'#f84f54'};font-weight:700;font-size:13px;">${values[idx]}%</div>`;
+          } else {
+            const v = values[idx];
+            html += `<div style="color:${v>0?'#2ecc71':v<0?'#f84f54':'#aaa'};font-weight:700;font-size:13px;">${v>0?'+':''}${v} LP</div>`;
+          }
+
+          tip.innerHTML = html;
+          tip.style.display = 'block';
+          const tx = Math.min(mx + 10, rect.width - 120);
+          tip.style.left = tx + 'px';
+          tip.style.top  = '8px';
+        }
+
+        canvas.addEventListener('mousemove', onMove);
+        canvas.addEventListener('touchmove', onMove, {passive:true});
+        canvas.addEventListener('mouseleave', () => tip.style.display='none');
+        canvas.addEventListener('touchend',   () => tip.style.display='none');
+      })();
+
+      // ── Boutons de mode ──────────────────────────────────────
+      window._hourMode = 'wr';
+      window.setHourMode = function(mode) {
+        window._hourMode = mode;
+        ['wr','day','lp'].forEach(m => {
+          const btn = document.getElementById('hc-btn-'+m);
+          if (!btn) return;
+          btn.style.background = m===mode ? 'var(--accent)' : 'transparent';
+          btn.style.color      = m===mode ? '#fff' : 'var(--text-muted)';
+        });
+        buildHourChart(window._hourGames || []);
+      };
 
       function setV(id, val, color) {
         const el = document.getElementById(id); if(!el) return;
@@ -3429,60 +3726,38 @@
     }
 
     /* =========================================================
-       QUICK LINKS — stockés dans IndexedDB (clé 'mlt_links')
+       QUICK LINKS — stockés dans le profil actif (S)
        ========================================================= */
-    const LINKS_KEY = 'mlt_links';
 
-    async function getLinksAsync() {
-      try {
-        const db    = await openDB();
-        const tx    = db.transaction(STORE_NAME, 'readonly');
-        const store = tx.objectStore(STORE_NAME);
-        const req   = store.get(LINKS_KEY);
-        return new Promise((res, rej) => {
-          req.onsuccess = e => res(e.target.result ? JSON.parse(e.target.result) : []);
-          req.onerror   = () => res([]);
-        });
-      } catch { return []; }
+    // Les liens sont dans ap().links — pas de stockage séparé
+    function getLinks() {
+      const p = ap();
+      if (!p) return [];
+      if (!Array.isArray(p.links)) p.links = [];
+      return p.links;
     }
-
-    async function saveLinksAsync(links) {
-      try {
-        // Migration : si des liens existent encore dans localStorage, on les ignore désormais
-        localStorage.removeItem('mlt_links');
-        const db    = await openDB();
-        const tx    = db.transaction(STORE_NAME, 'readwrite');
-        const store = tx.objectStore(STORE_NAME);
-        store.put(JSON.stringify(links), LINKS_KEY);
-        return new Promise((res, rej) => {
-          tx.oncomplete = () => res();
-          tx.onerror    = e => rej(e.target.error);
-        });
-      } catch(e) { console.error('saveLinks error:', e); }
-    }
-
-    // Helpers synchrones-looking pour le reste du code
-    let _linksCache = [];
-    function getLinks() { return _linksCache; }
     function saveLinks(links) {
-      _linksCache = links;
-      saveLinksAsync(links).catch(console.error);
+      const p = ap();
+      if (!p) return;
+      p.links = links;
+      save(); // sauvegarde tout S dans IndexedDB
     }
 
-    async function initLinks() {
-      // Migration depuis localStorage si besoin
-      let links = [];
+    function initLinks() {
+      // Migration : si des liens existent dans localStorage ou IndexedDB global,
+      // on les importe dans le profil actif au premier lancement
       try {
         const old = localStorage.getItem('mlt_links');
-        if(old) {
-          links = JSON.parse(old);
-          await saveLinksAsync(links);
+        if (old) {
+          const migrated = JSON.parse(old);
+          const p = ap();
+          if (p && (!p.links || p.links.length === 0)) {
+            p.links = migrated;
+            save();
+          }
           localStorage.removeItem('mlt_links');
-        } else {
-          links = await getLinksAsync();
         }
-      } catch { links = await getLinksAsync(); }
-      _linksCache = links;
+      } catch(e) {}
       renderNavLinks();
     }
 
@@ -3584,6 +3859,29 @@
         </a>
       `).join('');
     }
+
+    // ── Carte fusionnée : switch d'onglet ───────────────────
+    window._fcActive = 'rank';
+    window.fcSwitch = function(pane) {
+      window._fcActive = pane;
+      ['rank','lp','heure','role'].forEach(p => {
+        const panel = document.getElementById('fc-pane-'+p);
+        const tab   = document.getElementById('fc-tab-'+p);
+        if (!panel || !tab) return;
+        const active = p === pane;
+        panel.style.display   = active ? '' : 'none';
+        tab.style.color       = active ? 'var(--text-main)' : 'var(--text-dark)';
+        tab.style.borderBottom = active ? '2px solid var(--accent)' : '2px solid transparent';
+      });
+      // Re-render les graphes quand on les affiche
+      if (pane === 'lp') {
+        window._miniHoverAttached = false;
+        setTimeout(() => drawMiniLPChart(), 30);
+      }
+      if (pane === 'heure') {
+        setTimeout(() => buildHourChart(window._hourGames || []), 30);
+      }
+    };
 
     // Init nav links on load
     window.addEventListener('DOMContentLoaded', () => { initLinks(); });
