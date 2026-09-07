@@ -526,6 +526,9 @@
                 <button onclick="openMasterEditModal()" title="Edit Master+ (rang / LP manuel)" class="icon-edit-btn" style="opacity:0.5;">
                   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20"/><path d="M4 20V10l3.5 3L11 6l3.5 7L18 10v10"/></svg>
                 </button>
+                <button onclick="openLpAdjustModal()" title="Ajuster LP (dodge / decay, sans ajouter de game)" class="icon-edit-btn" style="opacity:0.5;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+                </button>
               </div>
             </div>
             <div class="rs-container">
@@ -1232,6 +1235,54 @@
       <div style="display:flex;gap:10px;">
         <button class="btn-ghost" style="flex:1;" onclick="closeModal('master-edit-modal')">Cancel</button>
         <button class="btn-primary" style="flex:2;" onclick="saveMasterEdit()">Appliquer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LP Adjustment Modal (dodge / decay — sans ajouter de game) -->
+  <div class="modal-overlay hidden" id="lp-adjust-modal" onclick="if(event.target===this)closeModal('lp-adjust-modal')">
+    <div class="modal" style="max-width:380px;">
+      <div class="modal-title">
+        <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="8" y1="12" x2="16" y2="12"/></svg> Ajustement LP</span>
+        <button class="close-btn" onclick="closeModal('lp-adjust-modal')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      </div>
+
+      <div style="display:flex;gap:6px;margin-bottom:16px;">
+        <button id="lpa-tab-new" onclick="switchLpaTab('new')" style="flex:1;font-size:11px;font-weight:700;padding:6px 8px;border-radius:6px;border:1px solid var(--border);background:var(--accent);color:#fff;cursor:pointer;transition:0.15s;">Ajuster</button>
+        <button id="lpa-tab-hist" onclick="switchLpaTab('hist')" style="flex:1;font-size:11px;font-weight:700;padding:6px 8px;border-radius:6px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:0.15s;">Historique</button>
+      </div>
+
+      <div id="lpa-panel-new">
+        <p style="font-size:12px;color:var(--text-muted);margin-bottom:16px;line-height:1.6;">
+          Pour un dodge, un decay par inactivité ou toute correction de LP sans jouer de game. N'apparaît pas dans l'historique des games ni dans les stats de winrate/KDA.
+        </p>
+        <div class="grid-2" style="margin-bottom:12px;">
+          <div class="fgroup">
+            <label class="flabel">LP (+/-)</label>
+            <input class="finput" id="lpa-delta" type="number" placeholder="-3"/>
+          </div>
+          <div class="fgroup">
+            <label class="flabel">Raison</label>
+            <select class="fselect" id="lpa-reason">
+              <option value="dodge">Dodge</option>
+              <option value="decay">Decay (inactivité)</option>
+              <option value="other">Autre</option>
+            </select>
+          </div>
+        </div>
+        <div class="fgroup" style="margin-bottom:16px;">
+          <label class="flabel">Note (optionnel)</label>
+          <input class="finput" id="lpa-note" type="text" placeholder="ex: dodge queue ranked"/>
+        </div>
+        <div id="lpa-preview" style="text-align:center;padding:12px;background:var(--bg-main);border-radius:8px;border:1px solid var(--border);margin-bottom:20px;font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:800;"></div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn-ghost" style="flex:1;" onclick="closeModal('lp-adjust-modal')">Annuler</button>
+          <button class="btn-primary" style="flex:2;" onclick="saveLpAdjustment()">Appliquer</button>
+        </div>
+      </div>
+
+      <div id="lpa-panel-hist" style="display:none;">
+        <div id="lpa-history-list" style="max-height:320px;overflow-y:auto;"></div>
       </div>
     </div>
   </div>
@@ -3022,6 +3073,115 @@
       renderOverview();
     }
 
+    /* =========================================================
+       LP ADJUSTMENT (dodge / decay — sans ajouter de game)
+       ========================================================= */
+    function computeLpAdjustResult(p, delta) {
+      let total = r2lp(p.currentRank.rank, p.currentRank.div, p.currentRank.lp);
+      total = Math.max(0, total + delta);
+      if (isMasterPlus(p.currentRank.rank)) {
+        return { rank: p.currentRank.rank, div: null, lp: Math.max(0, (p.currentRank.lp || 0) + delta) };
+      }
+      return lp2r(total);
+    }
+
+    function openLpAdjustModal() {
+      const p = ap(); if(!p) { alert("Create an account first!"); return; }
+      document.getElementById('lpa-delta').value = '';
+      document.getElementById('lpa-reason').value = 'dodge';
+      document.getElementById('lpa-note').value = '';
+      document.getElementById('lpa-delta').oninput = updateLpaPreview;
+      switchLpaTab('new');
+      updateLpaPreview();
+      document.getElementById('lp-adjust-modal').classList.remove('hidden');
+    }
+
+    function switchLpaTab(tab) {
+      const isNew = tab === 'new';
+      document.getElementById('lpa-panel-new').style.display  = isNew ? '' : 'none';
+      document.getElementById('lpa-panel-hist').style.display = isNew ? 'none' : '';
+      const btnNew  = document.getElementById('lpa-tab-new');
+      const btnHist = document.getElementById('lpa-tab-hist');
+      btnNew.style.background  = isNew ? 'var(--accent)' : 'transparent';
+      btnNew.style.color       = isNew ? '#fff' : 'var(--text-muted)';
+      btnHist.style.background = isNew ? 'transparent' : 'var(--accent)';
+      btnHist.style.color      = isNew ? 'var(--text-muted)' : '#fff';
+      if(!isNew) renderLpaHistory();
+    }
+
+    function updateLpaPreview() {
+      const p = ap(); if(!p) return;
+      const delta = parseInt(document.getElementById('lpa-delta').value) || 0;
+      const prev = document.getElementById('lpa-preview');
+      if(!prev) return;
+      const r = computeLpAdjustResult(p, delta);
+      const color = RC[r.rank] || 'var(--text-main)';
+      const label = r.div ? `${r.rank} ${r.div}` : r.rank;
+      prev.innerHTML = `<span style="color:${color}">${label}</span> <span style="color:var(--text-muted);font-size:16px;">${r.lp} LP</span> <span style="color:${delta>=0?'var(--win-color)':delta<0?'var(--loss-color)':'var(--text-muted)'};font-size:14px;">(${delta>=0?'+':''}${delta})</span>`;
+    }
+
+    function saveLpAdjustment() {
+      const p = ap(); if(!p) return;
+      const delta = parseInt(document.getElementById('lpa-delta').value) || 0;
+      if(delta === 0) { closeModal('lp-adjust-modal'); return; }
+      const reason = document.getElementById('lpa-reason').value;
+      const note   = document.getElementById('lpa-note').value.trim();
+
+      const rankBefore = {...p.currentRank};
+      const newRank = computeLpAdjustResult(p, delta);
+      p.currentRank = newRank;
+      if(p.games.length > 0) p.games[0].rankAfter = {...newRank};
+
+      if(!Array.isArray(p.lpAdjustments)) p.lpAdjustments = [];
+      p.lpAdjustments.unshift({
+        id: Date.now(), ts: Date.now(),
+        date: new Date().toLocaleDateString('fr-FR', {day:'2-digit', month:'short', year:'numeric'}),
+        delta, reason, note,
+        rankBefore, rankAfter: {...newRank}
+      });
+
+      save();
+      closeModal('lp-adjust-modal');
+      renderOverview();
+    }
+
+    function deleteLpAdjustment(id) {
+      const p = ap(); if(!p || !Array.isArray(p.lpAdjustments)) return;
+      if(!confirm("Supprimer cet ajustement ? (le rang courant actuel n'est pas recalculé)")) return;
+      p.lpAdjustments = p.lpAdjustments.filter(a => a.id !== id);
+      save();
+      renderLpaHistory();
+    }
+
+    function renderLpaHistory() {
+      const p = ap();
+      const list = document.getElementById('lpa-history-list');
+      if(!list) return;
+      const items = (p && p.lpAdjustments) || [];
+      if(items.length === 0) {
+        list.innerHTML = '<div style="text-align:center;padding:24px 10px;color:var(--text-dark);font-size:12px;">Aucun ajustement enregistré</div>';
+        return;
+      }
+      const reasonLabel = { dodge: 'Dodge', decay: 'Decay', other: 'Autre' };
+      list.innerHTML = items.map(a => {
+        const color = a.delta >= 0 ? 'var(--win-color)' : 'var(--loss-color)';
+        const afterLabel = a.rankAfter ? (a.rankAfter.div ? `${a.rankAfter.rank} ${a.rankAfter.div}` : a.rankAfter.rank) + ` (${a.rankAfter.lp} LP)` : '';
+        return `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,0.06);">
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--text-main);">${reasonLabel[a.reason] || 'Autre'}${a.note ? ' · '+a.note : ''}</div>
+            <div style="font-size:10px;color:var(--text-dark);margin-top:2px;">${a.date}${afterLabel ? ' · '+afterLabel : ''}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="font-family:'Rajdhani',sans-serif;font-weight:800;font-size:15px;color:${color};">${a.delta>=0?'+':''}${a.delta} LP</div>
+            <button onclick="deleteLpAdjustment(${a.id})" title="Supprimer" style="background:none;border:none;color:var(--text-dark);cursor:pointer;padding:2px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
     function renderAccountList() {
       const list = document.getElementById('profile-list');
       list.innerHTML = S.profiles.map(p => {
@@ -3469,7 +3629,7 @@
 
         ctx.clearRect(0, 0, W, H);
 
-        let labels, values, colors, hasData;
+        let labels, values, colors, hasData, sessions = null;
 
         if (mode === 'wr') {
           labels = Array.from({length:24}, (_,i) => i+'h');
@@ -3500,8 +3660,25 @@
               return d.has ? Math.round(d.lp) : null;
             });
           } else {
-            labels = Array.from({length:24}, (_,i) => i+'h');
-            values = hours.map(d => d.hasTs ? Math.round(d.lp) : null);
+            // Regroupement par session : une nouvelle session démarre dès qu'il
+            // s'écoule plus de 2h entre deux games consécutives.
+            const SESSION_GAP = 2 * 3600 * 1000;
+            const withTs = allGames.filter(g => g.ts).slice().sort((a,b) => a.ts - b.ts);
+            sessions = [];
+            withTs.forEach(g => {
+              const last = sessions[sessions.length - 1];
+              if (!last || (g.ts - last.lastTs) > SESSION_GAP) {
+                sessions.push({ startTs: g.ts, lastTs: g.ts, lp: 0, w: 0, l: 0, n: 0 });
+              }
+              const s = sessions[sessions.length - 1];
+              s.lastTs = g.ts;
+              s.lp += Number(g.lpChange) || 0;
+              s.n++;
+              if (g.result === 'win') s.w++;
+              else if (g.result === 'loss') s.l++;
+            });
+            labels = sessions.map(s => new Date(s.startTs).toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit' }));
+            values = sessions.map(s => Math.round(s.lp));
           }
           hasData = values.some(v => v !== null);
           const maxAbs = Math.max(1, ...values.filter(v=>v!==null).map(Math.abs));
@@ -3584,7 +3761,7 @@
 
         // Stocke les données pour le tooltip
         canvas._chartData = { values, labels, colors, n, cW, cH, PAD, barW, mode,
-                               hours, dayStats, DAYS_FR };
+                               hours, dayStats, DAYS_FR, sessions };
       }
 
       window.buildHourChart = buildHourChart;
@@ -3599,7 +3776,7 @@
           const d = canvas._chartData; if (!d) return;
           const rect = canvas.getBoundingClientRect();
           const mx = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-          const { n, cW, PAD, values, labels, hours, dayStats, DAYS_FR, mode } = d;
+          const { n, cW, PAD, values, labels, hours, dayStats, DAYS_FR, mode, sessions } = d;
           const idx = Math.floor((mx - PAD.left) / (cW/n));
           if (idx < 0 || idx >= n || values[idx] === null) { tip.style.display='none'; return; }
 
@@ -3617,6 +3794,10 @@
           } else {
             const v = values[idx];
             html += `<div style="color:${v>0?'#2ecc71':v<0?'#f84f54':'#aaa'};font-weight:700;font-size:13px;">${v>0?'+':''}${v} LP</div>`;
+            if (sessions && sessions[idx]) {
+              const s = sessions[idx];
+              html += `<div style="color:var(--text-muted);font-size:10px;margin-top:3px;">${s.n} game${s.n>1?'s':''} <span style="color:#2ecc71;">${s.w}W</span> <span style="color:#f84f54;">${s.l}L</span></div>`;
+            }
           }
 
           tip.innerHTML = html;
