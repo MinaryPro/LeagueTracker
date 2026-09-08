@@ -11,35 +11,46 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-main: #0B0E14;
-    --bg-card: #151822;
-    --bg-card-hover: #1c202d;
-    --bg-header: #10131a;
-    --border: #232736;
-    --border-light: #2d3346;
-    
-    --text-main: #E2E8F0;
-    --text-muted: #94A3B8;
-    --text-dark: #64748B;
-    
-    --win-color: #2ecc71;
-    --win-bg: rgba(30, 48, 64, 0.7);
-    --win-border: #2c4252;
-    
-    --loss-color: #e74c3c;
-    --loss-bg: rgba(60, 30, 40, 0.7);
-    --loss-border: #4d262d;
-    
-    --accent: #8C82D2;
-    --accent-dim: rgba(140, 130, 210, 0.15);
-    --radius: 12px;
+    --bg-main: #000000;
+    --bg-card: #1c1c1eb3;
+    --bg-card-hover: #2c2c2ecc;
+    --bg-header: #000000cc;
+    --border: rgba(255,255,255,0.09);
+    --border-light: rgba(255,255,255,0.16);
+
+    --text-main: #F5F5F7;
+    --text-muted: rgba(235,235,245,0.6);
+    --text-dark: rgba(235,235,245,0.38);
+
+    --win-color: #30D158;
+    --win-bg: rgba(48, 209, 88, 0.12);
+    --win-border: rgba(48, 209, 88, 0.35);
+
+    --loss-color: #FF453A;
+    --loss-bg: rgba(255, 69, 58, 0.12);
+    --loss-border: rgba(255, 69, 58, 0.35);
+
+    --accent: #0A84FF;
+    --accent-dim: rgba(10, 132, 255, 0.16);
+    --radius: 20px;
+
+    --glass-blur: 26px;
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html { -webkit-font-smoothing: antialiased; }
+
   body {
-    font-family: 'Inter', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Inter', sans-serif;
     background-color: var(--bg-main);
+    background-image:
+      radial-gradient(circle at 15% 0%, rgba(10,132,255,0.14) 0%, transparent 45%),
+      radial-gradient(circle at 85% 15%, rgba(191,90,242,0.10) 0%, transparent 40%),
+      radial-gradient(circle at 50% 100%, rgba(48,209,88,0.06) 0%, transparent 50%);
+    background-attachment: fixed;
     color: var(--text-main);
     font-size: 14px;
     line-height: 1.5;
@@ -47,40 +58,61 @@
     min-height: 100vh;
   }
 
+  button, input, select, .icon-edit-btn, .nav-action-btn, .account-btn, .sub-nav-item {
+    -webkit-tap-highlight-color: transparent;
+    transition: transform .15s var(--ease-spring), background-color .2s var(--ease-smooth),
+                color .2s var(--ease-smooth), border-color .2s var(--ease-smooth),
+                box-shadow .2s var(--ease-smooth), opacity .2s var(--ease-smooth);
+  }
+  button:active, .icon-edit-btn:active, .nav-action-btn:active, .account-btn:active,
+  .btn-primary:active, .btn-ghost:active, .mc-btn:active {
+    transform: scale(0.94);
+  }
+
+  @keyframes glassPop {
+    from { opacity: 0; transform: scale(0.92) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  @keyframes glassFadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
   /* --- NAVBAR --- */
   nav {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 0 20px; height: 52px; background-color: var(--bg-header);
+    padding: 0 20px; height: 56px; background-color: var(--bg-header);
+    backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
     border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100;
   }
   .nav-left { display: flex; align-items: center; gap: 16px; }
-  .logo { font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-muted); display:flex; align-items:center; gap:8px; letter-spacing: 0.3px;}
-  .logo-icon { width: 28px; height: 28px; border-radius: 6px; overflow:hidden; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .logo { font-family: inherit; font-size: 14px; font-weight: 600; color: var(--text-muted); display:flex; align-items:center; gap:8px; letter-spacing: 0.3px;}
+  .logo-icon { width: 28px; height: 28px; border-radius: 8px; overflow:hidden; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
   .logo-icon img { width: 100%; height: 100%; object-fit: contain; }
   .nav-links { display: flex; gap: 6px; }
   .nav-action-btn {
     display: flex; align-items: center; justify-content: center;
-    color: var(--text-dark); width: 32px; height: 32px;
-    border-radius: 7px; border: 1px solid var(--border);
-    background: transparent; transition: 0.15s; text-decoration: none; cursor: pointer;
+    color: var(--text-dark); width: 34px; height: 34px;
+    border-radius: 12px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.04); text-decoration: none; cursor: pointer;
     position: relative;
   }
-  .nav-action-btn:hover { background: var(--border); color: var(--text-muted); }
+  .nav-action-btn:hover { background: rgba(255,255,255,0.09); color: var(--text-main); border-color: var(--border-light); }
   .nav-action-btn svg { flex-shrink: 0; }
   .nav-action-btn .nav-tooltip {
-    display: none; position: absolute; top: calc(100% + 6px); left: 50%; transform: translateX(-50%);
-    background: #1c202d; border: 1px solid var(--border); color: var(--text-main);
-    font-size: 11px; font-weight: 500; white-space: nowrap; padding: 4px 8px; border-radius: 5px;
-    pointer-events: none; z-index: 200;
+    display: none; position: absolute; top: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+    background: rgba(28,28,30,0.95); backdrop-filter: blur(12px); border: 1px solid var(--border); color: var(--text-main);
+    font-size: 11px; font-weight: 500; white-space: nowrap; padding: 5px 10px; border-radius: 8px;
+    pointer-events: none; z-index: 200; box-shadow: 0 4px 14px rgba(0,0,0,0.4);
   }
-  .nav-action-btn:hover .nav-tooltip { display: block; }
+  .nav-action-btn:hover .nav-tooltip { display: block; animation: glassFadeIn .15s var(--ease-smooth); }
 
   .account-btn {
     display: flex; align-items: center; gap: 6px; font-weight: 500; color: var(--text-muted);
-    background: transparent; border: 1px solid var(--border); padding: 5px 10px; border-radius: 7px;
-    cursor: pointer; transition: 0.15s; font-size: 12px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 6px 12px; border-radius: 999px;
+    cursor: pointer; font-size: 12px;
   }
-  .account-btn:hover { background: var(--border); color: var(--text-main); }
+  .account-btn:hover { background: rgba(255,255,255,0.09); color: var(--text-main); border-color: var(--border-light); }
 
   /* --- HEADER PROFIL --- */
   .profile-header-wrap {
@@ -90,7 +122,7 @@
     border-bottom: 1px solid var(--border);
   }
   .profile-header-overlay {
-    background: linear-gradient(to right, rgba(16,19,26,1) 0%, rgba(16,19,26,0.8) 50%, rgba(16,19,26,0.4) 100%);
+    background: linear-gradient(to right, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.5) 100%);
     width: 100%; height: 100%;
   }
   .profile-header {
@@ -98,42 +130,57 @@
     display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2;
   }
   .profile-left { display: flex; align-items: center; gap: 20px; }
-  .profile-icon { width: 80px; height: 80px; border-radius: 16px; object-fit: cover; border: 2px solid var(--border); box-shadow: 0 4px 15px rgba(0,0,0,0.5);}
+  .profile-icon { width: 80px; height: 80px; border-radius: 22px; object-fit: cover; border: 1px solid var(--border-light); box-shadow: 0 8px 24px rgba(0,0,0,0.55);}
   .profile-info h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
   .profile-info h1 span { color: var(--text-dark); font-weight: 500; font-size: 18px; }
   
-  /* --- SUB NAV (Modernisé) --- */
+  /* --- SUB NAV (segmented control iOS) --- */
   .sub-nav {
-    max-width: 1140px; margin: 24px auto 0; padding: 0 16px;
-    display: flex; gap: 12px; position: relative; z-index: 2;
+    max-width: 1140px; margin: 24px auto 0; padding: 4px; gap: 2px;
+    display: flex; position: relative; z-index: 2;
+    left: 24px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: fit-content;
   }
   .sub-nav-item {
-    padding: 10px 14px; color: var(--text-muted); font-weight: 600; cursor: pointer;
-    position: relative; transition: all 0.2s ease; font-size: 14px; 
-    display: flex; align-items: center; gap: 8px; border-radius: 8px;
+    padding: 9px 16px; color: var(--text-muted); font-weight: 600; cursor: pointer;
+    position: relative; transition: all 0.25s var(--ease-smooth); font-size: 13px; 
+    display: flex; align-items: center; gap: 8px; border-radius: 12px;
   }
   .sub-nav-item svg { width: 16px; height: 16px; opacity: 0.8; }
-  .sub-nav-item.active { color: var(--text-main); }
+  .sub-nav-item.active { color: #fff; background: var(--accent); box-shadow: 0 2px 10px rgba(10,132,255,0.4); }
   .sub-nav-item.active svg { opacity: 1; }
-  .sub-nav-item.active::after {
-    content: ''; position: absolute; bottom: -1px; left: 15%; right: 15%;
-    height: 3px; background: var(--text-main); border-radius: 3px;
-  }
-  .sub-nav-item:hover:not(.active) { color: var(--text-main); background: rgba(255, 255, 255, 0.05); }
+  .sub-nav-item.active::after { content: none; }
+  .sub-nav-item:hover:not(.active) { color: var(--text-main); background: rgba(255, 255, 255, 0.07); }
 
   /* --- PAGES & LAYOUT --- */
   .page { display: none; }
-  .page.active { display: block; }
+  .page.active { display: block; animation: glassFadeIn .25s var(--ease-smooth); }
   
   main { max-width: 1140px; margin: 24px auto; padding: 0 16px 40px; }
   
   .layout-grid { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 24px; align-items: start; }
-  @media (max-width: 900px) { .layout-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .layout-grid { grid-template-columns: 1fr; } .sub-nav { left: 0; } }
 
   .card {
-    background: var(--bg-card); border-radius: var(--radius);
-    border: 1px solid var(--border); overflow: hidden; margin-bottom: 20px;
+    background: var(--bg-card);
+    backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+    border-radius: var(--radius);
+    border: 1px solid var(--border-light);
+    overflow: hidden; margin-bottom: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    position: relative;
   }
+  .card::before {
+    content: ''; position: absolute; inset: 0; border-radius: var(--radius); pointer-events: none;
+    background: linear-gradient(160deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 30%);
+  }
+
   .card-header {
     padding: 14px 16px; border-bottom: 1px solid var(--border);
     font-weight: 600; font-size: 12px; display: flex; justify-content: space-between; align-items: center;
@@ -176,7 +223,7 @@
   .cpi-kda-det { font-size: 11px; font-weight: 600; }
 
   /* --- COLONNE DROITE (MAIN) --- */
-  .summary-30g { display: grid; grid-template-columns: auto 1fr 1fr 1fr; gap: 0; padding: 0; align-items: center; }
+  .summary-30g { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; padding: 0; align-items: center; }
   @media (max-width: 600px) { .summary-30g { grid-template-columns: 1fr 1fr; } }
   .donut-chart { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
   .donut-inner { width: 48px; height: 48px; border-radius: 50%; background: var(--bg-card); display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -218,20 +265,20 @@
   /* Carte Match (Redesigned) */
   .match-card {
     display: flex; align-items: center; gap: 12px; padding: 10px 12px;
-    border-radius: 8px; margin-bottom: 6px;
-    transition: 0.15s; position: relative; border: 1px solid transparent;
+    border-radius: 14px; margin-bottom: 6px;
+    transition: 0.2s var(--ease-smooth); position: relative; border: 1px solid transparent;
   }
-  .match-card:hover { filter: brightness(1.1); }
+  .match-card:hover { filter: brightness(1.15); transform: translateY(-1px); }
   
   .match-card.win { 
     background: var(--win-bg);
     border-color: var(--win-border);
-    border-left: 4px solid var(--win-color);
+    border-left: 3px solid var(--win-color);
   }
   .match-card.loss { 
     background: var(--loss-bg); 
     border-color: var(--loss-border);
-    border-left: 4px solid var(--loss-color);
+    border-left: 3px solid var(--loss-color);
   }
   
   .mc-col-1 { width: 82px; }
@@ -302,11 +349,11 @@
 
   /* --- FORMULAIRES --- */
   .finput, .fselect {
-    background: var(--bg-main); border: 1px solid var(--border-light); border-radius: 8px;
-    color: var(--text-main); font-family: inherit; font-size: 13px; padding: 7px 10px;
-    outline: none; width: 100%; transition: 0.2s;
+    background: rgba(255,255,255,0.06); border: 1px solid var(--border-light); border-radius: 12px;
+    color: var(--text-main); font-family: inherit; font-size: 13px; padding: 9px 12px;
+    outline: none; width: 100%; transition: 0.2s var(--ease-smooth);
   }
-  .finput:focus, .fselect:focus { border-color: var(--accent); }
+  .finput:focus, .fselect:focus { border-color: var(--accent); background: rgba(255,255,255,0.09); box-shadow: 0 0 0 4px var(--accent-dim); }
   .flabel { font-size: 10px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; display: block; text-transform: uppercase; }
   .fgroup { display: flex; flex-direction: column; margin-bottom: 10px; }
   
@@ -314,24 +361,27 @@
   .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
   .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; }
   
-  .btn-primary { background: #4171ff; border: none; color: white; font-weight: 600; padding: 12px 24px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-family: inherit; font-size: 14px; }
-  .btn-primary:hover { filter: brightness(1.1); box-shadow: 0 0 15px rgba(65, 113, 255, 0.4); }
-  .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-main); padding: 10px 20px; border-radius: 8px; cursor: pointer; transition: 0.2s; font-weight: 600; }
-  .btn-ghost:hover { background: var(--border-light); }
+  .btn-primary { background: var(--accent); border: none; color: white; font-weight: 600; padding: 12px 24px; border-radius: 14px; cursor: pointer; font-family: inherit; font-size: 14px; box-shadow: 0 4px 14px rgba(10,132,255,0.35); }
+  .btn-primary:hover { filter: brightness(1.1); box-shadow: 0 4px 20px rgba(10,132,255,0.5); }
+  .btn-ghost { background: rgba(255,255,255,0.06); border: 1px solid var(--border-light); color: var(--text-main); padding: 10px 20px; border-radius: 14px; cursor: pointer; font-weight: 600; }
+  .btn-ghost:hover { background: rgba(255,255,255,0.12); }
 
-  .result-toggle { display: flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-  .rtb { flex: 1; padding: 10px; border: none; background: var(--bg-main); font-weight: 700; font-size: 14px; color: var(--text-dark); cursor: pointer; transition: 0.2s; }
-  .rtb.win.active { background: rgba(46, 204, 113, 0.15); color: #2ecc71; }
-  .rtb.loss.active { background: rgba(231, 76, 60, 0.15); color: #e74c3c; }
+  .result-toggle { display: flex; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; padding: 2px; gap: 2px; background: rgba(255,255,255,0.04); }
+  .rtb { flex: 1; padding: 10px; border: none; background: transparent; border-radius: 10px; font-weight: 700; font-size: 14px; color: var(--text-dark); cursor: pointer; transition: 0.2s var(--ease-smooth); }
+  .rtb.win.active { background: var(--win-color); color: #05230f; }
+  .rtb.loss.active { background: var(--loss-color); color: #2b0603; }
 
-  /* Modal Base */
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+  /* Modal Base — liquid glass */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 200; display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(20px) saturate(150%); -webkit-backdrop-filter: blur(20px) saturate(150%); animation: glassFadeIn .2s var(--ease-smooth); }
   .modal-overlay.hidden { display: none; }
-  .modal { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+  .modal { background: rgba(28,28,30,0.72); backdrop-filter: blur(var(--glass-blur)) saturate(180%); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+    border: 1px solid var(--border-light); border-radius: 24px; padding: 18px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.55); animation: glassPop .3s var(--ease-spring); }
   .modal.large { max-width: 800px; }
   .modal-title { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-  .close-btn { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; }
-  .close-btn:hover { color: var(--loss-color); }
+  .close-btn { background: rgba(255,255,255,0.08); border: none; color: var(--text-muted); font-size: 18px; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .close-btn:hover { color: #fff; background: var(--loss-color); }
 
   /* Autocomplete */
   .champ-input-container { position: relative; display: flex; align-items: center; }
@@ -357,38 +407,38 @@
   .pl-sub { font-size: 11px; color: var(--text-muted); }
   .pl-del { background: none; border: none; color: var(--text-dark); cursor: pointer; font-size: 14px; padding: 4px; border-radius: 4px; transition: 0.15s; }
   .pl-del:hover { color: var(--loss-color); background: var(--loss-bg); }
-  .pl-edit { background: none; border: none; color: var(--text-dark); cursor: pointer; font-size: 13px; padding: 4px; border-radius: 4px; transition: 0.15s; }
+  .pl-edit { background: none; border: none; color: var(--text-dark); cursor: pointer; font-size: 13px; padding: 4px; border-radius: 8px; }
   .pl-edit:hover { background: var(--border); }
   /* Unified edit button */
   .icon-edit-btn {
     display: flex; align-items: center; justify-content: center;
-    background: transparent; border: none; cursor: pointer;
-    color: var(--text-dark); padding: 4px; border-radius: 5px;
-    transition: 0.15s;
+    background: rgba(255,255,255,0.05); border: 1px solid transparent; cursor: pointer;
+    color: var(--text-dark); padding: 5px; border-radius: 999px; width: 24px; height: 24px;
   }
-  .icon-edit-btn:hover { color: var(--text-main); background: var(--border); }
+  .icon-edit-btn:hover { color: var(--text-main); background: rgba(255,255,255,0.12); }
 
   /* LP quickset */
   .lp-quick { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
-  .lp-qbtn { padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border-light); background: transparent; color: var(--text-muted); font-size: 11px; cursor: pointer; transition: 0.15s; }
-  .lp-qbtn:hover { border-color: var(--accent); color: var(--text-main); }
+  .lp-qbtn { padding: 3px 8px; border-radius: 999px; border: 1px solid var(--border-light); background: rgba(255,255,255,0.04); color: var(--text-muted); font-size: 11px; cursor: pointer; }
+  .lp-qbtn:hover { border-color: var(--accent); color: var(--text-main); background: var(--accent-dim); }
 
   /* Session summary bar (new) */
   .session-bar {
     display: grid; grid-template-columns: repeat(7, 1fr);
-    gap: 0; background: var(--bg-card); border: 1px solid var(--border);
+    gap: 0; background: var(--bg-card);
+    backdrop-filter: blur(var(--glass-blur)) saturate(180%); -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+    border: 1px solid var(--border-light);
     border-radius: var(--radius); overflow: hidden; margin-bottom: 10px;
   }
   .session-bar-secondary {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(7, 1fr);
     margin-bottom: 16px;
   }
   .session-bar-item { 
     padding: 12px 8px; text-align: center; border-right: 1px solid var(--border);
-    transition: 0.15s;
   }
   .session-bar-item:last-child { border-right: none; }
-  .session-bar-item:hover { background: var(--bg-card-hover); }
+  .session-bar-item:hover { background: rgba(255,255,255,0.05); }
   .sbi-val { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-main); line-height: 1; }
   .sbi-lbl { font-size: 9px; color: var(--text-dark); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; margin-top: 3px; }
 
@@ -432,9 +482,66 @@
   .rh-add-btn { display:flex; align-items:center; gap:6px; padding:8px 14px; font-size:11px; color:var(--text-dark); cursor:pointer; transition:color 0.15s; background:transparent; border:none; width:100%; text-align:left; }
   .rh-add-btn:hover { color:var(--text-muted); }
 
-  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar { width: 7px; height: 7px; }
   ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 999px; }
+  /* --- iOS glass polish for small inline-styled toggle buttons --- */
+  #hc-btn-wr, #hc-btn-day, #hc-btn-lp,
+  #mc-period-1j, #mc-period-30j, #mc-period-3m, #mc-period-all,
+  #lpa-tab-new, #lpa-tab-hist {
+    border-radius: 10px !important;
+    border-color: var(--border-light) !important;
+    font-family: inherit !important;
+  }
+  #hc-btn-wr:active, #hc-btn-day:active, #hc-btn-lp:active,
+  #mc-period-1j:active, #mc-period-30j:active, #mc-period-3m:active, #mc-period-all:active,
+  #lpa-tab-new:active, #lpa-tab-hist:active {
+    transform: scale(0.93);
+  }
+  .summary-30g { grid-template-columns: 1fr 1.8fr 1.2fr repeat(5, 0.8fr); justify-items: center; }
+  .summary-kda { padding: 10px 8px !important; }
+  .summary-kda > div:nth-child(2) { gap: 8px !important; white-space: nowrap; }
+  .summary-extra {
+    display: contents;
+  }
+  .summary-extra .session-bar-item {
+    padding: 10px 8px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .summary-extra .session-bar-item:last-child { border-right: none; }
+  .summary-filter {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: stretch;
+    padding: 12px 10px;
+    border-left: 1px solid var(--border);
+  }
+  .session-bar-secondary .session-bar-item { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  @media (max-width: 600px) { .summary-30g { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) {
+    nav { padding: 0 12px; }
+    .nav-left { gap: 8px; }
+    .profile-header { padding: 20px 12px 0; }
+    .profile-left { gap: 12px; }
+    .profile-icon { width: 60px; height: 60px; border-radius: 16px; }
+    .profile-info h1 { font-size: 20px; }
+    .profile-info h1 span { font-size: 16px !important; }
+    .sub-nav { width: calc(100% - 24px); justify-content: space-between; margin-top: 16px; }
+    .sub-nav-item { padding: 8px 10px; font-size: 11px; gap: 5px; }
+    .sub-nav-item svg { width: 14px; height: 14px; }
+    main { margin: 16px auto; padding: 0 10px 28px; }
+    .layout-grid { gap: 14px; }
+    .summary-kda { grid-column: span 2; width: 100%; }
+    .summary-filter { grid-column: span 2; width: 100%; flex-direction: row; align-items: center; padding: 8px 10px; }
+    .summary-filter button, .summary-filter input { flex: 1; }
+    .summary-extra .session-bar-item { padding: 9px 5px; }
+  }
 </style>
 </head>
 <body>
@@ -558,12 +665,36 @@
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
               </button>
             </div>
+            <div style="padding:6px 8px 0;display:flex;gap:4px;justify-content:flex-end;">
+              <button id="mc-period-1j"  onclick="setMiniChartPeriod('1j')"  style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:0.15s;">1j</button>
+              <button id="mc-period-30j" onclick="setMiniChartPeriod('30j')" style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:0.15s;">30j</button>
+              <button id="mc-period-3m"  onclick="setMiniChartPeriod('3m')"  style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:0.15s;">3 mois</button>
+              <button id="mc-period-all" onclick="setMiniChartPeriod('all')" style="font-size:9px;font-weight:700;padding:2px 7px;border-radius:5px;border:1px solid var(--border);background:var(--accent);color:#fff;cursor:pointer;transition:0.15s;">All</button>
+            </div>
             <div style="padding:6px 8px 8px;position:relative;">
               <canvas id="ov-lp-mini" style="width:100%;display:block;cursor:crosshair;" height="120"></canvas>
               <div id="mini-lp-tooltip" style="display:none;position:absolute;pointer-events:none;z-index:10;background:rgba(15,18,26,0.96);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px 12px;box-shadow:0 4px 16px rgba(0,0,0,0.5);min-width:130px;backdrop-filter:blur(8px);">
                 <div id="mini-tooltip-rank" style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:800;line-height:1.2;"></div>
                 <div id="mini-tooltip-lp" style="font-size:11px;color:var(--text-muted);margin-top:1px;font-family:'Share Tech Mono',monospace;"></div>
                 <div id="mini-tooltip-game" style="font-size:10px;color:var(--text-dark);margin-top:5px;border-top:1px solid rgba(255,255,255,0.06);padding-top:5px;"></div>
+              </div>
+            </div>
+
+            <!-- Games / Win max / Lose max — sous le graphe -->
+            <div style="display:flex;align-items:center;justify-content:center;gap:24px;padding:2px 8px 14px;">
+              <div style="text-align:center;">
+                <div class="sbi-val" id="sbi-games">0</div>
+                <div class="sbi-lbl">Games</div>
+              </div>
+              <div style="width:1px;height:30px;background:var(--border);"></div>
+              <div style="text-align:center;">
+                <div class="sbi-val" id="sum-win-streak" style="color:var(--win-color);">0</div>
+                <div class="sbi-lbl">Win max</div>
+              </div>
+              <div style="width:1px;height:30px;background:var(--border);"></div>
+              <div style="text-align:center;">
+                <div class="sbi-val" id="sum-lose-streak" style="color:var(--loss-color);">0</div>
+                <div class="sbi-lbl">Lose max</div>
               </div>
             </div>
 
@@ -579,7 +710,7 @@
               <div style="display:flex;gap:4px;">
                 <button id="hc-btn-wr"  onclick="setHourMode('wr')"  style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:var(--accent);color:#fff;cursor:pointer;transition:0.15s;">WR%</button>
                 <button id="hc-btn-day" onclick="setHourMode('day')" style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:0.15s;">Jour</button>
-                <button id="hc-btn-lp"  onclick="setHourMode('lp')"  style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:0.15s;">LP</button>
+                <button id="hc-btn-lp"  onclick="setHourMode('lp')"  style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:0.15s;">Session</button>
               </div>
             </div>
             <div style="padding:0 10px 10px 10px;position:relative;">
@@ -644,7 +775,7 @@
               <div id="sum-games" style="font-size:11px;color:var(--text-muted);font-weight:500;">0 Games</div>
             </div>
             
-            <div class="stat-block" style="padding:16px 20px;border-right:1px solid var(--border);">
+            <div class="stat-block summary-kda" style="padding:16px 20px;border-right:1px solid var(--border);">
               <div class="lbl" style="margin-bottom:8px;">KDA</div>
               <div style="display:flex;gap:16px;justify-content:center;align-items:flex-end;">
                 <div style="text-align:center;">
@@ -661,21 +792,6 @@
               </div>
             </div>
 
-            <div class="stat-block" style="padding:16px 20px;border-right:1px solid var(--border);">
-              <div class="lbl">Streaks</div>
-              <div style="display:flex;gap:16px;justify-content:center;align-items:flex-end;">
-                <div style="text-align:center;">
-                  <div class="val" id="sum-win-streak" style="font-size:24px;color:var(--win-color);">0</div>
-                  <div style="font-size:9px;color:var(--text-dark);margin-top:3px;text-transform:uppercase;letter-spacing:0.5px;">Win max</div>
-                </div>
-                <div style="width:1px;height:36px;background:var(--border);align-self:center;"></div>
-                <div style="text-align:center;">
-                  <div class="val" id="sum-lose-streak" style="font-size:24px;color:var(--loss-color);">0</div>
-                  <div style="font-size:9px;color:var(--text-dark);margin-top:3px;text-transform:uppercase;letter-spacing:0.5px;">Lose max</div>
-                </div>
-              </div>
-            </div>
-
             <div style="display:flex;align-items:center;padding:12px 14px;gap:12px;">
               <div class="stat-block" style="flex:1;text-align:center;">
                 <div class="lbl">Ranking Moy</div>
@@ -684,36 +800,29 @@
                   <span style="background:var(--win-bg);color:var(--win-color);padding:2px 6px;border-radius:4px;font-weight:700;" id="sum-mvp">MVP x0</span>
                 </div>
               </div>
-              <div style="display:flex;flex-direction:column;gap:4px;align-items:stretch;border-left:1px solid var(--border);padding-left:12px;width:58px;">
-                <button id="sum-btn-all" onclick="setSumFilter('all')"
-                  style="font-size:8px;font-weight:600;text-transform:uppercase;padding:4px 0;border-radius:4px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-muted);cursor:pointer;transition:all 0.15s;width:100%;">
-                  Origine
-                </button>
-                <button id="sum-btn-last" onclick="setSumFilter('last')"
-                  style="font-size:8px;font-weight:600;text-transform:uppercase;padding:4px 0;border-radius:4px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-muted);cursor:pointer;transition:all 0.15s;width:100%;">
-                  Last
-                </button>
-                <input id="sum-last-n" type="text" inputmode="numeric" maxlength="3" value="40"
-                  class="finput" style="font-size:9px;padding:3px 4px;text-align:center;box-sizing:border-box;width:100%;"
-                  onchange="setSumFilter('last')" onclick="setSumFilter('last')">
-              </div>
+            </div>
+            <div class="summary-extra" id="summary-extra">
+              <div class="session-bar-item"><div class="sbi-val" id="sbi-kp">—%</div><div class="sbi-lbl">KP%</div></div>
+              <div class="session-bar-item"><div class="sbi-val" id="sbi-tilt">—</div><div class="sbi-lbl">Tilt Index</div></div>
+              <div class="session-bar-item"><div class="sbi-val" id="sbi-cs">—</div><div class="sbi-lbl">CS/min</div></div>
+              <div class="session-bar-item"><div class="sbi-val" id="sbi-vs">—</div><div class="sbi-lbl">Vision</div></div>
+            </div>
+            <div class="summary-filter">
+              <button id="sum-btn-all" onclick="setSumFilter('all')"
+                style="font-size:8px;font-weight:600;text-transform:uppercase;padding:4px 0;border-radius:4px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-muted);cursor:pointer;transition:all 0.15s;width:100%;">
+                Origine
+              </button>
+              <button id="sum-btn-last" onclick="setSumFilter('last')"
+                style="font-size:8px;font-weight:600;text-transform:uppercase;padding:4px 0;border-radius:4px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-muted);cursor:pointer;transition:all 0.15s;width:100%;">
+                Last
+              </button>
+              <input id="sum-last-n" type="text" inputmode="numeric" maxlength="3" value="40"
+                class="finput" style="font-size:9px;padding:3px 4px;text-align:center;box-sizing:border-box;width:100%;"
+                onchange="setSumFilter('last')" onclick="setSumFilter('last')">
             </div>
             </div>
           </div><!-- end summary card -->
 
-
-          <!-- Barre secondaire : 8 metriques -->
-          <div class="session-bar session-bar-secondary" id="session-bar-secondary" style="margin-top:12px;">
-            <div class="session-bar-item"><div class="sbi-val" id="sbi-games">0</div><div class="sbi-lbl">Games</div></div>
-            <div class="session-bar-item"><div class="sbi-val" id="sbi-kda">—</div><div class="sbi-lbl">KDA Solo</div></div>
-            <div class="session-bar-item"><div class="sbi-val" id="sbi-team-kda">—</div><div class="sbi-lbl">KDA Team</div></div>
-            <div class="session-bar-item"><div class="sbi-val" id="sbi-kp">—%</div><div class="sbi-lbl">KP%</div></div>
-            <div class="session-bar-item"><div class="sbi-val" id="sbi-rank">#—</div><div class="sbi-lbl">Ranking</div></div>
-            <div class="session-bar-item"><div class="sbi-val" id="sbi-tilt">—</div><div class="sbi-lbl">Tilt Index</div></div>
-            <div class="session-bar-item"><div class="sbi-val" id="sbi-cs">—</div><div class="sbi-lbl">CS/min</div></div>
-            <div class="session-bar-item"><div class="sbi-val" id="sbi-vs">—</div><div class="sbi-lbl">Vision</div></div>
-
-          </div>
 
           <div class="history-controls">
             <div style="display:flex; align-items:center; gap:12px;">
@@ -1218,6 +1327,7 @@
         <button class="close-btn" onclick="closeModal('master-edit-modal')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
       <p style="font-size:12px;color:var(--text-muted);margin-bottom:20px;line-height:1.6;">
+        Au-dessus de Diamond I, le rang (Master / Grandmaster / Challenger) ne change plus automatiquement avec les LP. Mets-le à jour ici toi-même quand tu montes ou descends de rang. Les LP saisis dans le formulaire de game continueront à s'ajouter ou se soustraire normalement.
       </p>
       <div class="grid-2" style="margin-bottom:16px;">
         <div class="fgroup">
@@ -1422,6 +1532,9 @@
       }
 
       if (data) S = data;
+
+      // Migration des liens rapides (dépend de S, donc une fois les données chargées)
+      initLinks();
 
       // 3. Lance le rendu
       function ap() { return S.profiles.find(p => p.id === S.activeProfileId) || S.profiles[0] || null; }
@@ -1995,6 +2108,17 @@
     let _miniChartData = null;
     let _miniHoverAttached = false;
 
+    function setMiniChartPeriod(period) {
+      window._miniChartPeriod = period;
+      ['1j','30j','3m','all'].forEach(p => {
+        const btn = document.getElementById('mc-period-'+p);
+        if (!btn) return;
+        btn.style.background = p===period ? 'var(--accent)' : 'transparent';
+        btn.style.color      = p===period ? '#fff' : 'var(--text-muted)';
+      });
+      drawMiniLPChart();
+    }
+
     function drawMiniLPChart() {
       const p = ap(); if(!p) return;
       const canvas = document.getElementById('ov-lp-mini'); if(!canvas) return;
@@ -2010,15 +2134,39 @@
       ctx.clearRect(0, 0, CSSw, CSSh);
       const W = CSSw, H = CSSh;
 
-      const games = p.games;
-      if(!games.length) {
+      const allGamesRaw = p.games;
+      if(!allGamesRaw.length) {
         ctx.fillStyle = 'rgba(100,116,139,0.35)';
         ctx.font = "11px 'Inter'"; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText('Aucune game', W/2, H/2); return;
       }
 
-      const initLP = p.setup?.initialRank ? r2lp(p.setup.initialRank.rank, p.setup.initialRank.div, p.setup.initialRank.lp) : 0;
+      // Filtre de période : 1j / 30j / 3 mois / all
+      const period = window._miniChartPeriod || 'all';
+      const periodDays = period === '1j' ? 1 : period === '30j' ? 30 : period === '3m' ? 90 : null;
+      let games = allGamesRaw;
+      if (periodDays) {
+        const cutoff = Date.now() - periodDays * 24 * 3600 * 1000;
+        games = allGamesRaw.filter(g => g.ts && g.ts >= cutoff);
+      }
+
+      if(!games.length) {
+        ctx.fillStyle = 'rgba(100,116,139,0.35)';
+        ctx.font = "11px 'Inter'"; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('Aucune game sur cette période', W/2, H/2); return;
+      }
+
       const allReversed = [...games].reverse();
+      // Point de départ : le rang initial du compte pour "All", sinon le rang
+      // juste avant la première game de la période sélectionnée.
+      let initLP;
+      if (!periodDays) {
+        initLP = p.setup?.initialRank ? r2lp(p.setup.initialRank.rank, p.setup.initialRank.div, p.setup.initialRank.lp) : 0;
+      } else {
+        const firstGame = allReversed[0];
+        const ref = firstGame.rankBefore || firstGame.rankAfter;
+        initLP = r2lp(ref.rank, ref.div||null, ref.lp);
+      }
       const points   = [initLP, ...allReversed.map(g => r2lp(g.rankAfter.rank, g.rankAfter.div||null, g.rankAfter.lp))];
       const gameRefs = [null, ...allReversed];
 
@@ -2444,9 +2592,12 @@
         let wins = 0, losses = 0, kSum = 0, dSum = 0, aSum = 0, csSum = 0, csN = 0;
         let tkSum = 0, tdSum = 0, taSum = 0, tkN = 0;
         let tiltSum = 0, tiltN = 0;
+        let kdaRatioSum = 0; // somme des KDA individuels (par game), pour calculer une moyenne par jour
         dGames.forEach(g => {
            if(g.result === 'win') wins++; else if(g.result === 'loss') losses++;
            kSum += g.k||0; dSum += g.d||0; aSum += g.a||0;
+           const gd = g.d || 0;
+           kdaRatioSum += gd === 0 ? ((g.k||0) + (g.a||0)) : (((g.k||0) + (g.a||0)) / gd);
            if(g.csm) { csSum += g.csm; csN++; }
            if(g.teamKda) { tkSum+=g.teamKda.k; tdSum+=g.teamKda.d; taSum+=g.teamKda.a; tkN++; }
            if(g.tiltNote != null) { tiltSum += g.tiltNote; tiltN++; }
@@ -2461,7 +2612,9 @@
         const totalGames = wins + losses;
         const wrPct = totalGames > 0 ? Math.round(wins / totalGames * 100) : 0;
         const wrColor = wrPct >= 50 ? 'var(--win-color)' : 'var(--loss-color)';
-        const avgKda = dSum === 0 ? (kSum+aSum > 0 ? '∞' : '0.00') : ((kSum+aSum)/dSum).toFixed(2);
+        // Moyenne du KDA par game (et non le cumul de la journée)
+        const avgKdaNum = dGames.length > 0 ? kdaRatioSum / dGames.length : 0;
+        const avgKda = dGames.length === 0 ? '0.00' : avgKdaNum.toFixed(2);
         const realKda = `${kSum}/${dSum}/${aSum}`;
         const avgCs = csN > 0 ? (csSum/csN).toFixed(1) : '-';
 
@@ -2476,10 +2629,9 @@
           : (tkSum+taSum)/tdSum >= 2.5 ? '#2ecc71'
           : 'var(--loss-color)';
 
-        // KDA perso color
-        const kdaNumVal = dSum===0 ? Infinity : (kSum+aSum)/dSum;
-        const kdaColor = dSum===0&&(kSum+aSum>0) ? '#c89b3c'
-          : kdaNumVal>=6 ? '#c89b3c' : kdaNumVal>=4 ? '#4171ff'
+        // KDA perso color (basé sur la moyenne par game)
+        const kdaNumVal = avgKdaNum;
+        const kdaColor = kdaNumVal>=6 ? '#c89b3c' : kdaNumVal>=4 ? '#4171ff'
           : kdaNumVal>=2.5 ? '#2ecc71' : 'var(--text-muted)';
 
         // Header for the date
@@ -3301,6 +3453,7 @@
 
     function masterRender() {
       renderHeader();
+      renderNavLinks();
       
       S.filter = 'all';
       document.querySelectorAll('.r-btn').forEach(btn => btn.classList.remove('active'));
@@ -3517,9 +3670,9 @@
     function toggleSessionBar(btn) {
       _sbarVisible = !_sbarVisible;
       const bar = document.getElementById('session-bar-row');
-      const bar2 = document.getElementById('session-bar-secondary');
+      const summaryExtra = document.getElementById('summary-extra');
       if(bar) bar.style.display = _sbarVisible ? '' : 'none';
-      if(bar2) bar2.style.display = _sbarVisible ? '' : 'none';
+      if(summaryExtra) summaryExtra.style.display = _sbarVisible ? '' : 'none';
       if(btn) { btn.style.opacity = _sbarVisible ? '1' : '0.4'; btn.title = _sbarVisible ? 'Masquer les indicateurs' : 'Afficher les indicateurs'; }
     }
 
@@ -3664,25 +3817,29 @@
             // s'écoule plus de 2h entre deux games consécutives.
             const SESSION_GAP = 2 * 3600 * 1000;
             const withTs = allGames.filter(g => g.ts).slice().sort((a,b) => a.ts - b.ts);
-            sessions = [];
+            let allSessions = [];
             withTs.forEach(g => {
-              const last = sessions[sessions.length - 1];
+              const last = allSessions[allSessions.length - 1];
               if (!last || (g.ts - last.lastTs) > SESSION_GAP) {
-                sessions.push({ startTs: g.ts, lastTs: g.ts, lp: 0, w: 0, l: 0, n: 0 });
+                allSessions.push({ startTs: g.ts, lastTs: g.ts, lp: 0, w: 0, l: 0, n: 0 });
               }
-              const s = sessions[sessions.length - 1];
+              const s = allSessions[allSessions.length - 1];
               s.lastTs = g.ts;
               s.lp += Number(g.lpChange) || 0;
               s.n++;
               if (g.result === 'win') s.w++;
               else if (g.result === 'loss') s.l++;
             });
+            // On n'affiche que les 8 dernières sessions
+            sessions = allSessions.slice(-8);
             labels = sessions.map(s => new Date(s.startTs).toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit' }));
-            values = sessions.map(s => Math.round(s.lp));
+            values = sessions.map(s => {
+              const t = s.w + s.l;
+              return t > 0 ? Math.round(s.w/t*100) : null;
+            });
           }
           hasData = values.some(v => v !== null);
-          const maxAbs = Math.max(1, ...values.filter(v=>v!==null).map(Math.abs));
-          colors = values.map(v => v === null ? null : v > 0 ? '#2ecc71' : v < 0 ? '#f84f54' : 'var(--text-muted)');
+          colors = values.map(v => v === null ? null : v >= 60 ? '#2ecc71' : v >= 50 ? '#f0c040' : '#f84f54');
         }
 
         const n = labels.length;
@@ -3700,7 +3857,7 @@
 
         let minV = Math.min(...nonNull);
         let maxV = Math.max(...nonNull);
-        if (mode === 'wr' || mode === 'day') { minV = Math.min(minV, 0); maxV = Math.max(maxV, 100); }
+        if (mode === 'wr' || mode === 'day' || mode === 'lp') { minV = Math.min(minV, 0); maxV = Math.max(maxV, 100); }
         else { minV = Math.min(minV, 0); maxV = Math.max(maxV, 0); }
         if (minV === maxV) { minV -= 10; maxV += 10; }
         const range = maxV - minV;
@@ -3715,14 +3872,7 @@
           ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(PAD.left+cW, y); ctx.stroke();
         }
 
-        // Ligne zéro si LP
-        if (mode === 'lp') {
-          ctx.strokeStyle = 'rgba(255,255,255,0.15)';
-          ctx.lineWidth = 1;
-          ctx.setLineDash([3,3]);
-          ctx.beginPath(); ctx.moveTo(PAD.left, zero_y); ctx.lineTo(PAD.left+cW, zero_y); ctx.stroke();
-          ctx.setLineDash([]);
-        }
+        // (barres partent de 0, pas de ligne pointillée nécessaire en % comme pour WR/Jour)
 
         // Barres
         values.forEach((v, i) => {
@@ -3756,7 +3906,7 @@
         [0, 0.5, 1].forEach(t => {
           const v = Math.round(minV + t*range);
           const y = PAD.top + cH*(1-t);
-          ctx.fillText((mode==='wr'||mode==='day') ? v+'%' : (v>0?'+':'')+v, PAD.left-4, y+3);
+          ctx.fillText((mode==='wr'||mode==='day'||mode==='lp') ? v+'%' : (v>0?'+':'')+v, PAD.left-4, y+3);
         });
 
         // Stocke les données pour le tooltip
@@ -3793,10 +3943,13 @@
             html += `<div style="color:${values[idx]>=50?'#2ecc71':'#f84f54'};font-weight:700;font-size:13px;">${values[idx]}%</div>`;
           } else {
             const v = values[idx];
-            html += `<div style="color:${v>0?'#2ecc71':v<0?'#f84f54':'#aaa'};font-weight:700;font-size:13px;">${v>0?'+':''}${v} LP</div>`;
-            if (sessions && sessions[idx]) {
-              const s = sessions[idx];
-              html += `<div style="color:var(--text-muted);font-size:10px;margin-top:3px;">${s.n} game${s.n>1?'s':''} <span style="color:#2ecc71;">${s.w}W</span> <span style="color:#f84f54;">${s.l}L</span></div>`;
+            const s = sessions && sessions[idx];
+            if (s) {
+              html += `<div style="color:#2ecc71;">${s.w}W <span style="color:#f84f54;">${s.l}L</span></div>`;
+              html += `<div style="color:${v>=50?'#2ecc71':'#f84f54'};font-weight:700;font-size:13px;">${v}%</div>`;
+              html += `<div style="color:var(--text-muted);font-size:10px;margin-top:3px;">${s.n} game${s.n>1?'s':''} · ${s.lp>=0?'+':''}${Math.round(s.lp)} LP</div>`;
+            } else {
+              html += `<div style="color:${v>=50?'#2ecc71':'#f84f54'};font-weight:700;font-size:13px;">${v}%</div>`;
             }
           }
 
@@ -4120,8 +4273,7 @@
       }
     };
 
-    // Init nav links on load
-    window.addEventListener('DOMContentLoaded', () => { initLinks(); });
+    // (initLinks() est maintenant appelé depuis initApp() une fois les données chargées)
 
     /* =========================================================
        WINRATE PAR RÔLE
