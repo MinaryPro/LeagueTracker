@@ -398,6 +398,24 @@
   .champ-dropdown { position: absolute; top: 100%; left: 0; right: 0; margin-top: 4px; background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 8px; max-height: 200px; overflow-y: auto; z-index: 100; box-shadow: 0 10px 25px rgba(0,0,0,0.5); display: none; }
   .champ-option { display: flex; align-items: center; gap: 12px; padding: 8px 12px; cursor: pointer; transition: 0.15s; }
   .champ-option:hover, .champ-option-active { background: var(--bg-card-hover); }
+
+  /* Contre-picks (Matchups) */
+  .mu-champ-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(72px, 1fr)); gap: 10px; max-height: 380px; overflow-y: auto; padding-right: 4px; }
+  .mu-champ-cell { display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; padding: 6px 2px; border-radius: 10px; border: 1px solid transparent; transition: 0.15s; }
+  .mu-champ-cell:hover { background: rgba(255,255,255,0.04); }
+  .mu-champ-cell.selected { border-color: var(--accent); background: var(--accent-dim); }
+  .mu-champ-cell img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-light); }
+  .mu-champ-cell span { font-size: 9.5px; color: var(--text-muted); text-align: center; line-height: 1.15; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mu-champ-cell.selected span { color: var(--text-main); font-weight: 600; }
+  .mu-counter-pill { display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; }
+  .mu-counter-pill img { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-light); }
+  .ctr-tag { display: flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 8px; padding: 4px 8px 4px 4px; font-size: 11px; color: var(--text-muted); cursor: pointer; transition: 0.15s; }
+  .ctr-tag:hover { border-color: var(--accent); color: var(--text-main); }
+  .ctr-tag img { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
+  .ctr-row-item { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; }
+  .ctr-row-item img { width: 26px; height: 26px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border-light); }
+  .ctr-row-item .ctr-remove { margin-left: auto; background: none; border: none; color: var(--text-dark); cursor: pointer; font-size: 14px; padding: 2px 6px; border-radius: 5px; transition: 0.15s; }
+  .ctr-row-item .ctr-remove:hover { color: var(--loss-color); background: var(--loss-bg); }
   .champ-option-active { border-left: 2px solid var(--accent); }
   .champ-option img { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
   
@@ -997,29 +1015,47 @@
         <div class="card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
           <span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:6px;vertical-align:-2px;"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6"/><path d="M16 16l4 4"/><path d="M19 21l2-2"/></svg>
-            Matchup Analysis
+            Contre-picks
           </span>
-          <div style="display:flex;gap:8px;align-items:center;">
-            <select id="mu-role-filter" class="fselect" style="font-size:11px;padding:4px 8px;width:auto;" onchange="renderMatchupsTab()">
-              <option value="">All Roles</option>
-              <option>Top</option><option>Jungle</option><option>Mid</option><option>ADC</option><option>Support</option>
-            </select>
-            <select id="mu-champ-filter" class="fselect" style="font-size:11px;padding:4px 8px;width:auto;" onchange="renderMatchupsTab()">
-              <option value="">All Champions</option>
-            </select>
-            <select id="mu-sort" class="fselect" style="font-size:11px;padding:4px 8px;width:auto;" onchange="renderMatchupsTab()">
-              <option value="games">Most Played</option>
-              <option value="wr_asc">Worst Winrate</option>
-              <option value="wr_desc">Best Winrate</option>
-              <option value="kda">Best KDA</option>
-            </select>
-          </div>
+          <button class="r-btn" onclick="openCountersModal()" title="Réglages des contre-picks" style="width:auto;padding:0 12px;font-size:11px;gap:6px;display:flex;align-items:center;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Réglages
+          </button>
         </div>
         <div style="padding:16px;">
-          <!-- Summary row -->
-          <div id="mu-summary" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;"></div>
-          <!-- Table -->
-          <div id="mu-table" style="overflow-x:auto;"></div>
+          <input id="mu-champ-search" class="finput" placeholder="Rechercher un champion ennemi..." style="margin-bottom:14px;" oninput="renderMatchupsTab()">
+          <div id="mu-champ-grid" class="mu-champ-grid"></div>
+          <div id="mu-result" style="margin-top:22px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COUNTERS SETTINGS MODAL -->
+    <div class="modal-overlay hidden" id="counters-modal" onclick="if(event.target===this)closeModal('counters-modal')">
+      <div class="modal large" onclick="event.stopPropagation()" style="max-width:520px;">
+        <div class="modal-title">
+          Réglages des contre-picks
+          <button class="close-btn" onclick="closeModal('counters-modal')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+
+        <div class="fgroup">
+          <label class="flabel">Champion ennemi</label>
+          <div class="champ-input-container"><input class="finput champ-search-input" id="ctr-champ-input" type="text" autocomplete="off" placeholder="Choisir un champion..."><div id="ctr-champ-dropdown" class="champ-dropdown"></div></div>
+        </div>
+
+        <div id="ctr-current-list" style="margin:14px 0;"></div>
+
+        <div class="fgroup" id="ctr-add-row" style="display:none;">
+          <label class="flabel">Ajouter un contre-pick</label>
+          <div style="display:flex;gap:8px;">
+            <div class="champ-input-container" style="flex:1;"><input class="finput champ-search-input" id="ctr-add-input" type="text" autocomplete="off" placeholder="Nom du champion contre-pick..."><div id="ctr-add-dropdown" class="champ-dropdown"></div></div>
+            <button class="btn-primary" onclick="addCounterFromModal()" style="white-space:nowrap;padding:0 14px;">+ Ajouter</button>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;padding-top:14px;border-top:1px dashed var(--border);">
+          <label class="flabel">Champions déjà configurés</label>
+          <div id="ctr-configured-list" style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;"></div>
         </div>
       </div>
     </div>
@@ -1534,6 +1570,7 @@
         // Re-render once images are available to prevent blank spots
         if(document.getElementById('page-overview').classList.contains('active')) renderOverview();
         if(document.getElementById('page-champions').classList.contains('active')) renderChampionsTab();
+        if(document.getElementById('page-matchups').classList.contains('active')) renderMatchupsTab();
       } catch (err) {}
     }
     loadChampions();
@@ -1673,6 +1710,19 @@
       setupAutocomplete('e-champ2', 'e-champ2-dropdown');
       setupAutocomplete('e-matchup', 'e-vs-dropdown');
       setupAutocomplete('e-matchup2', 'e-vs2-dropdown');
+
+      setupAutocomplete('ctr-champ-input', 'ctr-champ-dropdown');
+      setupAutocomplete('ctr-add-input', 'ctr-add-dropdown');
+      const ctrChampInp = document.getElementById('ctr-champ-input');
+      if (ctrChampInp) {
+        const syncCtrChamp = () => {
+          const val = ctrChampInp.value.trim();
+          const champObj = championsData.find(c => normalizeStr(c.name) === normalizeStr(val));
+          if (champObj) setCtrModalChamp(champObj.name);
+        };
+        ctrChampInp.addEventListener('change', syncCtrChamp);
+        ctrChampInp.addEventListener('blur', () => setTimeout(syncCtrChamp, 160));
+      }
     }, 1000);
 
     /* Gestion Duo Botlane */
@@ -1886,127 +1936,187 @@
       }
     }
 
+    /* =========================================================
+       CONTRE-PICKS (MATCHUPS) — 100% manuel, choisi par l'utilisateur
+       Stocké dans le profil actif : p.counters = { "Ennemi": ["Contre1","Contre2", ...] }
+       ========================================================= */
+    let _muSelectedChamp = null;
+    let _ctrModalChamp = null;
+
+    function getCounters() {
+      const p = ap();
+      if (!p) return {};
+      if (!p.counters || typeof p.counters !== 'object') p.counters = {};
+      return p.counters;
+    }
+    function saveCounters() { save(); }
+
     function renderMatchupsTab() {
-      const p = ap(); if(!p) return;
-      const games = p.games;
+      const p = ap(); if (!p) return;
+      const query = (document.getElementById('mu-champ-search')?.value || '').trim();
+      const gridEl = document.getElementById('mu-champ-grid');
+      if (!gridEl) return;
 
-      // Populate champion filter
-      const champSel = document.getElementById('mu-champ-filter');
-      const currentChampVal = champSel ? champSel.value : '';
-      const allChamps = [...new Set(games.map(g => g.champion).filter(Boolean))].sort();
-      if(champSel) {
-        champSel.innerHTML = '<option value="">All Champions</option>' +
-          allChamps.map(c => `<option ${c===currentChampVal?'selected':''}>${c}</option>`).join('');
-      }
-
-      const roleFilter = document.getElementById('mu-role-filter')?.value || '';
-      const champFilter = champSel?.value || '';
-      const sortMode = document.getElementById('mu-sort')?.value || 'games';
-
-      // Filter games that have a matchup
-      let filtered = games.filter(g => g.matchup && g.result !== 'remake');
-      if(roleFilter) filtered = filtered.filter(g => g.role === roleFilter);
-      if(champFilter) filtered = filtered.filter(g => g.champion === champFilter);
-
-      // Aggregate by matchup opponent
-      const mu = {};
-      filtered.forEach(g => {
-        const key = g.matchup.trim();
-        if(!key) return;
-        if(!mu[key]) mu[key] = { name: key, wins: 0, losses: 0, kSum: 0, dSum: 0, aSum: 0, champs: {}, roles: {} };
-        const m = mu[key];
-        if(g.result === 'win') m.wins++; else m.losses++;
-        m.kSum += g.k||0; m.dSum += g.d||0; m.aSum += g.a||0;
-        m.champs[g.champion||'?'] = (m.champs[g.champion||'?']||0) + 1;
-        m.roles[g.role||'?'] = (m.roles[g.role||'?']||0) + 1;
-      });
-
-      let rows = Object.values(mu).map(m => {
-        const total = m.wins + m.losses;
-        const wr = Math.round(m.wins / total * 100);
-        const kda = m.dSum === 0 ? Infinity : (m.kSum + m.aSum) / m.dSum;
-        const topChamp = Object.entries(m.champs).sort((a,b)=>b[1]-a[1])[0]?.[0] || '—';
-        return { ...m, total, wr, kda, topChamp };
-      });
-
-      // Sort
-      if(sortMode === 'wr_asc') rows.sort((a,b) => a.wr - b.wr || b.total - a.total);
-      else if(sortMode === 'wr_desc') rows.sort((a,b) => b.wr - a.wr || b.total - a.total);
-      else if(sortMode === 'kda') rows.sort((a,b) => b.kda - a.kda);
-      else rows.sort((a,b) => b.total - a.total);
-
-      // Summary cards
-      const totalMu = rows.length;
-      const counters = rows.filter(r => r.wr < 50 && r.total >= 2);
-      const favourable = rows.filter(r => r.wr >= 60 && r.total >= 2);
-      const mostPlayed = rows[0]?.name || '—';
-      const summaryEl = document.getElementById('mu-summary');
-      if(summaryEl) summaryEl.innerHTML = [
-        { label: 'Unique Matchups', val: totalMu, color: 'var(--accent)' },
-        { label: 'Favourable (≥60%)', val: favourable.length, color: 'var(--win-color)' },
-        { label: 'Counter (< 50%)', val: counters.length, color: 'var(--loss-color)' },
-        { label: 'Most Faced', val: mostPlayed, color: 'var(--text-muted)', small: true },
-      ].map(c => `
-        <div style="background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:10px;padding:14px 16px;text-align:center;">
-          <div style="font-family:'Rajdhani',sans-serif;font-size:${c.small?'16px':'26px'};font-weight:800;color:${c.color};line-height:1.1;">${c.val}</div>
-          <div style="font-size:9px;color:var(--text-dark);text-transform:uppercase;font-weight:600;letter-spacing:0.5px;margin-top:4px;">${c.label}</div>
-        </div>`).join('');
-
-      // Table
-      const tableEl = document.getElementById('mu-table');
-      if(!tableEl) return;
-      if(!rows.length) {
-        tableEl.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dark);">No matchup data yet — add games with an opponent filled in.</div>';
+      if (!championsData.length) {
+        gridEl.innerHTML = '<div style="padding:30px;text-align:center;color:var(--text-dark);">Chargement de la liste des champions...</div>';
         return;
       }
 
-      tableEl.innerHTML = `
-        <table style="width:100%;border-collapse:collapse;font-size:13px;">
-          <thead>
-            <tr style="border-bottom:1px solid var(--border);color:var(--text-dark);font-size:10px;text-transform:uppercase;letter-spacing:0.5px;">
-              <th style="padding:8px 12px;text-align:left;font-weight:600;">Opponent</th>
-              <th style="padding:8px 12px;text-align:center;font-weight:600;">Games</th>
-              <th style="padding:8px 12px;text-align:center;font-weight:600;">W / L</th>
-              <th style="padding:8px 12px;text-align:center;font-weight:600;">Winrate</th>
-              <th style="padding:8px 12px;text-align:left;font-weight:600;">WR Bar</th>
-              <th style="padding:8px 12px;text-align:center;font-weight:600;">KDA</th>
-              <th style="padding:8px 12px;text-align:center;font-weight:600;">K/D/A</th>
-              <th style="padding:8px 12px;text-align:left;font-weight:600;">Played As</th>
-              <th style="padding:8px 12px;text-align:center;font-weight:600;">Tag</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${rows.map((r, i) => {
-              const wrColor = r.wr >= 60 ? 'var(--win-color)' : r.wr < 50 ? 'var(--loss-color)' : 'var(--text-muted)';
-              const kdaStr = r.dSum === 0 ? '∞' : r.kda.toFixed(2);
-              const kdaColor = r.kda >= 4 ? '#c89b3c' : r.kda >= 2.5 ? 'var(--win-color)' : r.kda < 1.5 ? 'var(--loss-color)' : 'var(--text-muted)';
-              const tag = r.total >= 2
-                ? r.wr >= 70 ? `<span style="background:rgba(46,204,113,0.12);color:var(--win-color);border:1px solid rgba(46,204,113,0.2);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">Stomp</span>`
-                : r.wr >= 60 ? `<span style="background:rgba(65,113,255,0.12);color:#5DA3E0;border:1px solid rgba(65,113,255,0.2);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">Favourable</span>`
-                : r.wr < 35 ? `<span style="background:rgba(248,79,84,0.12);color:var(--loss-color);border:1px solid rgba(248,79,84,0.2);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">Hard Counter</span>`
-                : r.wr < 50 ? `<span style="background:rgba(230,126,34,0.12);color:#e67e22;border:1px solid rgba(230,126,34,0.2);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">Counter</span>`
-                : `<span style="color:var(--text-dark);font-size:10px;">Even</span>`
-                : `<span style="color:var(--text-dark);font-size:10px;">—</span>`;
-              const topChamps = Object.entries(r.champs).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([c,n])=>`<span style="font-size:11px;color:var(--text-muted);">${c}</span>`).join('<span style="color:var(--text-dark);margin:0 3px;">·</span>');
-              return `
-              <tr style="border-bottom:1px solid rgba(255,255,255,0.04);transition:0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.025)'" onmouseout="this.style.background=''">
-                <td style="padding:10px 12px;font-weight:600;color:var(--text-main);">${r.name}</td>
-                <td style="padding:10px 12px;text-align:center;color:var(--text-muted);">${r.total}</td>
-                <td style="padding:10px 12px;text-align:center;"><span style="color:var(--win-color);">${r.wins}W</span> <span style="color:var(--text-dark);">/</span> <span style="color:var(--loss-color);">${r.losses}L</span></td>
-                <td style="padding:10px 12px;text-align:center;font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:800;color:${wrColor};">${r.wr}%</td>
-                <td style="padding:10px 12px;min-width:90px;">
-                  <div style="background:rgba(248,79,84,0.15);border-radius:3px;height:6px;overflow:hidden;">
-                    <div style="background:var(--win-color);height:100%;width:${r.wr}%;border-radius:3px;transition:width 0.4s;"></div>
-                  </div>
-                </td>
-                <td style="padding:10px 12px;text-align:center;font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;color:${kdaColor};">${kdaStr}</td>
-                <td style="padding:10px 12px;text-align:center;font-size:11px;color:var(--text-dark);">${r.kSum}/${r.dSum}/${r.aSum}</td>
-                <td style="padding:10px 12px;">${topChamps}</td>
-                <td style="padding:10px 12px;text-align:center;">${tag}</td>
-              </tr>`;
-            }).join('')}
-          </tbody>
-        </table>`;
+      const counters = getCounters();
+      const list = championsData.filter(c => !query || normalizeStr(c.name).includes(normalizeStr(query)));
+
+      gridEl.innerHTML = list.map(c => `
+        <div class="mu-champ-cell ${c.name === _muSelectedChamp ? 'selected' : ''}" onclick="selectMatchupChamp('${c.name.replace(/'/g, "\\'")}')">
+          <img src="${c.iconUrl}" onerror="this.src='https://ddragon.leagueoflegends.com/cdn/14.8.1/img/profileicon/29.png'">
+          <span>${c.name}</span>
+        </div>`).join('') || '<div style="padding:20px;text-align:center;color:var(--text-dark);">Aucun champion trouvé.</div>';
+
+      renderMuResult();
+    }
+
+    function selectMatchupChamp(name) {
+      _muSelectedChamp = (_muSelectedChamp === name) ? null : name;
+      renderMatchupsTab();
+    }
+
+    function renderMuResult() {
+      const resEl = document.getElementById('mu-result');
+      if (!resEl) return;
+
+      if (!_muSelectedChamp) {
+        resEl.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text-dark);font-size:13px;">Sélectionne le champion adverse ci-dessus pour voir tes contre-picks.</div>';
+        return;
+      }
+
+      const counters = getCounters();
+      const list = counters[_muSelectedChamp] || [];
+      const champIcon = getChampIcon(_muSelectedChamp);
+
+      let body;
+      if (list.length === 0) {
+        body = `
+          <div style="text-align:center;padding:26px 16px;border:1px dashed var(--border);border-radius:12px;">
+            <div style="font-size:12px;color:var(--text-dark);margin-bottom:12px;">Aucun contre-pick enregistré pour ce champion.</div>
+            <button class="btn-primary" onclick="openCountersModal('${_muSelectedChamp.replace(/'/g, "\\'")}')" style="padding:8px 16px;">+ Ajouter</button>
+          </div>`;
+      } else {
+        body = `
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            ${list.map(name => `
+              <div class="mu-counter-pill">
+                <img src="${getChampIcon(name)}" onerror="this.src='https://ddragon.leagueoflegends.com/cdn/14.8.1/img/profileicon/29.png'">
+                <span style="font-size:12px;font-weight:600;color:var(--text-main);">${name}</span>
+              </div>`).join('')}
+          </div>`;
+      }
+
+      resEl.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);">
+          <img src="${champIcon}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--border-light);" onerror="this.src='https://ddragon.leagueoflegends.com/cdn/14.8.1/img/profileicon/29.png'">
+          <div>
+            <div style="font-size:15px;font-weight:700;color:var(--text-main);">Contre ${_muSelectedChamp}</div>
+            <div style="font-size:11px;color:var(--text-dark);">Tes contre-picks enregistrés</div>
+          </div>
+        </div>
+        ${body}`;
+    }
+
+    /* ── Modal de réglages ── */
+    function openCountersModal(prefillChamp) {
+      document.getElementById('counters-modal').classList.remove('hidden');
+      const input = document.getElementById('ctr-champ-input');
+      if (prefillChamp) {
+        input.value = prefillChamp;
+        _ctrModalChamp = prefillChamp;
+      } else if (!input.value) {
+        _ctrModalChamp = null;
+      }
+      renderCtrCurrentList();
+      renderCtrConfiguredList();
+    }
+
+    function setCtrModalChamp(name) {
+      _ctrModalChamp = name;
+      document.getElementById('ctr-champ-input').value = name;
+      renderCtrCurrentList();
+    }
+
+    function renderCtrCurrentList() {
+      const listEl = document.getElementById('ctr-current-list');
+      const addRow = document.getElementById('ctr-add-row');
+      if (!listEl) return;
+
+      if (!_ctrModalChamp) {
+        listEl.innerHTML = '';
+        if (addRow) addRow.style.display = 'none';
+        return;
+      }
+      if (addRow) addRow.style.display = 'block';
+
+      const counters = getCounters();
+      const list = counters[_ctrModalChamp] || [];
+
+      listEl.innerHTML = `
+        <label class="flabel">Contre-picks pour ${_ctrModalChamp}</label>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px;">
+          ${list.length ? list.map(name => `
+            <div class="ctr-row-item">
+              <img src="${getChampIcon(name)}" onerror="this.src='https://ddragon.leagueoflegends.com/cdn/14.8.1/img/profileicon/29.png'">
+              <span style="font-size:12px;color:var(--text-main);">${name}</span>
+              <button class="ctr-remove" onclick="removeCounterFromChamp('${_ctrModalChamp.replace(/'/g, "\\'")}', '${name.replace(/'/g, "\\'")}')" title="Retirer">✕</button>
+            </div>`).join('') : '<div style="font-size:11px;color:var(--text-dark);padding:6px 0;">Aucun contre-pick enregistré pour le moment.</div>'}
+        </div>`;
+    }
+
+    function addCounterFromModal() {
+      const addInput = document.getElementById('ctr-add-input');
+      const counterName = addInput.value.trim();
+      if (!_ctrModalChamp || !counterName) return;
+      const champObj = championsData.find(c => normalizeStr(c.name) === normalizeStr(counterName));
+      const finalName = champObj ? champObj.name : counterName;
+      addCounterToChamp(_ctrModalChamp, finalName);
+      addInput.value = '';
+      document.getElementById('ctr-add-dropdown').style.display = 'none';
+    }
+
+    function addCounterToChamp(champ, counterName) {
+      const counters = getCounters();
+      if (!counters[champ]) counters[champ] = [];
+      if (!counters[champ].some(n => normalizeStr(n) === normalizeStr(counterName))) {
+        counters[champ].push(counterName);
+        saveCounters();
+      }
+      renderCtrCurrentList();
+      renderCtrConfiguredList();
+      renderMatchupsTab();
+    }
+
+    function removeCounterFromChamp(champ, counterName) {
+      const counters = getCounters();
+      if (!counters[champ]) return;
+      counters[champ] = counters[champ].filter(n => n !== counterName);
+      if (counters[champ].length === 0) delete counters[champ];
+      saveCounters();
+      renderCtrCurrentList();
+      renderCtrConfiguredList();
+      renderMatchupsTab();
+    }
+
+    function renderCtrConfiguredList() {
+      const el = document.getElementById('ctr-configured-list');
+      if (!el) return;
+      const counters = getCounters();
+      const champs = Object.keys(counters).filter(c => counters[c].length > 0);
+      if (!champs.length) {
+        el.innerHTML = '<div style="font-size:11px;color:var(--text-dark);">Aucun champion configuré pour le moment.</div>';
+        return;
+      }
+      el.innerHTML = champs.map(name => `
+        <div class="ctr-tag" onclick="setCtrModalChamp('${name.replace(/'/g, "\\'")}')">
+          <img src="${getChampIcon(name)}" onerror="this.src='https://ddragon.leagueoflegends.com/cdn/14.8.1/img/profileicon/29.png'">
+          <span>${name}</span>
+          <span style="color:var(--text-dark);">(${counters[name].length})</span>
+        </div>`).join('');
     }
 
     function renderProgression() {
