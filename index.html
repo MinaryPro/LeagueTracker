@@ -12,9 +12,9 @@
 <style>
   :root {
     --bg-main: #000000;
-    --bg-card: #1c1c1eb3;
-    --bg-card-hover: #2c2c2ecc;
-    --bg-header: #000000cc;
+    --bg-card: #000000;
+    --bg-card-hover: #0d0d0d;
+    --bg-header: #000000;
     --border: rgba(255,255,255,0.09);
     --border-light: rgba(255,255,255,0.16);
 
@@ -22,16 +22,16 @@
     --text-muted: rgba(235,235,245,0.6);
     --text-dark: rgba(235,235,245,0.38);
 
-    --win-color: #30D158;
-    --win-bg: rgba(48, 209, 88, 0.12);
-    --win-border: rgba(48, 209, 88, 0.35);
+    --win-color: #6FC98D;
+    --win-bg: rgba(111, 201, 141, 0.12);
+    --win-border: rgba(111, 201, 141, 0.35);
 
-    --loss-color: #FF453A;
-    --loss-bg: rgba(255, 69, 58, 0.12);
-    --loss-border: rgba(255, 69, 58, 0.35);
+    --loss-color: #E2827A;
+    --loss-bg: rgba(226, 130, 122, 0.12);
+    --loss-border: rgba(226, 130, 122, 0.35);
 
-    --accent: #0A84FF;
-    --accent-dim: rgba(10, 132, 255, 0.16);
+    --accent: #5DA3E0;
+    --accent-dim: rgba(93, 163, 224, 0.16);
     --radius: 20px;
 
     --glass-blur: 26px;
@@ -46,10 +46,6 @@
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Inter', sans-serif;
     background-color: var(--bg-main);
-    background-image:
-      radial-gradient(circle at 15% 0%, rgba(10,132,255,0.14) 0%, transparent 45%),
-      radial-gradient(circle at 85% 15%, rgba(191,90,242,0.10) 0%, transparent 40%),
-      radial-gradient(circle at 50% 100%, rgba(48,209,88,0.06) 0%, transparent 50%);
     background-attachment: fixed;
     color: var(--text-main);
     font-size: 14px;
@@ -122,7 +118,7 @@
     border-bottom: 1px solid var(--border);
   }
   .profile-header-overlay {
-    background: linear-gradient(to right, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.8) 50%, rgba(0,0,0,0.5) 100%);
+    background: linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.12) 100%);
     width: 100%; height: 100%;
   }
   .profile-header {
@@ -138,7 +134,6 @@
   .sub-nav {
     max-width: 1140px; margin: 24px auto 0; padding: 4px; gap: 2px;
     display: flex; position: relative; z-index: 2;
-    left: 24px;
     background: rgba(255,255,255,0.06);
     backdrop-filter: blur(var(--glass-blur)) saturate(180%);
     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
@@ -164,7 +159,7 @@
   main { max-width: 1140px; margin: 24px auto; padding: 0 16px 40px; }
   
   .layout-grid { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 24px; align-items: start; }
-  @media (max-width: 900px) { .layout-grid { grid-template-columns: 1fr; } .sub-nav { left: 0; } }
+  @media (max-width: 900px) { .layout-grid { grid-template-columns: 1fr; } }
 
   .card {
     background: var(--bg-card);
@@ -223,17 +218,17 @@
   .cpi-kda-det { font-size: 11px; font-weight: 600; }
 
   /* --- COLONNE DROITE (MAIN) --- */
-  .summary-30g { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; padding: 0; align-items: center; }
-  @media (max-width: 600px) { .summary-30g { grid-template-columns: 1fr 1fr; } }
+  .summary-30g { display: flex; align-items: stretch; padding: 0; overflow-x: auto; }
+  .summary-30g::-webkit-scrollbar { height: 0; }
   .donut-chart { width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
   .donut-inner { width: 48px; height: 48px; border-radius: 50%; background: var(--bg-card); display: flex; flex-direction: column; align-items: center; justify-content: center; }
   .donut-inner span { font-weight: 700; font-size: 13px; line-height: 1; }
   .donut-inner small { font-size: 9px; color: var(--text-dark); }
 
-  .stat-block { text-align: center; }
-  .stat-block .lbl { font-size: 11px; color: var(--text-dark); text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
-  .stat-block .val { font-size: 24px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 4px; font-family:'Rajdhani', sans-serif;}
-  .stat-block .sub { font-size: 11px; color: var(--text-dark); font-weight:500;}
+  .stat-block { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .stat-block .lbl { font-size: 10px; color: var(--text-dark); text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+  .stat-block .val { font-size: 20px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 4px; font-family:'Rajdhani', sans-serif;}
+  .stat-block .sub { font-size: 10px; color: var(--text-dark); font-weight:500;}
 
   /* History Filters */
   .history-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; margin-top: 10px;}
@@ -349,11 +344,24 @@
 
   /* --- FORMULAIRES --- */
   .finput, .fselect {
-    background: rgba(255,255,255,0.06); border: 1px solid var(--border-light); border-radius: 12px;
+    background-color: rgba(255,255,255,0.06); border: 1px solid var(--border-light); border-radius: 12px;
     color: var(--text-main); font-family: inherit; font-size: 13px; padding: 9px 12px;
     outline: none; width: 100%; transition: 0.2s var(--ease-smooth);
   }
-  .finput:focus, .fselect:focus { border-color: var(--accent); background: rgba(255,255,255,0.09); box-shadow: 0 0 0 4px var(--accent-dim); }
+  /* Menu déroulant épuré façon Apple : flèche fine + liste sombre lisible */
+  .fselect {
+    appearance: none; -webkit-appearance: none; -moz-appearance: none;
+    cursor: pointer; padding-right: 30px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e8e93' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 13px 13px;
+  }
+  .fselect option, .fselect optgroup {
+    background-color: #1c1c1e;
+    color: var(--text-main);
+  }
+  .finput:focus, .fselect:focus { border-color: var(--accent); background-color: rgba(255,255,255,0.09); box-shadow: 0 0 0 4px var(--accent-dim); }
   .flabel { font-size: 10px; font-weight: 600; color: var(--text-muted); margin-bottom: 4px; display: block; text-transform: uppercase; }
   .fgroup { display: flex; flex-direction: column; margin-bottom: 10px; }
   
@@ -430,17 +438,15 @@
     border: 1px solid var(--border-light);
     border-radius: var(--radius); overflow: hidden; margin-bottom: 10px;
   }
-  .session-bar-secondary {
-    grid-template-columns: repeat(7, 1fr);
-    margin-bottom: 16px;
-  }
+  .sbar-extra { display: contents; }
   .session-bar-item { 
     padding: 12px 8px; text-align: center; border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
   }
   .session-bar-item:last-child { border-right: none; }
   .session-bar-item:hover { background: rgba(255,255,255,0.05); }
-  .sbi-val { font-family: 'Rajdhani', sans-serif; font-size: 20px; font-weight: 700; color: var(--text-main); line-height: 1; }
-  .sbi-lbl { font-size: 9px; color: var(--text-dark); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px; margin-top: 3px; }
+  .sbi-val { font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-main); line-height: 1; }
+  .sbi-lbl { font-size: 8px; color: var(--text-dark); text-transform: uppercase; font-weight: 600; letter-spacing: 0.3px; margin-top: 3px; }
 
   /* Winrate main bar */
   .winrate-main-bar {
@@ -471,7 +477,7 @@
   .rh-img { width:22px; height:22px; object-fit:contain; flex-shrink:0; }
   .rh-select { background:transparent; border:none; color:var(--text-main); font-size:11px; font-weight:600; font-family:'Rajdhani',sans-serif; cursor:pointer; outline:none; padding:2px 1px; border-radius:4px; flex-shrink:0; min-width:0; max-width:72px; }
   .rh-select:hover { background:rgba(255,255,255,0.05); }
-  .rh-select option { background:var(--bg-card); }
+  .rh-select option { background-color:#1c1c1e; color:var(--text-main); }
   .rh-drag-handle { color:var(--text-dark); cursor:grab; display:flex; align-items:center; flex-shrink:0; padding:0 1px; opacity:0.5; transition:opacity 0.15s; }
   .rh-row:hover .rh-drag-handle { opacity:1; }
   .rh-drag-handle:active { cursor:grabbing; }
@@ -486,61 +492,17 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 999px; }
   /* --- iOS glass polish for small inline-styled toggle buttons --- */
-  #hc-btn-wr, #hc-btn-day, #hc-btn-lp,
+  #hc-btn-wr, #hc-btn-day, #hc-btn-seslen,
   #mc-period-1j, #mc-period-30j, #mc-period-3m, #mc-period-all,
   #lpa-tab-new, #lpa-tab-hist {
     border-radius: 10px !important;
     border-color: var(--border-light) !important;
     font-family: inherit !important;
   }
-  #hc-btn-wr:active, #hc-btn-day:active, #hc-btn-lp:active,
+  #hc-btn-wr:active, #hc-btn-day:active, #hc-btn-seslen:active,
   #mc-period-1j:active, #mc-period-30j:active, #mc-period-3m:active, #mc-period-all:active,
   #lpa-tab-new:active, #lpa-tab-hist:active {
     transform: scale(0.93);
-  }
-  .summary-30g { grid-template-columns: 1fr 1.8fr 1.2fr repeat(5, 0.8fr); justify-items: center; }
-  .summary-kda { padding: 10px 8px !important; }
-  .summary-kda > div:nth-child(2) { gap: 8px !important; white-space: nowrap; }
-  .summary-extra {
-    display: contents;
-  }
-  .summary-extra .session-bar-item {
-    padding: 10px 8px;
-    text-align: center;
-    border-right: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-  .summary-extra .session-bar-item:last-child { border-right: none; }
-  .summary-filter {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    align-items: stretch;
-    padding: 12px 10px;
-    border-left: 1px solid var(--border);
-  }
-  .session-bar-secondary .session-bar-item { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-  @media (max-width: 600px) { .summary-30g { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) {
-    nav { padding: 0 12px; }
-    .nav-left { gap: 8px; }
-    .profile-header { padding: 20px 12px 0; }
-    .profile-left { gap: 12px; }
-    .profile-icon { width: 60px; height: 60px; border-radius: 16px; }
-    .profile-info h1 { font-size: 20px; }
-    .profile-info h1 span { font-size: 16px !important; }
-    .sub-nav { width: calc(100% - 24px); justify-content: space-between; margin-top: 16px; }
-    .sub-nav-item { padding: 8px 10px; font-size: 11px; gap: 5px; }
-    .sub-nav-item svg { width: 14px; height: 14px; }
-    main { margin: 16px auto; padding: 0 10px 28px; }
-    .layout-grid { gap: 14px; }
-    .summary-kda { grid-column: span 2; width: 100%; }
-    .summary-filter { grid-column: span 2; width: 100%; flex-direction: row; align-items: center; padding: 8px 10px; }
-    .summary-filter button, .summary-filter input { flex: 1; }
-    .summary-extra .session-bar-item { padding: 9px 5px; }
   }
 </style>
 </head>
@@ -710,7 +672,7 @@
               <div style="display:flex;gap:4px;">
                 <button id="hc-btn-wr"  onclick="setHourMode('wr')"  style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:var(--accent);color:#fff;cursor:pointer;transition:0.15s;">WR%</button>
                 <button id="hc-btn-day" onclick="setHourMode('day')" style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:0.15s;">Jour</button>
-                <button id="hc-btn-lp"  onclick="setHourMode('lp')"  style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:0.15s;">Session</button>
+                <button id="hc-btn-seslen" onclick="setHourMode('seslen')" title="Winrate selon le nombre de games jouées dans une même session" style="font-size:9px;font-weight:700;padding:3px 8px;border-radius:5px;border:1px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;transition:0.15s;">Session</button>
               </div>
             </div>
             <div style="padding:0 10px 10px 10px;position:relative;">
@@ -761,68 +723,71 @@
           
           <div class="card" style="padding:0;margin-bottom:0;">
           <div class="summary-30g">
-            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:16px 20px;border-right:1px solid var(--border);">
-              <div style="position:relative;width:100px;height:56px;overflow:hidden;">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:12px 14px;border-right:1px solid var(--border);flex-shrink:0;">
+              <div style="position:relative;width:84px;height:48px;overflow:hidden;">
                 <svg viewBox="0 0 100 56" style="width:100%;height:100%;">
                   <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="var(--border-light)" stroke-width="10" stroke-linecap="round"/>
-                  <path id="wr-arc" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#2ecc71" stroke-width="10" stroke-linecap="round" stroke-dasharray="125.6" stroke-dashoffset="0"/>
+                  <path id="wr-arc" d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#6FC98D" stroke-width="10" stroke-linecap="round" stroke-dasharray="125.6" stroke-dashoffset="0"/>
                 </svg>
                 <div style="position:absolute;bottom:0;left:0;right:0;text-align:center;">
-                  <div id="sum-wr" style="font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:800;color:var(--text-main);line-height:1;">0%</div>
+                  <div id="sum-wr" style="font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:800;color:var(--text-main);line-height:1;">0%</div>
                 </div>
               </div>
-              <div style="font-size:10px;color:var(--text-dark);text-transform:uppercase;font-weight:600;letter-spacing:0.5px;">Winrate</div>
-              <div id="sum-games" style="font-size:11px;color:var(--text-muted);font-weight:500;">0 Games</div>
+              <div style="font-size:9px;color:var(--text-dark);text-transform:uppercase;font-weight:600;letter-spacing:0.3px;">Winrate</div>
+              <div id="sum-games" style="font-size:9px;color:var(--text-muted);font-weight:500;">0 Games</div>
             </div>
-            
-            <div class="stat-block summary-kda" style="padding:16px 20px;border-right:1px solid var(--border);">
-              <div class="lbl" style="margin-bottom:8px;">KDA</div>
-              <div style="display:flex;gap:16px;justify-content:center;align-items:flex-end;">
+
+            <div class="stat-block" style="padding:12px 14px;border-right:1px solid var(--border);flex-shrink:0;">
+              <div class="lbl" style="margin-bottom:6px;">KDA</div>
+              <div style="display:flex;gap:10px;justify-content:center;align-items:flex-end;">
                 <div style="text-align:center;">
-                  <div class="val" id="sum-kda" style="font-size:20px;">0.0</div>
-                  <div class="sub" id="sum-kda-detail" style="font-size:10px;margin-top:2px;">0 / 0 / 0</div>
-                  <div style="font-size:9px;color:var(--text-dark);margin-top:3px;text-transform:uppercase;letter-spacing:0.5px;">Perso</div>
+                  <div class="val" id="sum-kda" style="font-size:16px;">0.0</div>
+                  <div class="sub" id="sum-kda-detail" style="font-size:9px;margin-top:2px;">0 / 0 / 0</div>
+                  <div style="font-size:8px;color:var(--text-dark);margin-top:3px;text-transform:uppercase;letter-spacing:0.3px;">Perso</div>
                 </div>
-                <div style="width:1px;height:36px;background:var(--border);align-self:center;"></div>
+                <div style="width:1px;height:30px;background:var(--border);align-self:center;"></div>
                 <div style="text-align:center;">
-                  <div class="val" id="sum-team-kda" style="font-size:20px;">—</div>
-                  <div class="sub" id="sum-team-kda-detail" style="font-size:10px;margin-top:2px;">— / — / —</div>
-                  <div style="font-size:9px;color:var(--text-dark);margin-top:3px;text-transform:uppercase;letter-spacing:0.5px;">Équipe</div>
+                  <div class="val" id="sum-team-kda" style="font-size:16px;">—</div>
+                  <div class="sub" id="sum-team-kda-detail" style="font-size:9px;margin-top:2px;">— / — / —</div>
+                  <div style="font-size:8px;color:var(--text-dark);margin-top:3px;text-transform:uppercase;letter-spacing:0.3px;">Équipe</div>
                 </div>
               </div>
             </div>
 
-            <div style="display:flex;align-items:center;padding:12px 14px;gap:12px;">
-              <div class="stat-block" style="flex:1;text-align:center;">
-                <div class="lbl">Ranking Moy</div>
-                <div class="val" style="color:var(--text-main);font-size:24px;">#<span id="sum-rank">0.0</span></div>
-                <div class="sub" style="display:flex;justify-content:center;margin-top:4px;">
-                  <span style="background:var(--win-bg);color:var(--win-color);padding:2px 6px;border-radius:4px;font-weight:700;" id="sum-mvp">MVP x0</span>
-                </div>
+            <div class="stat-block" style="padding:10px 14px;border-right:1px solid var(--border);flex-shrink:0;text-align:center;">
+              <div class="lbl" style="font-size:9px;">Ranking Moy</div>
+              <div class="val" style="color:var(--text-main);font-size:19px;">#<span id="sum-rank">0.0</span></div>
+              <div class="sub" style="display:flex;justify-content:center;margin-top:4px;">
+                <span style="background:var(--win-bg);color:var(--win-color);padding:2px 6px;border-radius:4px;font-weight:700;font-size:10px;" id="sum-mvp">MVP x0</span>
               </div>
             </div>
-            <div class="summary-extra" id="summary-extra">
-              <div class="session-bar-item"><div class="sbi-val" id="sbi-kp">—%</div><div class="sbi-lbl">KP%</div></div>
-              <div class="session-bar-item"><div class="sbi-val" id="sbi-tilt">—</div><div class="sbi-lbl">Tilt Index</div></div>
-              <div class="session-bar-item"><div class="sbi-val" id="sbi-cs">—</div><div class="sbi-lbl">CS/min</div></div>
-              <div class="session-bar-item"><div class="sbi-val" id="sbi-vs">—</div><div class="sbi-lbl">Vision</div></div>
+
+            <!-- Métriques complémentaires (selon filtre de rôle actif) -->
+            <div class="session-bar-item" style="display:none;flex:1;"><div class="sbi-val" id="sbi-kda">—</div><div class="sbi-lbl">KDA Solo</div></div>
+            <div class="session-bar-item" style="display:none;flex:1;"><div class="sbi-val" id="sbi-team-kda">—</div><div class="sbi-lbl">KDA Team</div></div>
+            <div class="session-bar-item" style="display:none;flex:1;"><div class="sbi-val" id="sbi-rank">#—</div><div class="sbi-lbl">Ranking</div></div>
+            <div class="sbar-extra" id="session-bar-secondary">
+              <div class="session-bar-item" style="flex:1;min-width:52px;padding:10px 6px;"><div class="sbi-val" id="sbi-kp">—%</div><div class="sbi-lbl">KP%</div></div>
+              <div class="session-bar-item" style="flex:1;min-width:52px;padding:10px 6px;"><div class="sbi-val" id="sbi-tilt">—</div><div class="sbi-lbl">Tilt Index</div></div>
+              <div class="session-bar-item" style="flex:1;min-width:52px;padding:10px 6px;"><div class="sbi-val" id="sbi-cs">—</div><div class="sbi-lbl">CS/min</div></div>
+              <div class="session-bar-item" style="flex:1;min-width:52px;padding:10px 6px;border-right:none;"><div class="sbi-val" id="sbi-vs">—</div><div class="sbi-lbl">Vision</div></div>
             </div>
-            <div class="summary-filter">
+
+            <div style="display:flex;flex-direction:column;gap:4px;align-items:stretch;justify-content:center;border-left:1px solid var(--border);padding:10px 8px;width:60px;flex-shrink:0;">
               <button id="sum-btn-all" onclick="setSumFilter('all')"
-                style="font-size:8px;font-weight:600;text-transform:uppercase;padding:4px 0;border-radius:4px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-muted);cursor:pointer;transition:all 0.15s;width:100%;">
+                style="font-size:7px;font-weight:600;text-transform:uppercase;letter-spacing:0;white-space:nowrap;box-sizing:border-box;padding:4px 0;border-radius:4px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-muted);cursor:pointer;transition:all 0.15s;width:100%;">
                 Origine
               </button>
               <button id="sum-btn-last" onclick="setSumFilter('last')"
-                style="font-size:8px;font-weight:600;text-transform:uppercase;padding:4px 0;border-radius:4px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-muted);cursor:pointer;transition:all 0.15s;width:100%;">
+                style="font-size:7px;font-weight:600;text-transform:uppercase;letter-spacing:0;white-space:nowrap;box-sizing:border-box;padding:4px 0;border-radius:4px;border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-muted);cursor:pointer;transition:all 0.15s;width:100%;">
                 Last
               </button>
               <input id="sum-last-n" type="text" inputmode="numeric" maxlength="3" value="40"
-                class="finput" style="font-size:9px;padding:3px 4px;text-align:center;box-sizing:border-box;width:100%;"
+                class="finput" style="font-size:8px;padding:3px 2px;text-align:center;box-sizing:border-box;width:100%;"
                 onchange="setSumFilter('last')" onclick="setSumFilter('last')">
             </div>
-            </div>
+          </div>
           </div><!-- end summary card -->
-
 
           <div class="history-controls">
             <div style="display:flex; align-items:center; gap:12px;">
@@ -870,10 +835,6 @@
                     alt="Support" width="22" height="22">
                 </button>
               </div>
-              <button class="r-btn" onclick="toggleSessionBar(this)" title="Afficher/Masquer les indicateurs" id="toggle-sbar-btn" style="width:auto;padding:0 10px;font-size:10px;gap:4px;display:flex;align-items:center;">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-                Stats
-              </button>
             </div>
           </div>
 
@@ -1404,7 +1365,7 @@
     const RANKS = ['Iron','Bronze','Silver','Gold','Platinum','Emerald','Diamond','Master','Grandmaster','Challenger'];
     const DIVS = ['IV','III','II','I'];
     
-    const RC = {Iron:'#7c7c7c', Bronze:'#8c4a1e', Silver:'#8fa3b1', Gold:'#c89b3c', Platinum:'#3cb8a8', Emerald:'#2ecc71', Diamond:'#8C82D2', Master:'#9b59b6', Grandmaster:'#e74c3c', Challenger:'#f0e6c8'};
+    const RC = {Iron:'#7c7c7c', Bronze:'#8c4a1e', Silver:'#8fa3b1', Gold:'#c89b3c', Platinum:'#3cb8a8', Emerald:'#6FC98D', Diamond:'#8C82D2', Master:'#9b59b6', Grandmaster:'#e74c3c', Challenger:'#f0e6c8'};
     const RI = {
       Iron: 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/iron.png',
       Bronze: 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-shared-components/global/default/images/bronze.png',
@@ -2021,7 +1982,7 @@
               const kdaColor = r.kda >= 4 ? '#c89b3c' : r.kda >= 2.5 ? 'var(--win-color)' : r.kda < 1.5 ? 'var(--loss-color)' : 'var(--text-muted)';
               const tag = r.total >= 2
                 ? r.wr >= 70 ? `<span style="background:rgba(46,204,113,0.12);color:var(--win-color);border:1px solid rgba(46,204,113,0.2);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">Stomp</span>`
-                : r.wr >= 60 ? `<span style="background:rgba(65,113,255,0.12);color:#4171ff;border:1px solid rgba(65,113,255,0.2);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">Favourable</span>`
+                : r.wr >= 60 ? `<span style="background:rgba(65,113,255,0.12);color:#5DA3E0;border:1px solid rgba(65,113,255,0.2);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">Favourable</span>`
                 : r.wr < 35 ? `<span style="background:rgba(248,79,84,0.12);color:var(--loss-color);border:1px solid rgba(248,79,84,0.2);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">Hard Counter</span>`
                 : r.wr < 50 ? `<span style="background:rgba(230,126,34,0.12);color:#e67e22;border:1px solid rgba(230,126,34,0.2);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;">Counter</span>`
                 : `<span style="color:var(--text-dark);font-size:10px;">Even</span>`
@@ -2210,7 +2171,7 @@
       }
 
       const isUp = points[points.length-1] >= points[0];
-      const lineColor = isUp ? '#2ecc71' : '#e74c3c';
+      const lineColor = isUp ? '#6FC98D' : '#e74c3c';
 
       // ── Gradient fill ────────────────────────────────────────
       const grad = ctx.createLinearGradient(0, padT, 0, H-padB);
@@ -2231,7 +2192,7 @@
       for(let i=1;i<points.length;i++){
         const g=gameRefs[i]; if(!g) continue;
         ctx.beginPath(); ctx.arc(toX(i),toY(points[i]),2.5,0,Math.PI*2);
-        ctx.fillStyle=g.result==='win'?'#2ecc71':'#e74c3c';
+        ctx.fillStyle=g.result==='win'?'#6FC98D':'#e74c3c';
         ctx.fill();
       }
       // End dot
@@ -2311,7 +2272,7 @@
 
       // Fill
       const isUp=points[points.length-1]>=points[0];
-      const lineColor=isUp?'#2ecc71':'#e74c3c';
+      const lineColor=isUp?'#6FC98D':'#e74c3c';
       const grad=ctx.createLinearGradient(0,padT,0,H-padB);
       grad.addColorStop(0,isUp?'rgba(46,204,113,0.25)':'rgba(231,76,60,0.2)');
       grad.addColorStop(0.7,isUp?'rgba(46,204,113,0.05)':'rgba(231,76,60,0.03)');
@@ -2330,7 +2291,7 @@
       for(let i=1;i<points.length;i++){
         const g=gameRefs[i];if(!g)continue;
         ctx.beginPath();ctx.arc(toX(i),toY(points[i]),3,0,Math.PI*2);
-        ctx.fillStyle=g.result==='win'?'#2ecc71':'#e74c3c';
+        ctx.fillStyle=g.result==='win'?'#6FC98D':'#e74c3c';
         ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=4;ctx.fill();ctx.shadowBlur=0;
       }
 
@@ -2380,7 +2341,7 @@
         const g=gameRefs[closest];
         if(g){
           const isWin=g.result==='win';
-          ttGame.innerHTML=`<span style="color:${isWin?'#2ecc71':'#e74c3c'};font-weight:700;">${isWin?'✓ Victory':'✗ Defeat'}</span><span style="color:${isWin?'#2ecc71':'#e74c3c'};float:right;font-weight:700;">${g.lpChange>=0?'+':''}${g.lpChange} LP</span><br><span style="color:var(--text-dark);">${g.champion||''} ${g.role?'· '+g.role:''}</span>${g.date?`<br><span style="color:var(--text-dark);font-size:10px;">${g.date}</span>`:''}`;
+          ttGame.innerHTML=`<span style="color:${isWin?'#6FC98D':'#e74c3c'};font-weight:700;">${isWin?'✓ Victory':'✗ Defeat'}</span><span style="color:${isWin?'#6FC98D':'#e74c3c'};float:right;font-weight:700;">${g.lpChange>=0?'+':''}${g.lpChange} LP</span><br><span style="color:var(--text-dark);">${g.champion||''} ${g.role?'· '+g.role:''}</span>${g.date?`<br><span style="color:var(--text-dark);font-size:10px;">${g.date}</span>`:''}`;
         } else {
           ttGame.innerHTML=`<span style="color:var(--text-dark);font-size:11px;">Rank de départ</span>`;
         }
@@ -2478,7 +2439,7 @@
 
       // ── Gradient fill ────────────────────────────────────────
       const isUp = points[points.length - 1] >= points[0];
-      const lineColor = isUp ? '#2ecc71' : '#e74c3c';
+      const lineColor = isUp ? '#6FC98D' : '#e74c3c';
       const grad = ctx.createLinearGradient(0, padT, 0, H - padB);
       grad.addColorStop(0,   isUp ? 'rgba(46,204,113,0.25)' : 'rgba(231,76,60,0.2)');
       grad.addColorStop(0.7, isUp ? 'rgba(46,204,113,0.05)' : 'rgba(231,76,60,0.03)');
@@ -2507,7 +2468,7 @@
       // ── Game dots ────────────────────────────────────────────
       for(let i = 1; i < points.length; i++) {
         const g = gameRefs[i]; if(!g) continue;
-        const dotColor = g.result === 'win' ? '#2ecc71' : '#e74c3c';
+        const dotColor = g.result === 'win' ? '#6FC98D' : '#e74c3c';
         ctx.beginPath(); ctx.arc(toX(i), toY(points[i]), 3, 0, Math.PI * 2);
         ctx.fillStyle = dotColor;
         ctx.shadowColor = dotColor; ctx.shadowBlur = 4;
@@ -2606,7 +2567,7 @@
         const tiltColor = avgTilt === null ? 'var(--text-dark)'
           : avgTilt >= 7 ? 'var(--loss-color)'
           : avgTilt >= 5 ? '#e67e22'
-          : avgTilt >= 3 ? '#f0c040'
+          : avgTilt >= 3 ? '#E0B15C'
           : 'var(--win-color)';
         const tiltEmoji = '';
         const totalGames = wins + losses;
@@ -2625,14 +2586,14 @@
         const teamKdaColor = !hasTeamKda ? 'var(--text-dark)'
           : tdSum===0 ? '#c89b3c'
           : (tkSum+taSum)/tdSum >= 6 ? '#c89b3c'
-          : (tkSum+taSum)/tdSum >= 4 ? '#4171ff'
-          : (tkSum+taSum)/tdSum >= 2.5 ? '#2ecc71'
+          : (tkSum+taSum)/tdSum >= 4 ? '#5DA3E0'
+          : (tkSum+taSum)/tdSum >= 2.5 ? '#6FC98D'
           : 'var(--loss-color)';
 
         // KDA perso color (basé sur la moyenne par game)
         const kdaNumVal = avgKdaNum;
-        const kdaColor = kdaNumVal>=6 ? '#c89b3c' : kdaNumVal>=4 ? '#4171ff'
-          : kdaNumVal>=2.5 ? '#2ecc71' : 'var(--text-muted)';
+        const kdaColor = kdaNumVal>=6 ? '#c89b3c' : kdaNumVal>=4 ? '#5DA3E0'
+          : kdaNumVal>=2.5 ? '#6FC98D' : 'var(--text-muted)';
 
         // Header for the date
         html += `
@@ -2808,7 +2769,7 @@
       }
 
       const isUp = points[points.length-1] >= points[0];
-      const lineColor = isUp ? '#4171ff' : '#f84f54';
+      const lineColor = isUp ? '#5DA3E0' : '#E2827A';
 
       // Fill
       const grad = ctx.createLinearGradient(0, padT, 0, H);
@@ -2847,7 +2808,7 @@
       const btnAll  = document.getElementById('sum-btn-all');
       const btnLast = document.getElementById('sum-btn-last');
       if(btnAll && btnLast) {
-        const base = 'font-size:8px;font-weight:600;text-transform:uppercase;padding:4px 0;border-radius:4px;cursor:pointer;transition:all 0.15s;width:100%;';
+        const base = 'font-size:7px;font-weight:600;text-transform:uppercase;letter-spacing:0;white-space:nowrap;box-sizing:border-box;padding:4px 0;border-radius:4px;cursor:pointer;transition:all 0.15s;width:100%;';
         btnAll.style.cssText  = base + (mode === 'all'  ? 'border:1px solid var(--accent);background:rgba(108,92,231,0.15);color:var(--accent);' : 'border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-dark);');
         btnLast.style.cssText = base + (mode === 'last' ? 'border:1px solid var(--accent);background:rgba(108,92,231,0.15);color:var(--accent);' : 'border:1px solid var(--border);background:rgba(255,255,255,0.04);color:var(--text-dark);');
       }
@@ -2907,7 +2868,7 @@
       const teamKdaDetEl = document.getElementById('sum-team-kda-detail');
       if(tkN > 0) {
         const tkdaVal = tdSum === 0 ? '∞' : ((tkSum+taSum)/tdSum).toFixed(2);
-        const tkColor = tdSum===0 ? '#c89b3c' : (tkSum+taSum)/tdSum >= 6 ? '#c89b3c' : (tkSum+taSum)/tdSum >= 4 ? '#4171ff' : (tkSum+taSum)/tdSum >= 2.5 ? '#2ecc71' : 'var(--text-muted)';
+        const tkColor = tdSum===0 ? '#c89b3c' : (tkSum+taSum)/tdSum >= 6 ? '#c89b3c' : (tkSum+taSum)/tdSum >= 4 ? '#5DA3E0' : (tkSum+taSum)/tdSum >= 2.5 ? '#6FC98D' : 'var(--text-muted)';
         teamKdaEl.textContent  = tkdaVal;
         teamKdaEl.style.color  = tkColor;
         teamKdaDetEl.textContent = `${(tkSum/tkN).toFixed(1)} / ${(tdSum/tkN).toFixed(1)} / ${(taSum/tkN).toFixed(1)}`;
@@ -2946,16 +2907,16 @@
 
         // WR colour: ≥75 gold, ≥60 blue, 50-59 green, 40-49 muted, <40 red
         const wrColor = wr >= 75 ? '#c89b3c'
-                      : wr >= 60 ? '#4171ff'
-                      : wr >= 50 ? '#2ecc71'
+                      : wr >= 60 ? '#5DA3E0'
+                      : wr >= 50 ? '#6FC98D'
                       : wr >= 40 ? 'var(--text-muted)'
                       : 'var(--loss-color)';
 
         // KDA colour: perfect gold shimmer, ≥6 gold, ≥4 blue, ≥2.5 green, ≥1.5 muted, <1.5 red
         const kdaColor = isPerfKda         ? '#c89b3c'
                        : kdaVal >= 6       ? '#c89b3c'
-                       : kdaVal >= 4       ? '#4171ff'
-                       : kdaVal >= 2.5     ? '#2ecc71'
+                       : kdaVal >= 4       ? '#5DA3E0'
+                       : kdaVal >= 2.5     ? '#6FC98D'
                        : kdaVal >= 1.5     ? 'var(--text-muted)'
                        : 'var(--loss-color)';
 
@@ -3670,9 +3631,9 @@
     function toggleSessionBar(btn) {
       _sbarVisible = !_sbarVisible;
       const bar = document.getElementById('session-bar-row');
-      const summaryExtra = document.getElementById('summary-extra');
+      const bar2 = document.getElementById('session-bar-secondary');
       if(bar) bar.style.display = _sbarVisible ? '' : 'none';
-      if(summaryExtra) summaryExtra.style.display = _sbarVisible ? '' : 'none';
+      if(bar2) bar2.style.display = _sbarVisible ? '' : 'none';
       if(btn) { btn.style.opacity = _sbarVisible ? '1' : '0.4'; btn.title = _sbarVisible ? 'Masquer les indicateurs' : 'Afficher les indicateurs'; }
     }
 
@@ -3791,7 +3752,7 @@
             return t > 0 ? Math.round(d.w/t*100) : null;
           });
           hasData = values.some(v => v !== null);
-          colors = values.map(v => v === null ? null : v >= 60 ? '#2ecc71' : v >= 50 ? '#f0c040' : '#f84f54');
+          colors = values.map(v => v === null ? null : v >= 60 ? '#6FC98D' : v >= 50 ? '#E0B15C' : '#E2827A');
         } else if (mode === 'day') {
           labels = DAYS_FR;
           // ordre Lun→Dim
@@ -3803,7 +3764,40 @@
             return t > 0 ? Math.round(d.w/t*100) : null;
           });
           hasData = values.some(v => v !== null);
-          colors = values.map(v => v === null ? null : v >= 60 ? '#2ecc71' : v >= 50 ? '#f0c040' : '#f84f54');
+          colors = values.map(v => v === null ? null : v >= 60 ? '#6FC98D' : v >= 50 ? '#E0B15C' : '#E2827A');
+        } else if (mode === 'seslen') {
+          // Regroupement par session (comme mode "lp"), puis on classe chaque
+          // session selon son nombre de games, pour comparer le winrate
+          // obtenu quand on joue 1 game, 2 games, 3 games... par session.
+          const SESSION_GAP = 2 * 3600 * 1000;
+          const withTs = allGames.filter(g => g.ts && g.result !== 'remake').slice().sort((a,b) => a.ts - b.ts);
+          let allSess = [];
+          withTs.forEach(g => {
+            const last = allSess[allSess.length - 1];
+            if (!last || (g.ts - last.lastTs) > SESSION_GAP) {
+              allSess.push({ startTs: g.ts, lastTs: g.ts, w: 0, l: 0, n: 0 });
+            }
+            const s = allSess[allSess.length - 1];
+            s.lastTs = g.ts;
+            s.n++;
+            if (g.result === 'win') s.w++;
+            else if (g.result === 'loss') s.l++;
+          });
+          const MAX_BUCKET = 6; // dernière tranche = "6+"
+          const buckets = Array.from({length: MAX_BUCKET}, () => ({ w:0, l:0, n:0, sessions:0 }));
+          allSess.forEach(s => {
+            const idx = Math.min(s.n, MAX_BUCKET) - 1;
+            if(idx < 0) return;
+            buckets[idx].w += s.w;
+            buckets[idx].l += s.l;
+            buckets[idx].n += s.n;
+            buckets[idx].sessions++;
+          });
+          labels = buckets.map((b,i) => i === MAX_BUCKET-1 ? (MAX_BUCKET+'+') : String(i+1));
+          values = buckets.map(b => (b.w+b.l) > 0 ? Math.round(b.w/(b.w+b.l)*100) : null);
+          hasData = values.some(v => v !== null);
+          colors = values.map(v => v === null ? null : v >= 60 ? '#6FC98D' : v >= 50 ? '#E0B15C' : '#E2827A');
+          sessions = buckets;
         } else { // lp
           if (mode === 'lp' && window._lpDayMode) {
             labels = DAYS_FR;
@@ -3839,7 +3833,7 @@
             });
           }
           hasData = values.some(v => v !== null);
-          colors = values.map(v => v === null ? null : v >= 60 ? '#2ecc71' : v >= 50 ? '#f0c040' : '#f84f54');
+          colors = values.map(v => v === null ? null : v >= 60 ? '#6FC98D' : v >= 50 ? '#E0B15C' : '#E2827A');
         }
 
         const n = labels.length;
@@ -3857,7 +3851,7 @@
 
         let minV = Math.min(...nonNull);
         let maxV = Math.max(...nonNull);
-        if (mode === 'wr' || mode === 'day' || mode === 'lp') { minV = Math.min(minV, 0); maxV = Math.max(maxV, 100); }
+        if (mode === 'wr' || mode === 'day' || mode === 'lp' || mode === 'seslen') { minV = Math.min(minV, 0); maxV = Math.max(maxV, 100); }
         else { minV = Math.min(minV, 0); maxV = Math.max(maxV, 0); }
         if (minV === maxV) { minV -= 10; maxV += 10; }
         const range = maxV - minV;
@@ -3881,7 +3875,7 @@
           const y_val = PAD.top + cH * (1 - (v - minV)/range);
           const barH = Math.abs(zero_y - y_val);
           const barTop = v >= 0 ? y_val : zero_y;
-          const color = colors[i] || '#4171ff';
+          const color = colors[i] || '#5DA3E0';
           ctx.fillStyle = color + 'cc';
           ctx.beginPath();
           ctx.roundRect(x, barTop, barW, Math.max(2, barH), 2);
@@ -3906,7 +3900,7 @@
         [0, 0.5, 1].forEach(t => {
           const v = Math.round(minV + t*range);
           const y = PAD.top + cH*(1-t);
-          ctx.fillText((mode==='wr'||mode==='day'||mode==='lp') ? v+'%' : (v>0?'+':'')+v, PAD.left-4, y+3);
+          ctx.fillText((mode==='wr'||mode==='day'||mode==='lp'||mode==='seslen') ? v+'%' : (v>0?'+':'')+v, PAD.left-4, y+3);
         });
 
         // Stocke les données pour le tooltip
@@ -3930,26 +3924,38 @@
           const idx = Math.floor((mx - PAD.left) / (cW/n));
           if (idx < 0 || idx >= n || values[idx] === null) { tip.style.display='none'; return; }
 
-          let html = `<div style="font-weight:700;color:#fff;margin-bottom:4px;">${labels[idx]}</div>`;
+          let headerLabel = labels[idx];
+          if (mode === 'seslen') headerLabel = labels[idx] + (labels[idx]==='1' ? ' game/session' : ' games/session');
+          let html = `<div style="font-weight:700;color:#fff;margin-bottom:4px;">${headerLabel}</div>`;
           if (mode === 'wr') {
             const h = hours[idx];
             const t = h.w + h.l;
-            html += `<div style="color:#2ecc71;">${h.w}W <span style="color:#f84f54;">${h.l}L</span></div>`;
-            html += `<div style="color:${values[idx]>=50?'#2ecc71':'#f84f54'};font-weight:700;font-size:13px;">${values[idx]}%</div>`;
+            html += `<div style="color:#6FC98D;">${h.w}W <span style="color:#E2827A;">${h.l}L</span></div>`;
+            html += `<div style="color:${values[idx]>=50?'#6FC98D':'#E2827A'};font-weight:700;font-size:13px;">${values[idx]}%</div>`;
           } else if (mode === 'day') {
             const ORDER = [1,2,3,4,5,6,0];
             const d2 = dayStats[ORDER[idx]];
-            html += `<div style="color:#2ecc71;">${d2.w}W <span style="color:#f84f54;">${d2.l}L</span></div>`;
-            html += `<div style="color:${values[idx]>=50?'#2ecc71':'#f84f54'};font-weight:700;font-size:13px;">${values[idx]}%</div>`;
+            html += `<div style="color:#6FC98D;">${d2.w}W <span style="color:#E2827A;">${d2.l}L</span></div>`;
+            html += `<div style="color:${values[idx]>=50?'#6FC98D':'#E2827A'};font-weight:700;font-size:13px;">${values[idx]}%</div>`;
+          } else if (mode === 'seslen') {
+            const v = values[idx];
+            const b = sessions && sessions[idx];
+            if (b && b.sessions > 0) {
+              html += `<div style="color:#6FC98D;">${b.w}W <span style="color:#E2827A;">${b.l}L</span></div>`;
+              html += `<div style="color:${v>=50?'#6FC98D':'#E2827A'};font-weight:700;font-size:13px;">${v}%</div>`;
+              html += `<div style="color:var(--text-muted);font-size:10px;margin-top:3px;">${b.sessions} session${b.sessions>1?'s':''} · ${b.n} games</div>`;
+            } else {
+              html += `<div style="color:var(--text-muted);font-size:10px;">Aucune session</div>`;
+            }
           } else {
             const v = values[idx];
             const s = sessions && sessions[idx];
             if (s) {
-              html += `<div style="color:#2ecc71;">${s.w}W <span style="color:#f84f54;">${s.l}L</span></div>`;
-              html += `<div style="color:${v>=50?'#2ecc71':'#f84f54'};font-weight:700;font-size:13px;">${v}%</div>`;
+              html += `<div style="color:#6FC98D;">${s.w}W <span style="color:#E2827A;">${s.l}L</span></div>`;
+              html += `<div style="color:${v>=50?'#6FC98D':'#E2827A'};font-weight:700;font-size:13px;">${v}%</div>`;
               html += `<div style="color:var(--text-muted);font-size:10px;margin-top:3px;">${s.n} game${s.n>1?'s':''} · ${s.lp>=0?'+':''}${Math.round(s.lp)} LP</div>`;
             } else {
-              html += `<div style="color:${v>=50?'#2ecc71':'#f84f54'};font-weight:700;font-size:13px;">${v}%</div>`;
+              html += `<div style="color:${v>=50?'#6FC98D':'#E2827A'};font-weight:700;font-size:13px;">${v}%</div>`;
             }
           }
 
@@ -3970,7 +3976,7 @@
       window._hourMode = 'wr';
       window.setHourMode = function(mode) {
         window._hourMode = mode;
-        ['wr','day','lp'].forEach(m => {
+        ['wr','day','seslen'].forEach(m => {
           const btn = document.getElementById('hc-btn-'+m);
           if (!btn) return;
           btn.style.background = m===mode ? 'var(--accent)' : 'transparent';
@@ -4296,7 +4302,7 @@
       el.innerHTML = active.map(role => {
         const { w, t } = stats[role];
         const wr = Math.round(w / t * 100);
-        const color = wr >= 60 ? 'var(--win-color)' : wr >= 50 ? '#f0c040' : 'var(--loss-color)';
+        const color = wr >= 60 ? 'var(--win-color)' : wr >= 50 ? '#E0B15C' : 'var(--loss-color)';
         return `
           <div style="display:flex;align-items:center;gap:10px;padding:7px 12px;border-bottom:1px solid var(--border);">
             <span style="font-size:11px;font-weight:600;color:var(--text-muted);width:52px;flex-shrink:0;">${role}</span>
